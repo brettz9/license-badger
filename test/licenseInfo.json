@@ -1,0 +1,21 @@
+{
+  "default": "MIT",
+  "bundledRootPackages": ["load-stylesheets", "jamilih", "query-result", "qr-manipulation", "stackblur-canvas", "regenerator-runtime", "core-js-bundle"],
+  "bundledPackagesByLicense": {
+    "(AFL-2.1 OR BSD-3-Clause)": ["json-schema"],
+    "Apache-2.0": ["aws-sign2", "caseless", "forever-agent", "oauth-sign", "request", "tunnel-agent", "xml-name-validator"],
+    "BSD-2-Clause": ["browser-process-hrtime", "escodegen", "esprima", "estraverse", "esutils", "uri-js", "webidl-conversions"],
+    "BSD-3-Clause": ["abab", "bcrypt-pbkdf", "qs", "source-map", "tough-cookie"],
+    "ISC": ["har-schema", "json-stringify-safe", "query-result", "request-promise-core", "request-promise-native", "saxes", "stealthy-require"],
+    "Unlicense": ["tweetnacl"]
+  },
+  "filesByLicense": {
+    "(MIT OR GPL-2.0)": ["editor/jquery-ui/jquery-ui-1.8.17.custom.min.js", "editor/jquerybbq/jquery.bbq.min.js", "editor/js-hotkeys/jquery.hotkeys.min.js"],
+    "(MIT OR GPL-2.0-or-later)": ["editor/contextmenu/jQuery.contextMenu.js", "editor/extensions/ext-server_moinsave.js"],
+    "Apache-2.0": ["editor/contextmenu.js", "editor/extensions/ext-foreignobject.js", "editor/extensions/ext-grid.js", "editor/extensions/ext-markers.js", "screencasts/svgopen2010/index.html", "editor/jgraduate/jQuery.jGraduate.js", "editor/extensions/mathjax/MathJax.min.js", "editor/extensions/mathjax/TeX-AMS-MML_SVG.js"],
+    "CC-BY-SA-2.0": ["editor/images/polygon.svg"],
+    "ISC": ["editor/external/query-result/esm/index.js"],
+    "LGPL-3.0-or-later": ["editor/jspdf/jspdf.plugin.svgToPdf.js"],
+    "X11": ["editor/jspdf/jspdf.min.js"]
+  }
+}
