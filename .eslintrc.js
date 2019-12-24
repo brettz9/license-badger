@@ -28,5 +28,9 @@ module.exports = {
     sourceType: 'script'
   },
   rules: {
+    'import/no-commonjs': 0,
+
+    // Added back by `plugin:node/recommended-script` above, so disable
+    'no-process-exit': 0
   }
 };
