@@ -4,9 +4,10 @@
   "description": "Builds a badge indicating your project's license(s) and those of its dependencies.",
   "main": "src/index.js",
   "bin": {
-    "badger": "bin/index.js"
+    "license-badger": "./bin/index.js"
   },
   "scripts": {
+    "license-badger": "./bin/index.js",
     "eslint": "eslint --ext=js,md,html .",
     "test:unit": "mocha --require esm test/**",
     "test": "npm run eslint && npm run test:unit"
