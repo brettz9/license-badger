@@ -30,6 +30,8 @@ module.exports = {
   rules: {
     'import/no-commonjs': 0,
 
+    // Not used by Node
+    'compat/compat': 0,
     // Added back by `plugin:node/recommended-script` above, so disable
     'no-process-exit': 0
   }
