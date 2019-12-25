@@ -9,42 +9,42 @@ const pkg = require('../package.json');
 
 // Todo: Adapt these to this package!
 
+const getBracketedChalkTemplateEscape = (s) => {
+  return '{' + s.replace(/[{}\\]/gu, (ch) => {
+    return `\\\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
+  }) + '}';
+};
+
 const optionDefinitions = [
   {
-    name: 'output', alias: 'o', type: String, defaultOption: true,
-    description: 'Output file (extension not needed); defaults to ' +
-      '"coverage-badge"',
-    typeLabel: '{underline file}'
+    name: 'textColor', type: String,
+    description: 'Color for "Licenses" subject',
+    typeLabel: getBracketedChalkTemplateEscape(
+      'underline <typeName>=<color> (<color>: CSS-Color|Hex as: ' +
+        '{ffffff}|Hex stroke as s{ffffff})'
+    )
   },
   {
-    name: 'format', alias: 'f', type: String,
-    description: 'The output format (defaults to "svg")',
-    typeLabel: '{underline "svg"|"png"}'
-  },
-  {
-    name: 'color', alias: 'c', type: String,
-    description: 'The badge background color (gh-badges color: https://www.npmjs.com/package/gh-badges#colors); ' +
-      'defaults to "orange"',
-    typeLabel: '{underline color}'
+    name: 'licenseTypeColor', type: String,
+    multiple: true,
+    description: 'Key-value set for mapping a license type name to color. ' +
+      'Reuse for different types.',
+    typeLabel: getBracketedChalkTemplateEscape(
+      'underline <typeName>=<color> (<color>: CSS-Color|Hex as: ' +
+        '{ffffff}|Hex stroke as s{ffffff})'
+    )
   },
   {
     name: 'textTemplate', type: String,
-    description: 'Template for text of coverage badge; defaults to: ' +
-      '"Coverage $\\{pct\\}%"',
+    description: 'Template for text of license badge; defaults to: ' +
+      'License\\\\n$\\{licenses.join("\\\\n")\\}',
     typeLabel: '{underline textTemplate}'
   },
   {
-    name: 'template', alias: 't', type: String,
-    description: 'Template style (gh-badges templates: https://github.com/badges/shields/tree/master/gh-badges/templates); defaults to "flat"',
-    typeLabel: '{underline ' +
-      '"flat"|"flat-square"|"for-the-badge"|"plastic"|"social"' +
-    '}'
-  },
-  {
-    name: 'coveragePath', type: String,
-    description: 'Path of coverage JSON file relative to the current ' +
-      'working directory; defaults to "./coverage/coverage-summary.json"',
-    typeLabel: '{underline coveragePath}'
+    name: 'licensePath', type: String, defaultOption: true,
+    description: 'Path of licensesType.json file relative to the current ' +
+      'working directory; defaults to "./licensesType.json"',
+    typeLabel: '{underline licensePath}'
   }
 ];
 
@@ -52,7 +52,7 @@ const cliSections = [
   {
     // Add italics: `{italic textToItalicize}`
     content: pkg.description +
-      '\n\n{italic badger [--color=aColor] [--format="svg"|"png"] output}'
+      '\n\n{italic badger [--textColor=aColor] output}'
   },
   {
     optionList: optionDefinitions

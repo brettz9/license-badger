@@ -12,7 +12,7 @@ const getWhitelistedRootPackagesLicenses = require(
   './getWhitelistedRootPackagesLicenses.js'
 );
 
-const textColor = 'gray';
+const defaultTextColor = 'gray';
 const licenseTypeMap = new Map([
   ['publicDomain', {
     color: 'green',
@@ -52,7 +52,16 @@ const licenseTypeMap = new Map([
  * @param {LicenseBadgerOptions} options
  * @returns {void}
  */
-module.exports = (options) => {
+module.exports = ({
+  textColor = defaultTextColor,
+  licenseTypeColor = []
+}) => {
+  const customLicenseTypeToColor = new WeakMap(
+    licenseTypeColor.map((typeAndColor) => {
+      return typeAndColor.split('=').slice(0, 2);
+    })
+  );
+
   const licenses = getWhitelistedRootPackagesLicenses();
 
   const sections = [
@@ -62,7 +71,9 @@ module.exports = (options) => {
     ...[...licenseTypeMap].map(([type, {color, text}]) => {
       return [
         `${text}:\n\n${licenses[type].join('\n')}`,
-        color
+        customLicenseTypeToColor.has(type)
+          ? customLicenseTypeToColor.get(type)
+          : color
       ];
     })
   ];
