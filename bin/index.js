@@ -13,5 +13,7 @@ if (!optionDefinitions) { // cliBasics handled
   process.exit();
 }
 
+(async () => {
 // Use `optionDefinitions`
-mainScript(optionDefinitions);
+await mainScript(optionDefinitions);
+})();

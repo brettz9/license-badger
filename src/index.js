@@ -5,8 +5,10 @@
    as alluded to in comment at https://github.com/jslicense/licensee.js/pull/61
 */
 
-const utils = require('util');
-const badgeUp = utils.promisify(require('badge-up'));
+const bu = require('badge-up');
+const promisify = require('./promisify.js');
+
+const badgeUp = promisify(bu.v2.bind(bu.v2));
 
 const getLicenses = require(
   './getLicenses.js'
@@ -66,6 +68,7 @@ module.exports = async ({
   try {
     ({licenses} = await getLicenses());
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log('err', err);
     throw err;
   }
@@ -90,7 +93,9 @@ module.exports = async ({
     })
   ];
 
+  // eslint-disable-next-line no-console
   console.log('sections', sections);
-  return licenses;
-  // return badgeUp.v2(sections);
+  // eslint-disable-next-line no-console
+  console.log('licenses', licenses);
+  return badgeUp(sections);
 };

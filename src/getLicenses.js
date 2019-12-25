@@ -8,7 +8,9 @@ const getLicenseType = require('npm-consider/lib/getLicenseType');
 //  Arborist may replace `read-package-tree`:
 //  https://github.com/jslicense/licensee.js/pull/62#discussion_r352206031
 // const licensee = require('licensee');
-const licensee = require('./licensee-promisified.js');
+const promisify = require('./promisify.js');
+// eslint-disable-next-line import/order
+const licensee = promisify(require('licensee'));
 
 const getWhitelistedRootPackagesLicenses = require(
   './getWhitelistedRootPackagesLicenses.js'
@@ -96,6 +98,7 @@ module.exports = async () => {
     licenses.set(type, set);
   });
 
+  // eslint-disable-next-line no-console
   console.log('licenses', licenses);
 
   return {
