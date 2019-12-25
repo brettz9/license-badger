@@ -91,7 +91,6 @@ module.exports = async () => {
     const type = license ? getLicenseType(license) : null;
     if (!licenses.has(type)) {
       licenses.set(type, new Set());
-      return;
     }
     const set = licenses.get(type);
     set.add(license);

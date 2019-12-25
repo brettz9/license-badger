@@ -5,9 +5,11 @@
    as alluded to in comment at https://github.com/jslicense/licensee.js/pull/61
 */
 
+const fs = require('fs');
 const bu = require('badge-up');
 const promisify = require('./promisify.js');
 
+const writeFile = promisify(fs.writeFile);
 const badgeUp = promisify(bu.v2.bind(bu.v2));
 
 const getLicenses = require(
@@ -78,11 +80,15 @@ module.exports = async ({
     // Todo: Filter out specific unwanted categories when empty
     // Todo: Make version that only iterates what user has
     ...[...licenseTypeMap].map(([type, {color, text}]) => {
+      const oldType = type;
       if (!licenses.get(type)) {
         type = 'uncategorized';
-        if (!licenses.get(type)) {
-          licenses.set(type, new Map());
+        if (!licenses.get(type) && type !== null) {
+          licenses.set(type, new Set());
         }
+      }
+      if (oldType === 'uncategorized') {
+        licenses.get(oldType).add('unknown');
       }
       return [
         `${text}:\n\n${[...licenses.get(type)].join('\n')}`,
@@ -97,5 +103,6 @@ module.exports = async ({
   console.log('sections', sections);
   // eslint-disable-next-line no-console
   console.log('licenses', licenses);
-  return badgeUp(sections);
+  const svg = await badgeUp(sections);
+  await writeFile('test.svg', svg);
 };
