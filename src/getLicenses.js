@@ -101,7 +101,6 @@ module.exports = async () => {
   console.log('licenses', licenses);
 
   return {
-    // Todo: Need to probably shape results
     licenses,
     approved,
     nonApproved,

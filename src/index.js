@@ -68,6 +68,8 @@ module.exports = async ({
 
   let licenses;
   try {
+    // Todo: Ability to request all deps, devDeps, and optionally
+    //   specific packages (merged with source?)
     ({licenses} = await getLicenses());
   } catch (err) {
     // eslint-disable-next-line no-console
