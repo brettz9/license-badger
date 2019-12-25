@@ -52,7 +52,7 @@ const cliSections = [
   {
     // Add italics: `{italic textToItalicize}`
     content: pkg.description +
-      '\n\n{italic badger [--textColor=aColor] output}'
+      '\n\n{italic license-badger [--textColor=aColor] output}'
   },
   {
     optionList: optionDefinitions
