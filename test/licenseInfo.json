@@ -1,6 +1,6 @@
 {
   "default": "MIT",
-  "bundledRootPackages": ["load-stylesheets", "jamilih", "query-result", "qr-manipulation", "stackblur-canvas", "regenerator-runtime", "core-js-bundle"],
+  "bundledRootPackages": ["esm", "mocha"],
   "bundledPackagesByLicense": {
     "(AFL-2.1 OR BSD-3-Clause)": ["json-schema"],
     "Apache-2.0": ["aws-sign2", "caseless", "forever-agent", "oauth-sign", "request", "tunnel-agent", "xml-name-validator"],

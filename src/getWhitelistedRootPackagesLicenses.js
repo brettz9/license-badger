@@ -1,7 +1,17 @@
 'use strict';
 
 module.exports = function (bundledRootPackages) {
-  return (packages) => {
+  return (unflattenedPackages) => {
+    const packages = [];
+    const flatten = (pkg) => {
+      packages.push(pkg);
+      if (pkg.children) {
+        pkg.children.forEach((p) => flatten(p));
+      }
+    };
+    unflattenedPackages.forEach((p) => flatten(p));
+
+    // console.log('packages', packages);
     const filteredPackages = packages.filter((pkg) => {
       // Ensure we are getting a package with the version set in the
       //  user's package.json
@@ -15,13 +25,23 @@ module.exports = function (bundledRootPackages) {
 
     // eslint-disable-next-line jsdoc/require-jsdoc
     function getDeps (pkgs) {
-      pkgs.forEach(({package: {dependencies}}) => {
+      pkgs.forEach((pkg) => {
+        if (!pkg) {
+          return;
+        }
+        const {package: {dependencies}} = pkg;
         if (dependencies) {
           const pkgsToCheck = [];
           Object.keys(dependencies).forEach((dep) => {
-            const findPkg = ({name}) => dep === name;
+            const findPkg = (pk) => {
+              if (!pk) {
+                return false;
+              }
+              const {name} = pk;
+              return dep === name;
+            };
             /* eslint-disable unicorn/no-fn-reference-in-iterator */
-            if (filteredPackages.find(findPkg)) {
+            if (filteredPackages.find(findPkg) !== undefined) {
               return;
             }
             const pk = packages.find(findPkg);
@@ -36,12 +56,6 @@ module.exports = function (bundledRootPackages) {
 
     getDeps(filteredPackages);
 
-    /*
-    console.log(
-      'filteredPackages',
-      filteredPackages.map((fp) => fp.name).sort()
-    );
-    */
     return filteredPackages;
   };
 };

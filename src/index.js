@@ -8,7 +8,7 @@
 const utils = require('util');
 const badgeUp = utils.promisify(require('badge-up'));
 
-const getWhitelistedRootPackagesLicenses = require(
+const getLicenses = require(
   './getLicenses.js'
 );
 
@@ -52,7 +52,7 @@ const licenseTypeMap = new Map([
  * @param {LicenseBadgerOptions} options
  * @returns {void}
  */
-module.exports = ({
+module.exports = async ({
   textColor = defaultTextColor,
   licenseTypeColor = []
 }) => {
@@ -62,7 +62,13 @@ module.exports = ({
     })
   );
 
-  const licenses = getWhitelistedRootPackagesLicenses();
+  let licenses;
+  try {
+    ({licenses} = await getLicenses());
+  } catch (err) {
+    console.log('err', err);
+    throw err;
+  }
 
   const sections = [
     ['Licenses', textColor],
@@ -78,5 +84,6 @@ module.exports = ({
     })
   ];
 
-  return badgeUp.v2(sections);
+  return licenses;
+  // return badgeUp.v2(sections);
 };
