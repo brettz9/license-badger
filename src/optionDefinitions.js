@@ -7,8 +7,6 @@ const pkg = require('../package.json');
 * @typedef {PlainObject} LicenseBadgerOptions
 */
 
-// Todo: Adapt these to this package!
-
 const getBracketedChalkTemplateEscape = (s) => {
   return '{' + s.replace(/[{}\\]/gu, (ch) => {
     return `\\\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
