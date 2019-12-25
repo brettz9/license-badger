@@ -75,8 +75,14 @@ module.exports = async ({
     // Todo: Filter out specific unwanted categories when empty
     // Todo: Make version that only iterates what user has
     ...[...licenseTypeMap].map(([type, {color, text}]) => {
+      if (!licenses.get(type)) {
+        type = 'uncategorized';
+        if (!licenses.get(type)) {
+          licenses.set(type, new Map());
+        }
+      }
       return [
-        `${text}:\n\n${licenses[type].join('\n')}`,
+        `${text}:\n\n${[...licenses.get(type)].join('\n')}`,
         customLicenseTypeToColor.has(type)
           ? customLicenseTypeToColor.get(type)
           : color
@@ -84,6 +90,7 @@ module.exports = async ({
     })
   ];
 
+  console.log('sections', sections);
   return licenses;
   // return badgeUp.v2(sections);
 };
