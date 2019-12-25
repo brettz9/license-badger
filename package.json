@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build-cli-svg": "clp -c src/optionDefinitions.js cli.svg",
-    "license-badger": "./bin/index.js",
+    "license-badger": "./bin/index.js -l test/licenseInfo.json test.svg",
     "eslint": "eslint --ext=js,md,html .",
     "test:unit": "mocha --require esm test/**",
     "test": "npm run eslint && npm run test:unit"

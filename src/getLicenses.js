@@ -1,6 +1,6 @@
 'use strict';
 
-const {join} = require('path');
+const {join, resolve} = require('path');
 
 const getLicenseType = require('npm-consider/lib/getLicenseType');
 
@@ -16,13 +16,14 @@ const getWhitelistedRootPackagesLicenses = require(
   './getWhitelistedRootPackagesLicenses.js'
 );
 
-module.exports = async () => {
+module.exports = async ({licensePath}) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   const {bundledRootPackages} = require(
-    join(process.cwd(), 'test/licenseInfo.json')
+    resolve(process.cwd(), licensePath)
   );
   // console.log('bundledRootPackages', bundledRootPackages);
 
+  // Todo: Decide what to do with this here and exposing unapproved, etc.
   // This doesn't filter; it affects whether an `approved` property is added
   const approvedLicenses = {
     // osi: true

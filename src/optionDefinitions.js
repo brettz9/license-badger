@@ -39,7 +39,12 @@ const optionDefinitions = [
     typeLabel: '{underline textTemplate}'
   },
   {
-    name: 'licensePath', type: String, defaultOption: true,
+    name: 'path', type: String, defaultOption: true,
+    description: 'Path to which to save the file',
+    typeLabel: '{underline path}'
+  },
+  {
+    name: 'licensePath', type: String, alias: 'l',
     description: 'Path of licensesType.json file relative to the current ' +
       'working directory; defaults to "./licensesType.json"',
     typeLabel: '{underline licensePath}'

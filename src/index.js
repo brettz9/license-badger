@@ -57,6 +57,8 @@ const licenseTypeMap = new Map([
  * @returns {void}
  */
 module.exports = async ({
+  path,
+  licensePath,
   textColor = defaultTextColor,
   licenseTypeColor = []
 }) => {
@@ -70,7 +72,7 @@ module.exports = async ({
   try {
     // Todo: Ability to request all deps, devDeps, and optionally
     //   specific packages (merged with source?)
-    ({licenses} = await getLicenses());
+    ({licenses} = await getLicenses({licensePath}));
   } catch (err) {
     // eslint-disable-next-line no-console
     console.log('err', err);
@@ -106,5 +108,5 @@ module.exports = async ({
   // eslint-disable-next-line no-console
   console.log('licenses', licenses);
   const svg = await badgeUp(sections);
-  await writeFile('test.svg', svg);
+  await writeFile(path, svg);
 };
