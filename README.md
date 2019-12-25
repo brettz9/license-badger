@@ -21,6 +21,9 @@ and "uncategorized". We also add "reuseProtective" (for
 conditions on even private use) and "unlicensed" (which is copyrighted or
 otherwise explicitly against reuse--rather than merely being currently
 unspecified).
+<!--
+(See [#24](https://github.com/delfrrr/npm-consider/issues/24) and [#18](https://github.com/delfrrr/npm-consider/issues/18#issuecomment-568872477) of `npm-consider` for tracking these recommendations)
+-->
 
 ## Immediate to-dos
 
