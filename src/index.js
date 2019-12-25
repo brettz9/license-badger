@@ -9,7 +9,7 @@ const utils = require('util');
 const badgeUp = utils.promisify(require('badge-up'));
 
 const getWhitelistedRootPackagesLicenses = require(
-  './getWhitelistedRootPackagesLicenses.js'
+  './getLicenses.js'
 );
 
 const defaultTextColor = 'gray';
