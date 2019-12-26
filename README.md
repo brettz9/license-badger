@@ -41,7 +41,7 @@ unspecified).
 
 ## Immediate to-dos
 
-1. Fix `uncategorized`
+1. Fix `uncategorized` (really need tests/coverage)
 1. Ability to merge license types from self, deps, devDeps, and optionally
     specific packages
 
