@@ -96,11 +96,14 @@ module.exports = async ({
       }
       // Todo: List names of uncategorized instead of "unknown"
       if (oldType === 'uncategorized') {
-        licenses.get(oldType).add('unknown');
+        licenses.get(oldType).add('Unknown');
       }
 
+      // Todo: Make dynamic
+      const glue = '\n- ';
+      const licenseList = [...licenses.get(type)];
       return [
-        `${text}\n\n${[...licenses.get(type)].join('\n')}`,
+        `${text}\n${licenseList.length ? glue : ''}${licenseList.join(glue)}`,
         ...(customLicenseTypeToColor.has(oldType)
           ? customLicenseTypeToColor.get(oldType)
           : color)
