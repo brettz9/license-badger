@@ -19,17 +19,18 @@ const optionDefinitions = [
     description: 'Color for "Licenses" subject',
     typeLabel: getBracketedChalkTemplateEscape(
       'underline <typeName>=<color> (<color>: CSS-Color|Hex as: ' +
-        '{ffffff}|Hex stroke as s{ffffff})'
+        'ffffff|Hex stroke as s{ffffff})'
     )
   },
   {
     name: 'licenseTypeColor', type: String,
     multiple: true,
     description: 'Key-value set for mapping a license type name to color. ' +
-      'Reuse for different types.',
+      'Reuse for different types. Follow by comma for additional (e.g., to ' +
+      'add a stroke color)',
     typeLabel: getBracketedChalkTemplateEscape(
       'underline <typeName>=<color> (<color>: CSS-Color|Hex as: ' +
-        '{ffffff}|Hex stroke as s{ffffff})'
+        'ffffff|Hex stroke as s{ffffff})'
     )
   },
   {

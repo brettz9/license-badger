@@ -19,36 +19,36 @@ const getLicenses = require(
 const defaultTextColor = 'gray';
 const licenseTypeMap = new Map([
   ['publicDomain', {
-    color: 'green',
+    color: ['darkgreen'],
     text: 'Public domain'
   }],
   ['permissive', {
-    color: 'green',
+    color: ['green'],
     text: 'Permissive'
   }],
   ['weaklyProtective', {
-    color: 'yellow',
+    color: ['yellow'],
     text: 'Weakly protective'
   }],
   ['protective', {
-    color: 'pink',
+    color: ['pink'],
     text: 'Protective'
   }],
   ['networkProtective', {
-    color: 'red',
+    color: ['FF69B4'],
     text: 'Network protective'
   }],
   ['reuseProtective', {
-    color: 'red',
+    color: ['red'],
     text: 'Reuse protective'
   }],
-  ['uncategorized', {
-    color: 'red',
-    text: 'Uncategorized'
-  }],
   ['unlicensed', {
-    color: 'red',
+    color: ['black'],
     text: 'Unlicensed'
+  }],
+  ['uncategorized', {
+    color: ['gray'],
+    text: 'Uncategorized'
   }]
 ]);
 
@@ -62,10 +62,12 @@ module.exports = async ({
   textColor = defaultTextColor,
   licenseTypeColor = []
 }) => {
-  const customLicenseTypeToColor = new WeakMap(
-    licenseTypeColor.map((typeAndColor) => {
-      return typeAndColor.split('=').slice(0, 2);
-    })
+  const licenseTypeColorInfo = licenseTypeColor.map((typeAndColor) => {
+    const [type, colors] = typeAndColor.split('=');
+    return [type, colors.split(',')];
+  });
+  const customLicenseTypeToColor = new Map(
+    licenseTypeColorInfo
   );
 
   let licenses;
@@ -80,6 +82,7 @@ module.exports = async ({
   }
 
   const sections = [
+    // Todo: Use `textTemplate`
     ['Licenses', textColor],
     // Todo: Filter out specific unwanted categories when empty
     // Todo: Make version that only iterates what user has
@@ -94,11 +97,12 @@ module.exports = async ({
       if (oldType === 'uncategorized') {
         licenses.get(oldType).add('unknown');
       }
+
       return [
-        `${text}:\n\n${[...licenses.get(type)].join('\n')}`,
-        customLicenseTypeToColor.has(type)
-          ? customLicenseTypeToColor.get(type)
-          : color
+        `${text}\n\n${[...licenses.get(type)].join('\n')}`,
+        ...(customLicenseTypeToColor.has(oldType)
+          ? customLicenseTypeToColor.get(oldType)
+          : color)
       ];
     })
   ];

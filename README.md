@@ -13,6 +13,11 @@ Build a badge indicating your project's license(s) and those of its dependencies
 npm i license-badger
 ```
 
+## Usage
+
+```sh
+license-badger --licenseTypeColor networkProtective=blue,s{white} -l test/licenseInfo.json test.svg
+```
 -->
 
 Adopts helpful categories of [npm-consider](https://github.com/delfrrr/npm-consider):
