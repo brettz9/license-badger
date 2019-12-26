@@ -103,9 +103,6 @@ module.exports = async ({licensePath}) => {
     licenses.set(type, set);
   });
 
-  // eslint-disable-next-line no-console
-  console.log('licenses', licenses);
-
   return {
     licenses,
     approved,
