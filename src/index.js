@@ -100,10 +100,17 @@ module.exports = async ({
       }
 
       // Todo: Make dynamic
-      const glue = '\n- ';
+      const glue = (license, i) => {
+        return `\n${i}. ${license}`;
+      };
       const licenseList = [...licenses.get(type)];
       return [
-        `${text}\n${licenseList.length ? glue : ''}${licenseList.join(glue)}`,
+        `${text}\n${licenseList.length
+          ? licenseList.sort().map((license, i) => {
+            return glue(license, i + 1);
+          }).join('')
+          : ''
+        }`,
         ...(customLicenseTypeToColor.has(oldType)
           ? customLicenseTypeToColor.get(oldType)
           : color)
