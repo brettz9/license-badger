@@ -21,7 +21,9 @@
   "author": "Brett Zamir",
   "contributors": [],
   "license": "MIT",
-  "engines": {},
+  "engines": {
+    "node": ">=8.3.0"
+  },
   "bugs": {
     "url": "https://github.com/brettz9/license-badger/issues"
   },

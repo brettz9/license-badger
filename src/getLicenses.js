@@ -117,17 +117,30 @@ module.exports = async ({licensePath}) => {
   const licenses = new Map();
   [...new Set(results)].forEach(({license, name, version}) => {
     const type = !license
-      ? null
+      ? 'missing'
       : (/^(?:rpl|parity)-/u).test(license)
         ? 'reuseProtective'
         : license === 'UNLICENSED'
           ? 'unlicensed'
-          : getLicenseType(license);
+          : license.startsWith('SEE LICENSE IN ')
+            ? 'custom'
+            : getLicenseType(license);
     if (!licenses.has(type)) {
       licenses.set(type, new Set());
     }
+    let custom;
+    if (type === 'custom') {
+      custom = license.replace('SEE LICENSE IN ', '');
+      license = null;
+    }
     const set = licenses.get(type);
-    set.add(license || {name, version, license});
+    set.add(license || {name, version, license, ...(
+      type === 'custom'
+        ? {
+          custom
+        }
+        : {}
+    )});
     licenses.set(type, set);
   });
 

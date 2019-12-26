@@ -21,7 +21,7 @@ const defaultTextColor = ['navy'];
 const licenseTypes = [
   ['publicDomain', {
     color: ['darkgreen'],
-    text: 'Public domain'
+    text: 'Public\ndomain'
   }],
   ['permissive', {
     color: ['green'],
@@ -29,7 +29,7 @@ const licenseTypes = [
   }],
   ['weaklyProtective', {
     color: ['yellow'],
-    text: 'Weakly protective'
+    text: 'Weakly\nprotective'
   }],
   ['protective', {
     color: ['pink'],
@@ -37,18 +37,26 @@ const licenseTypes = [
   }],
   ['networkProtective', {
     color: ['FF69B4'],
-    text: 'Network protective'
+    text: 'Network\nprotective'
   }],
   ['reuseProtective', {
     color: ['red'],
-    text: 'Reuse protective'
+    text: 'Reuse\nprotective'
   }],
   ['unlicensed', {
     color: ['black'],
     text: 'Unlicensed'
   }],
-  ['uncategorized', {
+  ['custom', {
+    color: ['lightgray'],
+    text: 'Custom'
+  }],
+  ['missing', {
     color: ['gray'],
+    text: 'Missing'
+  }],
+  ['uncategorized', {
+    color: ['darkgray'],
     text: 'Uncategorized'
   }]
 ];
@@ -102,14 +110,39 @@ module.exports = async ({
         licenses.set(type, new Set());
       }
     }
-    if (oldType === 'uncategorized') {
-      licenses.get(oldType).add(...([...licenses.get(null)]).map((
-        {name, version}
+
+    const specialTemplate = (typ, templ) => {
+      const mapped = [...licenses.get(typ) || []].map((
+        {name, version, custom}
       ) => {
-        return template(uncategorizedLicenseTemplate, {
-          name, version
+        return template(templ, {
+          name, version, custom
         });
-      }));
+      });
+      if (mapped.length) {
+        if (typ === 'missing') {
+          // Get rid of objects now that data mapped
+          licenses.get(oldType).clear();
+        }
+        licenses.get(oldType).add(...mapped);
+      }
+    };
+
+    switch (oldType) {
+    case 'uncategorized':
+      specialTemplate(null, uncategorizedLicenseTemplate);
+      break;
+    case 'custom':
+      if (!licenses.has(type)) {
+        licenses.set(type, new Set());
+      }
+      specialTemplate(type, uncategorizedLicenseTemplate);
+      break;
+    case 'missing':
+      specialTemplate(type, uncategorizedLicenseTemplate);
+      break;
+    default:
+      break;
     }
 
     const licenseList = [...licenses.get(type)];
