@@ -2,6 +2,8 @@
 
 **This project is not yet functional**
 
+Todo: Fully document
+
 <!--
 Build a badge indicating your project's license(s) and those of its dependencies.
 
