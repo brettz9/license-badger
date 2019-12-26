@@ -94,6 +94,7 @@ module.exports = async ({
           licenses.set(type, new Set());
         }
       }
+      // Todo: List names of uncategorized instead of "unknown"
       if (oldType === 'uncategorized') {
         licenses.get(oldType).add('unknown');
       }
