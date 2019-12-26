@@ -59,14 +59,17 @@ module.exports = async ({licensePath}) => {
   // console.log('results', results);
   const approved = results.filter(
     (r) => r.approved
-  ).reduce((obj, {name, version, license /* , repository: {url} */}) => {
+  ).reduce((obj, {name, version, license, repository}) => {
+    const {url} = repository || {};
     if (!obj[license]) {
       obj[license] = [];
     }
     // obj[license].push(url);
     // Might be in here as a different version
-    if (!obj[license].includes(name)) {
-      obj[license].push(name);
+    if (!obj[license].find(({name: n, version: v}) => {
+      return name === n && version === v;
+    })) {
+      obj[license].push({name, version, url});
       obj[license].sort();
     }
     return obj;
@@ -74,9 +77,21 @@ module.exports = async ({licensePath}) => {
 
   const nonApproved = results.filter(
     (r) => !r.approved
-  ).map(({license, version, repository: {url}}) => {
-    return {license, url, version};
-  });
+  ).reduce((obj, {license, name, version, repository}) => {
+    const {url} = repository || {};
+    if (!obj[license]) {
+      obj[license] = [];
+    }
+    // obj[license].push(url);
+    // Might be in here as a different version
+    if (!obj[license].find(({name: n, version: v}) => {
+      return name === n && version === v;
+    })) {
+      obj[license].push({name, version, url});
+      obj[license].sort();
+    }
+    return obj;
+  }, {});
 
   // To get automatic corrections, really need to omit `corrections` and
   //  look at non-approved, since `correct-license-metadata.js` does
@@ -87,7 +102,7 @@ module.exports = async ({licensePath}) => {
   ).map(({name}) => (name)).sort();
 
   const licenses = new Map();
-  [...new Set(results)].forEach(({license}) => {
+  [...new Set(results)].forEach(({license, name, version}) => {
     const type = !license
       ? null
       : (/^(?:rpl|parity)-/u).test(license)
@@ -99,9 +114,11 @@ module.exports = async ({licensePath}) => {
       licenses.set(type, new Set());
     }
     const set = licenses.get(type);
-    set.add(license);
+    set.add(license || {name, version, license});
     licenses.set(type, set);
   });
+
+  // console.log('license approvals', approved, nonApproved, manuallyCorrected);
 
   return {
     licenses,

@@ -50,6 +50,14 @@ const optionDefinitions = [
     typeLabel: '{underline licenseTemplate}'
   },
   {
+    name: 'uncategorizedLicenseTemplate', type: String,
+    description: 'Template for listing individual uncategorized projects; ' +
+      // eslint-disable-next-line no-template-curly-in-string
+      'defaults to: "${name} (${version})"; passed `license`, `name`, and ' +
+      '`version`; remember to escape `$` with backslash for CLI use',
+    typeLabel: '{underline uncategorizedLicenseTemplate}'
+  },
+  {
     name: 'licenseTypeTemplate', type: String,
     description: 'Template for listing individual license types; defaults ' +
       // eslint-disable-next-line no-template-curly-in-string

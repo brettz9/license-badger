@@ -60,10 +60,11 @@ const licenseTypeMap = new Map([
 module.exports = async ({
   path,
   textTemplate = 'Licenses',
-  // eslint-disable-next-line no-template-curly-in-string
+  /* eslint-disable no-template-curly-in-string */
   licenseTemplate = '\n${index}. ${license}',
-  // eslint-disable-next-line no-template-curly-in-string
   licenseTypeTemplate = '${text}',
+  uncategorizedLicenseTemplate = '${name} (${version})',
+  /* eslint-enable no-template-curly-in-string */
   licensePath,
   textColor = defaultTextColor,
   licenseTypeColor = []
@@ -102,9 +103,14 @@ module.exports = async ({
         licenses.set(type, new Set());
       }
     }
-    // Todo: List names of uncategorized instead of "unknown"
     if (oldType === 'uncategorized') {
-      licenses.get(oldType).add('Unknown');
+      licenses.get(oldType).add(...([...licenses.get(null)]).map((
+        {name, version}
+      ) => {
+        return template(uncategorizedLicenseTemplate, {
+          name, version
+        });
+      }));
     }
 
     const glue = (license, index) => {
