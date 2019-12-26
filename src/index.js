@@ -16,7 +16,7 @@ const getLicenses = require(
   './getLicenses.js'
 );
 
-const defaultTextColor = 'gray';
+const defaultTextColor = 'navy';
 const licenseTypeMap = new Map([
   ['publicDomain', {
     color: ['darkgreen'],
