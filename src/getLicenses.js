@@ -89,7 +89,13 @@ module.exports = async ({licensePath}) => {
 
   const licenses = new Map();
   [...new Set(results)].forEach(({license}) => {
-    const type = license ? getLicenseType(license) : null;
+    const type = !license
+      ? null
+      : (/^(?:rpl|parity)-/u).test(license)
+        ? 'reuseProtective'
+        : license === 'UNLICENSED'
+          ? 'unlicensed'
+          : getLicenseType(license);
     if (!licenses.has(type)) {
       licenses.set(type, new Set());
     }
