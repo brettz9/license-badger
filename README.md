@@ -41,8 +41,8 @@ unspecified).
 
 ## Immediate to-dos
 
-1. Ability to request all deps, devDeps, and optionally specific packages
-    (merged with source?)
+1. Ability to merge license types from self, deps, devDeps, and optionally
+    specific packages
 
 ## To-dos
 
