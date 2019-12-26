@@ -50,6 +50,9 @@ unspecified).
 1. Document above
 1. Process `licenseeInfo.json` `filesByLicense` to overwrite `license`
     in `package.json`
+    1. Ability to normalize an AND/OR license, e.g.,
+        `(MIT OR (MIT OR GPL-3.0))`, `(MIT AND (MIT AND GPL-3.0))`,
+        or `(MIT AND (MIT OR GPL-3.0))`
     1. Extract jsdoc iterator from `eslint-plugin-jsdoc` to own repo and
         use to search for `@license` within files so as to be able to
         overwrite `filesByLicense` with dynamic info
