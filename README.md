@@ -42,10 +42,18 @@ unspecified).
 1. Remove logging
 1. Process `licenseeInfo.json` `filesByLicense` to overwrite `license`
     in `package.json`
+    1. Extract jsdoc iterator from `eslint-plugin-jsdoc` to own repo and
+        use to search for `@license` within files so as to be able to
+        overwrite `filesByLicense` with dynamic info
 1. Generate reports (MD, HTML, JSON, CLI) creating a
     `bundledPackagesByLicense` (and repeating `filesByLicense` info), and
     using `licenseeInfo.json`'s `bundledRootPackages` (and optionally
     `default`)
+    1. Use `unapproved`, `nonApproved`, and especially `manuallyCorrected`
+        info in reports so users can know whether to report.
+    1. Link to issue tracker and/or search of issue tracker for "license",
+        so users can easily see if filed/discussed, at least for those
+        missing, manually corrected, etc.
 1. See about using [license-checker](https://github.com/davglass/license-checker)
     for more detection opportunities (e.g., README and License file); see
     also <https://github.com/davglass/license-checker/issues/225> to make this

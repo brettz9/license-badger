@@ -23,7 +23,6 @@ module.exports = async ({licensePath}) => {
   );
   // console.log('bundledRootPackages', bundledRootPackages);
 
-  // Todo: Decide what to do with this here and exposing unapproved, etc.
   // This doesn't filter; it affects whether an `approved` property is added
   const approvedLicenses = {
     // osi: true
