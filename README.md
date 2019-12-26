@@ -29,6 +29,13 @@ unspecified).
 
 ![cli.svg](cli.svg)
 
-## Immediate to-dos
+## To-dos
 
-1. Make general purpose
+1. Handle to-dos in code
+1. Remove logging
+1. Process `licenseeInfo.json` `filesByLicense` to overwrite `license`
+    in `package.json`
+1. Generate reports (MD, HTML, JSON, CLI) creating a
+    `bundledPackagesByLicense` (and repeating `filesByLicense` info), and
+    using `licenseeInfo.json`'s `bundledRootPackages` (and optionally
+    `default`)
