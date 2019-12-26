@@ -48,7 +48,7 @@ const licenseTypes = [
     text: 'Unlicensed'
   }],
   ['custom', {
-    color: ['lightgray'],
+    color: ['gray'],
     text: 'Custom'
   }],
   ['uncategorized', {
@@ -57,7 +57,7 @@ const licenseTypes = [
     text: 'Uncategorized'
   }],
   ['missing', {
-    color: ['gray'],
+    color: ['lightgray'],
     text: 'Missing'
   }]
 ];
