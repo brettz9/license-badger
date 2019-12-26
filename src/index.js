@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const bu = require('badge-up');
+const template = require('es6-template-strings');
 const promisify = require('./promisify.js');
 
 const writeFile = promisify(fs.writeFile);
@@ -58,6 +59,7 @@ const licenseTypeMap = new Map([
  */
 module.exports = async ({
   path,
+  textTemplate = 'Licenses',
   licensePath,
   textColor = defaultTextColor,
   licenseTypeColor = []
@@ -85,41 +87,48 @@ module.exports = async ({
     throw err;
   }
 
+  const usedLicenses = [];
+  const licensesWithColors = [...licenseTypeMap].map((
+    [type, {color, text}]
+  ) => {
+    const oldType = type;
+    if (!licenses.get(type)) {
+      type = 'uncategorized';
+      if (!licenses.get(type) && type !== null) {
+        licenses.set(type, new Set());
+      }
+    }
+    // Todo: List names of uncategorized instead of "unknown"
+    if (oldType === 'uncategorized') {
+      licenses.get(oldType).add('Unknown');
+    }
+
+    // Todo: Make dynamic
+    const glue = (license, i) => {
+      return `\n${i}. ${license}`;
+    };
+    const licenseList = [...licenses.get(type)];
+    usedLicenses.push(...licenseList);
+    return [
+      `${text}\n${licenseList.length
+        ? licenseList.sort().map((license, i) => {
+          return glue(license, i + 1);
+        }).join('')
+        : ''
+      }`,
+      ...(customLicenseTypeToColor.has(oldType)
+        ? customLicenseTypeToColor.get(oldType)
+        : color)
+    ];
+  });
+
   const sections = [
-    // Todo: Use `textTemplate`
-    ['Licenses', ...textColor],
+    [template(textTemplate, {
+      licenseCount: usedLicenses.length
+    }), ...textColor],
     // Todo: Filter out specific unwanted categories when empty
     // Todo: Make version that only iterates what user has
-    ...[...licenseTypeMap].map(([type, {color, text}]) => {
-      const oldType = type;
-      if (!licenses.get(type)) {
-        type = 'uncategorized';
-        if (!licenses.get(type) && type !== null) {
-          licenses.set(type, new Set());
-        }
-      }
-      // Todo: List names of uncategorized instead of "unknown"
-      if (oldType === 'uncategorized') {
-        licenses.get(oldType).add('Unknown');
-      }
-
-      // Todo: Make dynamic
-      const glue = (license, i) => {
-        return `\n${i}. ${license}`;
-      };
-      const licenseList = [...licenses.get(type)];
-      return [
-        `${text}\n${licenseList.length
-          ? licenseList.sort().map((license, i) => {
-            return glue(license, i + 1);
-          }).join('')
-          : ''
-        }`,
-        ...(customLicenseTypeToColor.has(oldType)
-          ? customLicenseTypeToColor.get(oldType)
-          : color)
-      ];
-    })
+    ...licensesWithColors
   ];
 
   // eslint-disable-next-line no-console

@@ -55,6 +55,7 @@
   "dependencies": {
     "badge-up": "^2.3.0",
     "command-line-basics": "^0.6.2",
+    "es6-template-strings": "^2.0.1",
     "licensee": "https://github.com/brettz9/licensee.js#filterPackages",
     "npm-consider": "^1.7.0"
   }

@@ -16,7 +16,7 @@ npm i license-badger
 ## Usage
 
 ```sh
-license-badger --licenseTypeColor networkProtective=blue,s{white} -l test/licenseInfo.json test.svg
+license-badger --textTemplate \"License types (\\${licenseCount})\" --licenseTypeColor networkProtective=blue,s{white} -l test/licenseInfo.json test.svg
 ```
 -->
 

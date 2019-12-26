@@ -37,7 +37,7 @@ const optionDefinitions = [
   {
     name: 'textTemplate', type: String,
     description: 'Template for text of license badge; defaults to: ' +
-      'License\\\\n$\\{licenses.join("\\\\n")\\}',
+      '"License"; passed; remember to escape `$` with backslash for CLI use',
     typeLabel: '{underline textTemplate}'
   },
   {
