@@ -60,6 +60,8 @@ const licenseTypeMap = new Map([
 module.exports = async ({
   path,
   textTemplate = 'Licenses',
+  // eslint-disable-next-line no-template-curly-in-string
+  licenseTypeTemplate = '${text}',
   licensePath,
   textColor = defaultTextColor,
   licenseTypeColor = []
@@ -108,9 +110,13 @@ module.exports = async ({
       return `\n${i}. ${license}`;
     };
     const licenseList = [...licenses.get(type)];
+    const licenseCount = licenseList.length;
     usedLicenses.push(...licenseList);
     return [
-      `${text}\n${licenseList.length
+      `${template(licenseTypeTemplate, {
+        text,
+        licenseCount
+      })}\n${licenseCount
         ? licenseList.sort().map((license, i) => {
           return glue(license, i + 1);
         }).join('')

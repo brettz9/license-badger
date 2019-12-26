@@ -37,8 +37,17 @@ const optionDefinitions = [
   {
     name: 'textTemplate', type: String,
     description: 'Template for text of license badge; defaults to: ' +
-      '"License"; passed; remember to escape `$` with backslash for CLI use',
+      '"License"; passed `licenseCount`; remember to escape `$` with ' +
+      'backslash for CLI use',
     typeLabel: '{underline textTemplate}'
+  },
+  {
+    name: 'licenseTypeTemplate', type: String,
+    description: 'Template for listing individual license types; defaults ' +
+      // eslint-disable-next-line no-template-curly-in-string
+      'to: "${text}"; passed `text` and `licenseCount`; remember to escape ' +
+      '`$` with backslash for CLI use',
+    typeLabel: '{underline licenseTypeTemplate}'
   },
   {
     name: 'path', type: String, defaultOption: true,
