@@ -35,6 +35,14 @@ const optionDefinitions = [
     )
   },
   {
+    name: 'filteredTypes', type: String,
+    description: 'Comma-separated list of specific license types to display ' +
+      'and/or "nonempty"; defaults to no filter',
+    typeLabel: '{underline list of "nonempty"|"publicDomain"|"permissive"|' +
+      '"weaklyProtective"|"protective"|"networkProtective"|' +
+      '"reuseProtective"|"unlicensed"|"uncategorized"}'
+  },
+  {
     name: 'textTemplate', type: String,
     description: 'Template for text of license badge; defaults to: ' +
       '"License"; passed `licenseCount`; remember to escape `$` with ' +

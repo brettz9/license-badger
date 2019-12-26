@@ -18,7 +18,7 @@ const getLicenses = require(
 );
 
 const defaultTextColor = ['navy'];
-const licenseTypeMap = new Map([
+const licenseTypes = [
   ['publicDomain', {
     color: ['darkgreen'],
     text: 'Public domain'
@@ -51,7 +51,7 @@ const licenseTypeMap = new Map([
     color: ['gray'],
     text: 'Uncategorized'
   }]
-]);
+];
 
 /**
  * @param {LicenseBadgerOptions} options
@@ -66,6 +66,7 @@ module.exports = async ({
   uncategorizedLicenseTemplate = '${name} (${version})',
   /* eslint-enable no-template-curly-in-string */
   licensePath,
+  filteredTypes,
   textColor = defaultTextColor,
   licenseTypeColor = []
 }) => {
@@ -93,7 +94,7 @@ module.exports = async ({
   }
 
   const usedLicenses = [];
-  const licensesWithColors = [...licenseTypeMap].map((
+  const licenseTypesWithUncategorized = licenseTypes.map((
     [type, {color, text}]
   ) => {
     const oldType = type;
@@ -113,15 +114,36 @@ module.exports = async ({
       }));
     }
 
+    const licenseList = [...licenses.get(type)];
+    const licenseCount = licenseList.length;
+    usedLicenses.push(...licenseList);
+    return [type, {color, text, oldType, licenseCount, licenseList}];
+  });
+
+  filteredTypes = filteredTypes
+    ? filteredTypes.split(',')
+    : [];
+
+  let filteredLicenseTypes = licenseTypesWithUncategorized;
+  const nonemptyPos = filteredTypes.indexOf('nonempty');
+  if (nonemptyPos > -1) {
+    filteredTypes.splice(nonemptyPos, 1);
+    filteredLicenseTypes = filteredLicenseTypes.filter((
+      [, {licenseCount, oldType}]
+    ) => {
+      return licenseCount || filteredTypes.includes(oldType);
+    });
+  }
+
+  const licensesWithColors = filteredLicenseTypes.map((
+    [type, {color, text, oldType, licenseCount, licenseList}]
+  ) => {
     const glue = (license, index) => {
       return template(licenseTemplate, {
         license,
         index
       });
     };
-    const licenseList = [...licenses.get(type)];
-    const licenseCount = licenseList.length;
-    usedLicenses.push(...licenseList);
     return [
       `${template(licenseTypeTemplate, {
         text,
@@ -142,8 +164,6 @@ module.exports = async ({
     [template(textTemplate, {
       licenseCount: usedLicenses.length
     }), ...textColor],
-    // Todo: Filter out specific unwanted categories when empty
-    // Todo: Make version that only iterates what user has
     ...licensesWithColors
   ];
 
