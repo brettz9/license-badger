@@ -62,6 +62,10 @@ module.exports = async ({
   textColor = defaultTextColor,
   licenseTypeColor = []
 }) => {
+  if (typeof textColor === 'string') {
+    textColor = textColor.split(',');
+  }
+
   const licenseTypeColorInfo = licenseTypeColor.map((typeAndColor) => {
     const [type, colors] = typeAndColor.split('=');
     return [type, colors.split(',')];
@@ -79,10 +83,6 @@ module.exports = async ({
     // eslint-disable-next-line no-console
     console.log('err', err);
     throw err;
-  }
-
-  if (typeof textColor === 'string') {
-    textColor = textColor.split(',');
   }
 
   const sections = [
