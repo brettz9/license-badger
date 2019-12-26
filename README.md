@@ -29,6 +29,11 @@ unspecified).
 
 ![cli.svg](cli.svg)
 
+## See also
+
+- [mocha-badge-generator](https://github.com/ianpogi5/mocha-badge-generator) - Locally created badges for Mocha test results
+- [coveradge](https://github.com/brettz9/coveradge) - Locally-created badges for nyc/istanbul coverage
+
 ## To-dos
 
 1. Handle to-dos in code
