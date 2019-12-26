@@ -61,6 +61,8 @@ module.exports = async ({
   path,
   textTemplate = 'Licenses',
   // eslint-disable-next-line no-template-curly-in-string
+  licenseTemplate = '\n${index}. ${license}',
+  // eslint-disable-next-line no-template-curly-in-string
   licenseTypeTemplate = '${text}',
   licensePath,
   textColor = defaultTextColor,
@@ -105,9 +107,11 @@ module.exports = async ({
       licenses.get(oldType).add('Unknown');
     }
 
-    // Todo: Make dynamic
-    const glue = (license, i) => {
-      return `\n${i}. ${license}`;
+    const glue = (license, index) => {
+      return template(licenseTemplate, {
+        license,
+        index
+      });
     };
     const licenseList = [...licenses.get(type)];
     const licenseCount = licenseList.length;
