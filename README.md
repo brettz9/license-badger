@@ -1,6 +1,6 @@
 # license-badger
 
-**This project is not yet functional**
+**This project is in early alpha.**
 
 Todo: Fully document
 
