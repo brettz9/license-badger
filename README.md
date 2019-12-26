@@ -38,7 +38,7 @@ unspecified).
 
 ## To-dos
 
-1. Handle to-dos in code
+1. Handle to-dos in code (and above)
 1. Remove logging
 1. Process `licenseeInfo.json` `filesByLicense` to overwrite `license`
     in `package.json`
