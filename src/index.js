@@ -111,7 +111,7 @@ module.exports = async ({
       }
     }
 
-    const specialTemplate = (typ, templ) => {
+    const specialTemplate = (typ, templ, clear) => {
       const mapped = [...licenses.get(typ) || []].map((
         {name, version, custom}
       ) => {
@@ -120,11 +120,16 @@ module.exports = async ({
         });
       });
       if (mapped.length) {
-        if (typ === 'missing') {
+        if (clear) {
+          if (!licenses.has(oldType)) {
+            licenses.set(oldType, new Set());
+          }
           // Get rid of objects now that data mapped
           licenses.get(oldType).clear();
         }
-        licenses.get(oldType).add(...mapped);
+        if (licenses.has(oldType)) {
+          licenses.get(oldType).add(...mapped);
+        }
       }
     };
 
@@ -136,10 +141,11 @@ module.exports = async ({
       if (!licenses.has(type)) {
         licenses.set(type, new Set());
       }
-      specialTemplate(type, uncategorizedLicenseTemplate);
+      specialTemplate(type, uncategorizedLicenseTemplate, true);
       break;
+    case 'unlicensed':
     case 'missing':
-      specialTemplate(type, uncategorizedLicenseTemplate);
+      specialTemplate(type, uncategorizedLicenseTemplate, true);
       break;
     default:
       break;

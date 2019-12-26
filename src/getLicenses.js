@@ -116,22 +116,24 @@ module.exports = async ({licensePath}) => {
 
   const licenses = new Map();
   [...new Set(results)].forEach(({license, name, version}) => {
-    const type = !license
-      ? 'missing'
-      : (/^(?:rpl|parity)-/u).test(license)
-        ? 'reuseProtective'
-        : license === 'UNLICENSED'
-          ? 'unlicensed'
-          : license.startsWith('SEE LICENSE IN ')
-            ? 'custom'
-            : getLicenseType(license);
-    if (!licenses.has(type)) {
-      licenses.set(type, new Set());
-    }
-    let custom;
-    if (type === 'custom') {
+    let type, custom;
+    if (!license) {
+      type = 'missing';
+    } else if ((/^(?:rpl|parity)-/u).test(license)) {
+      type = 'reuseProtective';
+    } else if (license === 'UNLICENSED') {
+      type = 'unlicensed';
+      license = null;
+    } else if (license.startsWith('SEE LICENSE IN ')) {
+      type = 'custom';
       custom = license.replace('SEE LICENSE IN ', '');
       license = null;
+    } else {
+      type = getLicenseType(license);
+    }
+
+    if (!licenses.has(type)) {
+      licenses.set(type, new Set());
     }
     const set = licenses.get(type);
     set.add(license || {name, version, license, ...(
