@@ -16,7 +16,7 @@ const getLicenses = require(
   './getLicenses.js'
 );
 
-const defaultTextColor = 'navy';
+const defaultTextColor = ['navy'];
 const licenseTypeMap = new Map([
   ['publicDomain', {
     color: ['darkgreen'],
@@ -81,9 +81,13 @@ module.exports = async ({
     throw err;
   }
 
+  if (typeof textColor === 'string') {
+    textColor = textColor.split(',');
+  }
+
   const sections = [
     // Todo: Use `textTemplate`
-    ['Licenses', textColor],
+    ['Licenses', ...textColor],
     // Todo: Filter out specific unwanted categories when empty
     // Todo: Make version that only iterates what user has
     ...[...licenseTypeMap].map(([type, {color, text}]) => {

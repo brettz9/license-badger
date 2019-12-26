@@ -16,7 +16,8 @@ const getBracketedChalkTemplateEscape = (s) => {
 const optionDefinitions = [
   {
     name: 'textColor', type: String,
-    description: 'Color for "Licenses" subject',
+    description: 'Color for "Licenses" subject. Follow by comma for ' +
+      'additional (e.g., to add a stroke color)',
     typeLabel: getBracketedChalkTemplateEscape(
       'underline <typeName>=<color> (<color>: CSS-Color|Hex as: ' +
         'ffffff|Hex stroke as s{ffffff})'
