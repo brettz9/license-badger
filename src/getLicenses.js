@@ -16,6 +16,19 @@ const getWhitelistedRootPackagesLicenses = require(
   './getWhitelistedRootPackagesLicenses.js'
 );
 
+// Todo: When stabilized, list more specific types than `Map` and `GenericArray`
+/**
+* @typedef {PlainObject} LicenseInfo
+* @property {Map} licenses
+* @property {GenericArray} approved
+* @property {GenericArray} nonApproved
+* @property {string[]} manuallyCorrected
+*/
+
+/**
+ * @param {LicenseBadgerOptions#licensePath} licensePath
+ * @returns {Promise<LicenseInfo>}
+ */
 module.exports = async ({licensePath}) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   const {bundledRootPackages} = require(

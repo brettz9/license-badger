@@ -55,7 +55,7 @@ const licenseTypes = [
 
 /**
  * @param {LicenseBadgerOptions} options
- * @returns {void}
+ * @returns {Promise<void>}
  */
 module.exports = async ({
   path,
@@ -84,8 +84,6 @@ module.exports = async ({
 
   let licenses;
   try {
-    // Todo: Ability to request all deps, devDeps, and optionally
-    //   specific packages (merged with source?)
     ({licenses} = await getLicenses({licensePath}));
   } catch (err) {
     // eslint-disable-next-line no-console

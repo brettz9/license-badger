@@ -2,8 +2,6 @@
 
 **This project is in early alpha.**
 
-Todo: Fully document
-
 <!--
 Build a badge indicating your project's license(s) and those of its dependencies.
 
@@ -41,10 +39,14 @@ unspecified).
 - [mocha-badge-generator](https://github.com/ianpogi5/mocha-badge-generator) - Locally created badges for Mocha test results
 - [coveradge](https://github.com/brettz9/coveradge) - Locally-created badges for nyc/istanbul coverage
 
+## Immediate to-dos
+
+1. Ability to request all deps, devDeps, and optionally specific packages
+    (merged with source?)
+
 ## To-dos
 
-1. Handle to-dos in code (and above)
-1. Remove logging
+1. Document above
 1. Process `licenseeInfo.json` `filesByLicense` to overwrite `license`
     in `package.json`
     1. Extract jsdoc iterator from `eslint-plugin-jsdoc` to own repo and
