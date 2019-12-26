@@ -119,8 +119,7 @@ module.exports = async ({licensePath}) => {
     let type, custom;
     if (!license) {
       type = 'missing';
-    } else if ((/^(?:rpl|parity)-/u).test(license)) {
-      type = 'reuseProtective';
+      license = null;
     } else if (license === 'UNLICENSED') {
       type = 'unlicensed';
       license = null;
@@ -128,6 +127,8 @@ module.exports = async ({licensePath}) => {
       type = 'custom';
       custom = license.replace('SEE LICENSE IN ', '');
       license = null;
+    } else if ((/^(?:rpl|parity)-/u).test(license)) {
+      type = 'reuseProtective';
     } else {
       type = getLicenseType(license);
     }
