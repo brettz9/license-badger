@@ -142,7 +142,7 @@ module.exports = async ({
   ];
 
   // eslint-disable-next-line no-console
-  console.log('Printing sections', sections);
+  console.log('Printing sections', sections, '\nusing licenses:\n', licenses);
 
   const svg = await badgeUp(sections);
   await writeFile(path, svg);
