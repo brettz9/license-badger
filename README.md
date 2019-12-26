@@ -44,3 +44,7 @@ unspecified).
     `bundledPackagesByLicense` (and repeating `filesByLicense` info), and
     using `licenseeInfo.json`'s `bundledRootPackages` (and optionally
     `default`)
+1. See about using [license-checker](https://github.com/davglass/license-checker)
+    for more detection opportunities (e.g., README and License file); see
+    also <https://github.com/davglass/license-checker/issues/225> to make this
+    easier on our end.
