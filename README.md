@@ -43,6 +43,7 @@ unspecified).
 
 1. Ability to merge license types from self, deps, devDeps, and optionally
     specific packages
+1. Fix `uncategorized`
 
 ## To-dos
 
