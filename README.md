@@ -30,6 +30,11 @@ unspecified).
 (See [#24](https://github.com/delfrrr/npm-consider/issues/24) and [#18](https://github.com/delfrrr/npm-consider/issues/18#issuecomment-568872477) of `npm-consider` for tracking these recommendations)
 -->
 
+<!--
+Todo: In explaining categories, mention potential problems with public domain,
+despite being listed first
+-->
+
 ## CLI
 
 ![cli.svg](cli.svg)
