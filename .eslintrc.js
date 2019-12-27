@@ -21,6 +21,19 @@ module.exports = {
       rules: {
         'import/unambiguous': 0
       }
+    },
+    {
+      extends: [
+        'plugin:chai-expect/recommended',
+        'plugin:chai-friendly/recommended'
+      ],
+      files: ['test/**'],
+      globals: {
+        expect: true
+      },
+      env: {
+        mocha: true
+      }
     }
   ],
   parserOptions: {
