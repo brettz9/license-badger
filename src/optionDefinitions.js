@@ -7,10 +7,14 @@ const pkg = require('../package.json');
 * @typedef {PlainObject} LicenseBadgerOptions
 */
 
-const getBracketedChalkTemplateEscape = (s) => {
-  return '{' + s.replace(/[{}\\]/gu, (ch) => {
+const getChalkTemplateEscape = (s) => {
+  return s.replace(/[{}\\]/gu, (ch) => {
     return `\\\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
-  }) + '}';
+  });
+};
+
+const getBracketedChalkTemplateEscape = (s) => {
+  return '{' + getChalkTemplateEscape(s) + '}';
 };
 
 const optionDefinitions = [
@@ -37,10 +41,11 @@ const optionDefinitions = [
   {
     name: 'filteredTypes', type: String,
     description: 'Comma-separated list of specific license types to display ' +
-      'and/or "nonempty"; defaults to no filter',
-    typeLabel: '{underline list of "nonempty"|"publicDomain"|"permissive"|' +
-      '"weaklyProtective"|"protective"|"networkProtective"|' +
-      '"reuseProtective"|"unlicensed"|"uncategorized"}'
+      'and/or "nonempty"; defaults to no filter; can be one of ' +
+      '"publicDomain"|"permissive"|"weaklyProtective"|\n' +
+      '"protective"|"networkProtective"|"reuseProtective"|\n' +
+      '"unlicensed"|"uncategorized"',
+    typeLabel: '{underline list of "nonempty" or value}'
   },
   {
     name: 'textTemplate', type: String,
@@ -52,24 +57,30 @@ const optionDefinitions = [
   {
     name: 'licenseTemplate', type: String,
     description: 'Template for listing individual licenses; defaults ' +
-      // eslint-disable-next-line no-template-curly-in-string
-      'to: "\n${index}. ${license}"; passed `license` and `index` (1-based); ' +
+      getChalkTemplateEscape(
+        // eslint-disable-next-line no-template-curly-in-string
+        'to: "\n${index}. ${license}"; passed `license` and `index` (1-based); '
+      ) +
       'remember to escape `$` with backslash for CLI use',
     typeLabel: '{underline licenseTemplate}'
   },
   {
     name: 'uncategorizedLicenseTemplate', type: String,
     description: 'Template for listing individual uncategorized projects; ' +
-      // eslint-disable-next-line no-template-curly-in-string
-      'defaults to: "${name} (${version})"; passed `license`, `name`, and ' +
+      getChalkTemplateEscape(
+        // eslint-disable-next-line no-template-curly-in-string
+        'defaults to: "${name} (${version})"; passed `license`, `name`, and '
+      ) +
       '`version`; remember to escape `$` with backslash for CLI use',
     typeLabel: '{underline uncategorizedLicenseTemplate}'
   },
   {
     name: 'licenseTypeTemplate', type: String,
     description: 'Template for listing individual license types; defaults ' +
-      // eslint-disable-next-line no-template-curly-in-string
-      'to: "${text}"; passed `text` and `licenseCount`; remember to escape ' +
+      getChalkTemplateEscape(
+        // eslint-disable-next-line no-template-curly-in-string
+        'to: "${text}"; passed `text` and `licenseCount`; remember to escape '
+      ) +
       '`$` with backslash for CLI use',
     typeLabel: '{underline licenseTypeTemplate}'
   },
@@ -97,5 +108,6 @@ const cliSections = [
   }
 ];
 
+exports.getBracketedChalkTemplateEscape = getBracketedChalkTemplateEscape;
 exports.definitions = optionDefinitions;
 exports.sections = cliSections;
