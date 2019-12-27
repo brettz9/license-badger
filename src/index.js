@@ -96,8 +96,10 @@ module.exports = async ({
   try {
     ({licenses} = await getLicenses({licensePath}));
   } catch (err) {
+    /* istanbul ignore next */
     // eslint-disable-next-line no-console
     console.log('err', err);
+    /* istanbul ignore next */
     throw err;
   }
 
