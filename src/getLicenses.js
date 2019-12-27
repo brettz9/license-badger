@@ -63,8 +63,10 @@ module.exports = async ({licensePath}) => {
       join(__dirname, '../')
     );
   } catch (err) {
+    /* istanbul ignore next */
     // eslint-disable-next-line no-console
     console.log('Error', err);
+    /* istanbul ignore next */
     throw err;
   }
 

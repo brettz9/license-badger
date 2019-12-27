@@ -1,29 +1,32 @@
 'use strict';
 
+const {readFile: rf, unlink: ul} = require('fs');
 const {promisify} = require('util');
 const {join} = require('path');
-const {execFile: ef} = require('child_process');
+const licenseBadger = require('../src/index.js');
 
-const execFile = promisify(ef);
+const readFile = promisify(rf);
+const unlink = promisify(ul);
+const licensePath = join(__dirname, 'fixtures/licenseInfo.json');
+const esmAndMochaPath = join(__dirname, 'fixtures/esm-and-mocha.svg');
 
-const binFile = join(__dirname, '../bin/index.js');
-
-describe('Binary', function () {
-  it('should return help', async function () {
-    this.timeout(5000);
-    const {stdout} = await execFile(binFile, ['-h']);
-    expect(stdout).to.contain(
-      "Builds a badge indicating your project's license(s)"
-    );
-  });
-
-  it('should return execute', async function () {
-    this.timeout(5000);
-    const {stdout, stderr} = await execFile(
-      binFile,
-      ['-l', 'test/fixtures/licenseInfo.json', 'test.svg']
-    );
-    expect(stdout).to.contain('Printing sections');
-    expect(stderr).to.equal('');
+describe('Main file', function () {
+  const fixturePath = join(__dirname, 'fixtures/temp1.svg');
+  const unlinker = async () => {
+    try {
+      await unlink(fixturePath);
+    } catch (err) {}
+  };
+  before(unlinker);
+  after(unlinker);
+  it('should work with string text color', async function () {
+    await licenseBadger({
+      path: fixturePath,
+      textColor: 'orange,s{blue}',
+      licensePath
+    });
+    const contents = await readFile(fixturePath, 'utf8');
+    const expected = await readFile(esmAndMochaPath, 'utf8');
+    expect(contents).to.equal(expected);
   });
 });

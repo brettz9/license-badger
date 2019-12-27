@@ -69,14 +69,14 @@ const licenseTypes = [
  */
 module.exports = async ({
   path,
+  licensePath,
   textTemplate = 'Licenses',
   /* eslint-disable no-template-curly-in-string */
   licenseTemplate = '\n${index}. ${license}',
   licenseTypeTemplate = '${text}',
   uncategorizedLicenseTemplate = '${name} (${version})',
   /* eslint-enable no-template-curly-in-string */
-  licensePath,
-  filteredTypes,
+  filteredTypes = null,
   textColor = defaultTextColor,
   licenseTypeColor = []
 }) => {
