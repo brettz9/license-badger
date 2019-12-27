@@ -23,7 +23,7 @@ describe('Binary', function () {
       binFile,
       ['-l', 'test/fixtures/licenseInfo.json', 'test.svg']
     );
-    console.log('stderr', stderr);
-    expect(stderr).to.contain('');
+    expect(stdout).to.contain('Printing sections');
+    expect(stderr).to.equal('');
   });
 });

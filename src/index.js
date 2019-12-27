@@ -6,9 +6,10 @@
 */
 
 const fs = require('fs');
+const {promisify} = require('util');
+
 const bu = require('badge-up');
 const template = require('es6-template-strings');
-const promisify = require('./promisify.js');
 
 const writeFile = promisify(fs.writeFile);
 const badgeUp = promisify(bu.v2.bind(bu.v2));

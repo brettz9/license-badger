@@ -19,6 +19,10 @@ module.exports = function (bundledRootPackages) {
       //   but normally will be whitelisting devDep. that we are copying
       //   over
       // const isRootDep = pkg.package._requiredBy.includes('#USER');
+      if (!pkg.package._requiredBy) {
+        // May have been installed in `node_modules` but unused
+        return false;
+      }
       const isRootDevDep = pkg.package._requiredBy.includes('#DEV:/');
       return isRootDevDep && bundledRootPackages.includes(pkg.name);
     });
