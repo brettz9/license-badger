@@ -7,13 +7,19 @@ const licenseBadger = require('../src/index.js');
 
 const readFile = promisify(rf);
 const unlink = promisify(ul);
-const licensePath = join(__dirname, 'fixtures/licenseInfo.json');
-const esmAndMochaPath = join(__dirname, 'fixtures/esm-and-mocha.svg');
-const redPublicDomainPath = join(__dirname, 'fixtures/redPublicDomain.svg');
+
+const getFixturePath = (path) => {
+  return join(__dirname, `fixtures/${path}`);
+};
+
+const licensePath = getFixturePath('licenseInfo.json');
+const esmAndMochaPath = getFixturePath('esm-and-mocha.svg');
+const redPublicDomainPath = getFixturePath('redPublicDomain.svg');
+const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
 
 describe('Main file', function () {
   const fixturePaths = [];
-  for (let i = 1; i <= 2; i++) {
+  for (let i = 1; i <= 3; i++) {
     fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));
   }
   const unlinker = async () => {
@@ -44,6 +50,17 @@ describe('Main file', function () {
     });
     const contents = await readFile(fixturePaths[1], 'utf8');
     const expected = await readFile(redPublicDomainPath, 'utf8');
+    expect(contents).to.equal(expected);
+  });
+
+  it('should work with `filteredTypes`', async function () {
+    await licenseBadger({
+      licensePath,
+      path: fixturePaths[2],
+      filteredTypes: 'nonempty'
+    });
+    const contents = await readFile(fixturePaths[2], 'utf8');
+    const expected = await readFile(nonemptyFilteredTypes, 'utf8');
     expect(contents).to.equal(expected);
   });
 });
