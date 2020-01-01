@@ -3,9 +3,11 @@
 const pkg = require('../package.json');
 
 // Todo: We really need a comamnd-line-args-TO-typedef-jsdoc generator!
+/* eslint-disable jsdoc/require-property */
 /**
 * @typedef {PlainObject} LicenseBadgerOptions
 */
+/* eslint-enable jsdoc/require-property */
 
 const getChalkTemplateEscape = (s) => {
   return s.replace(/[{}\\]/gu, (ch) => {
