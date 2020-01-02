@@ -10,7 +10,7 @@ const binFile = join(__dirname, '../bin/index.js');
 
 describe('Binary', function () {
   it('should return help', async function () {
-    this.timeout(5000);
+    this.timeout(8000);
     const {stdout} = await execFile(binFile, ['-h']);
     expect(stdout).to.contain(
       "Builds a badge indicating your project's license(s)"
@@ -18,7 +18,7 @@ describe('Binary', function () {
   });
 
   it('should return execute', async function () {
-    this.timeout(5000);
+    this.timeout(8000);
     const {stdout, stderr} = await execFile(
       binFile,
       ['-l', 'test/fixtures/licenseInfo.json', 'test.svg']

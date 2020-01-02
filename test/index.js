@@ -30,6 +30,7 @@ const reuseProtectivePath = getFixturePath('reuseProtective.svg');
 const uncategorizedPath = getFixturePath('uncategorized.svg');
 
 describe('Main file', function () {
+  this.timeout(5000);
   const fixturePaths = [];
   for (let i = 0; i <= 6; i++) {
     fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));

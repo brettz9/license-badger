@@ -10,10 +10,11 @@
     "build-cli-svg": "clp -c src/optionDefinitions.js cli.svg",
     "help": "./bin/index.js -h",
     "license-badger": "./bin/index.js -l test/fixtures/licenseInfo.json test.svg",
+    "coverage-badge": "coveradge --color brightgreen badges/coverage-badge.svg",
     "eslint": "eslint --ext=js,md,html .",
     "test:unit": "rm -rf node_modules/.cache && mocha --require test/bootstrap/node test/**",
     "test": "npm run eslint && npm run test:unit",
-    "test-cov": "nyc --all npm run test:unit"
+    "test-cov": "nyc --all npm run test:unit && npm run coverage-badge"
   },
   "nyc": {
     "reporter": [
@@ -40,13 +41,14 @@
   "devDependencies": {
     "@mysticatea/eslint-plugin": "^13.0.0",
     "babel-eslint": "^10.0.3",
+    "brettz9-missing": "https://github.com/brettz9/license-missing",
     "brettz9-reuseprotective": "https://github.com/brettz9/license-reuseprotective",
     "brettz9-seelicensein": "https://github.com/brettz9/license-seelicensein",
     "brettz9-uncategorized": "https://github.com/brettz9/license-uncategorized",
     "brettz9-unlicensed": "https://github.com/brettz9/license-unlicensed",
-    "brettz9-missing": "https://github.com/brettz9/license-missing",
     "chai": "^4.2.0",
     "command-line-publish": "^0.6.0",
+    "coveradge": "^0.2.0",
     "eslint": "^6.8.0",
     "eslint-config-ash-nazg": "^16.3.0",
     "eslint-config-standard": "^14.1.0",

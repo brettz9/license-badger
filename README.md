@@ -1,5 +1,19 @@
 # license-badger
 
+[![npm](https://img.shields.io/npm/v/license-badger.svg)](https://www.npmjs.com/package/license-badger)
+[![Dependencies](https://img.shields.io/david/brettz9/license-badger.svg)](https://david-dm.org/brettz9/license-badger)
+[![devDependencies](https://img.shields.io/david/dev/brettz9/license-badger.svg)](https://david-dm.org/brettz9/license-badger?type=dev)
+
+[![coverage badge](https://raw.githubusercontent.com/brettz9/license-badger/master/badges/coverage-badge.svg?sanitize=true)](badges/coverage-badge.svg)
+
+[![Known Vulnerabilities](https://snyk.io/test/github/brettz9/license-badger/badge.svg)](https://snyk.io/test/github/brettz9/license-badger)
+[![Total Alerts](https://img.shields.io/lgtm/alerts/g/brettz9/license-badger.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/brettz9/license-badger/alerts)
+[![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/brettz9/license-badger.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/brettz9/license-badger/context:javascript)
+
+[![License](https://img.shields.io/npm/l/license-badger.svg)](LICENSE-MIT)
+
+[![issuehunt-to-marktext](https://issuehunt.io/static/embed/issuehunt-button-v1.svg)](https://issuehunt.io/r/brettz9/license-badger)
+
 **This project is in early alpha.**
 
 <!--
