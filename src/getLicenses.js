@@ -145,13 +145,17 @@ module.exports = async ({licensePath, corrections}) => {
       licenses.set(type, new Set());
     }
     const set = licenses.get(type);
-    set.add(license || {name, version, license, ...(
-      type === 'custom'
-        ? {
-          custom
-        }
-        : {}
-    )});
+    set.add(
+      type !== 'uncategorized' && license
+        ? license
+        : {name, version, license, ...(
+          type === 'custom'
+            ? {
+              custom
+            }
+            : {}
+        )}
+    );
     licenses.set(type, set);
   });
 

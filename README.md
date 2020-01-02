@@ -4,6 +4,7 @@
 [![Dependencies](https://img.shields.io/david/brettz9/license-badger.svg)](https://david-dm.org/brettz9/license-badger)
 [![devDependencies](https://img.shields.io/david/dev/brettz9/license-badger.svg)](https://david-dm.org/brettz9/license-badger?type=dev)
 
+[![testing badge](https://raw.githubusercontent.com/brettz9/license-badger/master/badges/tests-badge.svg?sanitize=true)](badges/tests-badge.svg)
 [![coverage badge](https://raw.githubusercontent.com/brettz9/license-badger/master/badges/coverage-badge.svg?sanitize=true)](badges/coverage-badge.svg)
 
 [![Known Vulnerabilities](https://snyk.io/test/github/brettz9/license-badger/badge.svg)](https://snyk.io/test/github/brettz9/license-badger)

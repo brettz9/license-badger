@@ -1,6 +1,6 @@
 {
   "name": "license-badger",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Builds a badge indicating your project's license(s) and those of its dependencies.",
   "main": "src/index.js",
   "bin": {
@@ -13,6 +13,7 @@
     "coverage-badge": "coveradge --color brightgreen badges/coverage-badge.svg",
     "eslint": "eslint --ext=js,md,html .",
     "test:unit": "rm -rf node_modules/.cache && mocha --require test/bootstrap/node test/**",
+    "test:unit-with-badge": "rm -rf node_modules/.cache && mocha --require test/bootstrap/node test/** --reporter mocha-badge-generator --reporter-options badge_output=badges/tests-badge.svg",
     "test": "npm run eslint && npm run test:unit",
     "test-cov": "nyc --all npm run test:unit && npm run coverage-badge"
   },
@@ -69,6 +70,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-unicorn": "^15.0.1",
     "mocha": "^6.2.2",
+    "mocha-badge-generator": "https://github.com/brettz9/mocha-badge-generator#svg2png-optional",
     "nyc": "^15.0.0",
     "q-combinators": "^1.0.0",
     "typescript": "^3.7.4"

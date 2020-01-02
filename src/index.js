@@ -129,7 +129,6 @@ module.exports = async ({
 
     switch (type) {
     case 'uncategorized':
-      break;
     case 'custom':
     case 'unlicensed':
     case 'missing':
