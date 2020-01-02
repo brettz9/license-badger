@@ -17,8 +17,8 @@
 
 **This project is in early beta.**
 
-Build a badge indicating your project's dependencies (currently whitelist bundled
-only).
+Build a badge indicating the licenses of your project's dependencies
+(currently whitelist bundled dependencies only).
 
 This project is currently of benefit for those projects which bring over
 third-party dependencies into their final distribution files and/or repo via
