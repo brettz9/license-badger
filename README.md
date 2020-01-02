@@ -39,10 +39,10 @@ they may wish to deploy to Github-based hosting services (such as Github
 Pages) which normally wouldn't bring in `node_modules` yet can host static
 files copied into a repository.
 
-Current license checking tools typically only allow checking dependencies,
-devDependencies, or selected packages (but not their transitive dependencies).
-This project allows you to check selected packages with their transitive
-dependencies.
+Current license checking tools typically only allow checking dependencies or
+devDependencies, or they allow checking selected packages without transitive
+dependencies. This project allows you to check specific selected packages but
+*with* their transitive dependencies.
 
 The project currently checks a `licenseInfo.json` file for a
 `bundledRootPackages` array property to determine which of your top-level
