@@ -61,7 +61,11 @@ license(s) and those of its dependencies.
 
 Here's a sample badge (see below on the format):
 
-[![testing badge](https://raw.githubusercontent.com/brettz9/license-badger/master/test/fixtures/esm-mocha-and-missing.svg?sanitize=true)](test/fixtures/esm-mocha-and-missing.svg)
+[![esm mocha and missing badge](https://raw.githubusercontent.com/brettz9/license-badger/master/test/fixtures/esm-mocha-and-missing.svg?sanitize=true)](test/fixtures/esm-mocha-and-missing.svg)
+
+You can also opt to only show non-empty types:
+
+[![testing badge](https://raw.githubusercontent.com/brettz9/license-badger/master/test/fixtures/nonemptyFilteredTypes.svg?sanitize=true)](test/fixtures/nonemptyFilteredTypes.svg)
 
 ## Installation
 
