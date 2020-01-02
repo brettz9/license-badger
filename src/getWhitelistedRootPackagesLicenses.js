@@ -59,6 +59,8 @@ module.exports = function (bundledRootPackages) {
     }
 
     getDeps(filteredPackages);
+    // eslint-disable-next-line max-len
+    // console.log('filteredPackages', filteredPackages.map(({name}) => name).sort());
 
     return filteredPackages;
   };

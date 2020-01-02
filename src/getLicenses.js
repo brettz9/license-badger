@@ -53,7 +53,7 @@ module.exports = async ({licensePath}) => {
       {
         // The manual corrections are useful but automatic ones are critical
         //   handling old objects, arrays of objects etc.
-        corrections: true,
+        corrections: false,
         packages: {
           // 'load-stylesheets': '*'
         },
@@ -119,7 +119,7 @@ module.exports = async ({licensePath}) => {
   const licenses = new Map();
   [...new Set(results)].forEach(({license, name, version}) => {
     let type, custom;
-    if (!license) {
+    if (!license || typeof license !== 'string') {
       type = 'missing';
       license = null;
     } else if (license === 'UNLICENSED') {
