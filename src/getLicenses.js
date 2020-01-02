@@ -60,6 +60,7 @@ module.exports = async ({licensePath}) => {
         filterPackages,
         licenses: approvedLicenses
       },
+      // Path to check
       join(__dirname, '../')
     );
   } catch (err) {
@@ -70,7 +71,7 @@ module.exports = async ({licensePath}) => {
     throw err;
   }
 
-  // console.log('results', results);
+  // console.log('results', [...results.map(({name}) => name)].sort());
   const approved = results.filter(
     (r) => r.approved
   ).reduce((obj, {name, version, license, repository}) => {
