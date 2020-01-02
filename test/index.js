@@ -15,15 +15,19 @@ const getFixturePath = (path) => {
 const licensePath = getFixturePath('licenseInfo.json');
 const licensePathSeeLicenseIn = getFixturePath('licenseInfo-seeLicenseIn.json');
 const licensePathUnlicensed = getFixturePath('licenseInfo-unlicensed.json');
-const esmAndMochaPath = getFixturePath('esm-and-mocha.svg');
+const licensePathReuseProtective = getFixturePath(
+  'licenseInfo-reuseProtective.json'
+);
+const esmAndMochaPath = getFixturePath('esm-mocha-and-missing.svg');
 const redPublicDomainPath = getFixturePath('redPublicDomain.svg');
 const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
 const seeLicenseInPath = getFixturePath('seeLicenseIn.svg');
 const unlicensedPath = getFixturePath('unlicensed.svg');
+const reuseProtectivePath = getFixturePath('reuseProtectivePath.svg');
 
 describe('Main file', function () {
   const fixturePaths = [];
-  for (let i = 0; i <= 4; i++) {
+  for (let i = 0; i <= 5; i++) {
     fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));
   }
   const unlinker = async () => {
@@ -87,6 +91,17 @@ describe('Main file', function () {
     });
     const contents = await readFile(fixturePaths[4], 'utf8');
     const expected = await readFile(unlicensedPath, 'utf8');
+    expect(contents).to.equal(expected);
+  });
+
+  it('should work with Parity', async function () {
+    await licenseBadger({
+      corrections: true,
+      licensePath: licensePathReuseProtective,
+      path: fixturePaths[5]
+    });
+    const contents = await readFile(fixturePaths[5], 'utf8');
+    const expected = await readFile(reuseProtectivePath, 'utf8');
     expect(contents).to.equal(expected);
   });
 });

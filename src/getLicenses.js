@@ -135,7 +135,7 @@ module.exports = async ({licensePath, corrections}) => {
       type = 'custom';
       custom = license.replace('SEE LICENSE IN ', '');
       license = null;
-    } else if ((/^(?:rpl|parity)-/u).test(license)) {
+    } else if ((/^(?:RPL|Parity)-/u).test(license)) {
       type = 'reuseProtective';
     } else {
       type = getLicenseType(license);
