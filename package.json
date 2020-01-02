@@ -74,7 +74,7 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
-    "badge-up": "^2.3.0",
+    "badge-up": "https://github.com/brettz9/badge-up#npm-and-testing",
     "command-line-basics": "^0.6.2",
     "es6-template-strings": "^2.0.1",
     "licensee": "https://github.com/brettz9/licensee.js#filterPackages",
