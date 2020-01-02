@@ -24,20 +24,22 @@ This project is currently of benefit for those projects which bring over
 third-party dependencies into their final distribution files and/or repo via
 a copy routine.
 
-Such projects may not wish to either:
-- include all of `node_modules` and use actual `bundledDependencies`,
-  creating a potentially very large repository
-- use the likes of [rollup-plugin-license](https://www.npmjs.com/package/rollup-plugin-license)
-  to grab licenses while pulling in modules during a bundling routine, perhaps
-  because the project wishes instead for their source to be usable within a live
-  ESM browser version for rapid debugging/development which has no need of
-  a bundling step (or wish not to need the bundling step for the ESM version).
-
 Projects may do this to take advantage of npm versioning but instead of only
 deploying to clients that have the capability to install `dependencies`,
 they may wish to deploy to Github-based hosting services (such as Github
 Pages) which normally wouldn't bring in `node_modules` yet can host static
 files copied into a repository.
+
+Other current solutions may not be desired becayse a project may not wish to
+be forced to either:
+- include all of `node_modules` and use actual `bundledDependencies`,
+  creating a potentially very large repository
+- use the likes of [rollup-plugin-license](https://www.npmjs.com/package/rollup-plugin-license)
+  to grab licenses while pulling in modules during a bundling routine (as useful
+  as this can be), perhaps because the project wishes instead for their source
+  to be usable within a live ESM browser version for rapid debugging/development
+  which has no need of a bundling step or wish has a bundling step but is not
+  needed for an online demo.
 
 Current license checking tools typically only allow checking dependencies or
 devDependencies, or they allow checking selected packages without transitive
