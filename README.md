@@ -17,11 +17,21 @@
 
 **This project is in early beta.**
 
-Build a badge indicating your project's dependencies.
+Build a badge indicating your project's dependencies (currently whitelist bundled
+only).
 
-Currently will check a `licenseInfo.json` file for a `bundledRootPackages` array
-property to determine which of your `devDependencies` are being bundled,
-and builds a badge showing the license types within that bundle.
+This project is currently of benefit for those projects which bring over
+third-party dependencies into their final distribution files and/or repo via
+a copy routine but which do not need to actually include all of `node_modules`
+and use actual `bundledDependencies`. Projects may do this to take advantage
+of npm versioning but by using Github-based hosting which normally wouldn't
+bring in `node_modules`.
+
+The project currently checks a `licenseInfo.json` file for a
+`bundledRootPackages` array property to determine which of your
+`devDependencies` you are bundling and uses this information to build a badge
+showing the license types within your distribution (not including your own
+project's license).
 
 In the future, plans are to also add your current project's license and that
 of its dependencies.
