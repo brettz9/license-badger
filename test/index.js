@@ -13,9 +13,11 @@ const getFixturePath = (path) => {
 };
 
 const licensePath = getFixturePath('licenseInfo.json');
+const licensePathSeeLicenseIn = getFixturePath('licenseInfo-seeLicenseIn.json');
 const esmAndMochaPath = getFixturePath('esm-and-mocha.svg');
 const redPublicDomainPath = getFixturePath('redPublicDomain.svg');
 const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
+const seeLicenseInPath = getFixturePath('seeLicenseIn.svg');
 
 describe('Main file', function () {
   const fixturePaths = [];
@@ -61,6 +63,17 @@ describe('Main file', function () {
     });
     const contents = await readFile(fixturePaths[2], 'utf8');
     const expected = await readFile(nonemptyFilteredTypes, 'utf8');
+    expect(contents).to.equal(expected);
+  });
+
+  it('should work with "see license in"', async function () {
+    await licenseBadger({
+      corrections: true,
+      licensePath: licensePathSeeLicenseIn,
+      path: fixturePaths[0]
+    });
+    const contents = await readFile(fixturePaths[0], 'utf8');
+    const expected = await readFile(seeLicenseInPath, 'utf8');
     expect(contents).to.equal(expected);
   });
 });

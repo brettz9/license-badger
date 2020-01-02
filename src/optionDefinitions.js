@@ -96,6 +96,10 @@ const optionDefinitions = [
     description: 'Path of licensesType.json file relative to the current ' +
       'working directory; defaults to "./licensesType.json"',
     typeLabel: '{underline licensePath}'
+  },
+  {
+    name: 'corrections', type: Boolean, alias: 'c',
+    description: 'Whether to apply corrections of licensee.js'
   }
 ];
 

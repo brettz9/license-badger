@@ -70,6 +70,7 @@ const licenseTypes = [
 module.exports = async ({
   path,
   licensePath,
+  corrections = false,
   textTemplate = 'Licenses',
   /* eslint-disable no-template-curly-in-string */
   licenseTemplate = '\n${index}. ${license}',
@@ -94,7 +95,7 @@ module.exports = async ({
 
   let licenses;
   try {
-    ({licenses} = await getLicenses({licensePath}));
+    ({licenses} = await getLicenses({licensePath, corrections}));
   } catch (err) {
     /* istanbul ignore next */
     // eslint-disable-next-line no-console

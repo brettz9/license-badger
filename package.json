@@ -11,7 +11,7 @@
     "help": "./bin/index.js -h",
     "license-badger": "./bin/index.js -l test/fixtures/licenseInfo.json test.svg",
     "eslint": "eslint --ext=js,md,html .",
-    "test:unit": "mocha --require test/bootstrap/node test/**",
+    "test:unit": "rm -rf node_modules/.cache && mocha --require test/bootstrap/node test/**",
     "test": "npm run eslint && npm run test:unit",
     "test-cov": "nyc --all npm run test:unit"
   },
@@ -64,6 +64,7 @@
     "esprima": "1.0.4",
     "mocha": "^6.2.2",
     "nyc": "^15.0.0",
+    "q-combinators": "^1.0.0",
     "typescript": "^3.7.4"
   },
   "dependencies": {

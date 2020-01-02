@@ -28,7 +28,7 @@ const getWhitelistedRootPackagesLicenses = require(
  * @param {LicenseBadgerOptions#licensePath} licensePath
  * @returns {Promise<LicenseInfo>}
  */
-module.exports = async ({licensePath}) => {
+module.exports = async ({licensePath, corrections}) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   const {bundledRootPackages} = require(
     resolve(process.cwd(), licensePath)
@@ -53,7 +53,7 @@ module.exports = async ({licensePath}) => {
       {
         // The manual corrections are useful but automatic ones are critical
         //   handling old objects, arrays of objects etc.
-        corrections: false,
+        corrections,
         packages: {
           // 'load-stylesheets': '*'
         },
@@ -71,6 +71,7 @@ module.exports = async ({licensePath}) => {
     throw err;
   }
 
+  /*
   // console.log('results', [...results.map(({name}) => name)].sort());
   const approved = results.filter(
     (r) => r.approved
@@ -89,7 +90,9 @@ module.exports = async ({licensePath}) => {
     }
     return obj;
   }, {});
+  */
 
+  /*
   const nonApproved = results.filter(
     (r) => !r.approved
   ).reduce((obj, {license, name, version, repository}) => {
@@ -107,7 +110,9 @@ module.exports = async ({licensePath}) => {
     }
     return obj;
   }, {});
+  */
 
+  /*
   // To get automatic corrections, really need to omit `corrections` and
   //  look at non-approved, since `correct-license-metadata.js` does
   //  not return a value distinguishing a valid from corrected and
@@ -115,6 +120,7 @@ module.exports = async ({licensePath}) => {
   const manuallyCorrected = results.filter(
     (r) => r.corrected === 'manual'
   ).map(({name}) => (name)).sort();
+  */
 
   const licenses = new Map();
   [...new Set(results)].forEach(({license, name, version}) => {
@@ -152,9 +158,9 @@ module.exports = async ({licensePath}) => {
   // console.log('license approvals', approved, nonApproved, manuallyCorrected);
 
   return {
-    licenses,
-    approved,
-    nonApproved,
-    manuallyCorrected
+    licenses
+    // approved,
+    // nonApproved,
+    // manuallyCorrected
   };
 };
