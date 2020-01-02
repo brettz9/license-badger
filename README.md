@@ -14,15 +14,24 @@
 
 [![issuehunt-to-marktext](https://issuehunt.io/static/embed/issuehunt-button-v1.svg)](https://issuehunt.io/r/brettz9/license-badger)
 
-**This project is in early alpha.**
+**This project is in early beta.**
 
+Build a badge indicating your project's dependencies.
+
+Currently will check a `licenseInfo.json` file for a `bundledRootPackages` array
+property to determine which of your `devDependencies` are being bundled,
+and builds a badge showing the license types within that bundle.
+
+In the future, plans are to also add your current project's license and that
+of its dependencies.
 <!--
-Build a badge indicating your project's license(s) and those of its dependencies.
+license(s) and those of its dependencies.
+-->
 
 ## Installation
 
 ```
-npm i license-badger
+npm i -g license-badger
 ```
 
 ## Usage
@@ -30,7 +39,6 @@ npm i license-badger
 ```sh
 license-badger  --filteredTypes=weaklyProtective,protective --textTemplate \"License types (\\${licenseCount})\" --licenseTypeColor networkProtective=blue,s{white} -l test/fixtures/licenseInfo.json test.svg
 ```
--->
 
 Adopts helpful categories of [npm-consider](https://github.com/delfrrr/npm-consider):
 "publicDomain", "permissive", "weaklyProtective", "protective", "networkProtective",
