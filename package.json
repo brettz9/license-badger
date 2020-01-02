@@ -42,6 +42,7 @@
     "babel-eslint": "^10.0.3",
     "brettz9-reuseprotective": "https://github.com/brettz9/license-reuseprotective",
     "brettz9-seelicensein": "https://github.com/brettz9/license-seelicensein",
+    "brettz9-uncategorized": "https://github.com/brettz9/license-uncategorized",
     "brettz9-unlicensed": "https://github.com/brettz9/license-unlicensed",
     "brettz9-missing": "https://github.com/brettz9/license-missing",
     "chai": "^4.2.0",
