@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- npm: Update devDeps
+
 ## 0.3.0
 
 - Enhancement: Have "uncategorized" supply package name and version
