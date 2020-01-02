@@ -22,7 +22,7 @@ Build a badge indicating the licenses of your project's dependencies
 
 This project is currently of benefit for those projects which bring over
 third-party dependencies into their final distribution files and/or repo via
-a copy routine.
+a copy routine run upon dependency updates.
 
 Projects may do this to take advantage of npm versioning but instead of only
 deploying to clients that have the capability to install `dependencies`,
