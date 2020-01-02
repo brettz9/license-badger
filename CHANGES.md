@@ -7,6 +7,7 @@
 - Refactoring: Remove redundant code
 - Testing: Fix per recent update
 - Docs: Add locally-generated testing badg
+- npm: Update to `mocha-badge-generator` which uses updated `badge-up`
 
 ## 0.2.0
 
