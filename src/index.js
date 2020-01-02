@@ -109,9 +109,9 @@ module.exports = async ({
     [type, {color, text}]
   ) => {
     const oldType = type;
-    if (!licenses.get(type)) {
+    if (!licenses.has(type)) {
       type = 'uncategorized';
-      if (!licenses.get(type) && type !== null) {
+      if (type !== null) {
         licenses.set(type, new Set());
       }
     }
@@ -126,15 +126,10 @@ module.exports = async ({
       });
       if (mapped.length) {
         if (clear) {
-          if (!licenses.has(oldType)) {
-            licenses.set(oldType, new Set());
-          }
           // Get rid of objects now that data mapped
           licenses.get(oldType).clear();
         }
-        if (licenses.has(oldType)) {
-          licenses.get(oldType).add(...mapped);
-        }
+        licenses.get(oldType).add(...mapped);
       }
     };
 
@@ -143,9 +138,6 @@ module.exports = async ({
       specialTemplate(null, uncategorizedLicenseTemplate);
       break;
     case 'custom':
-      if (!licenses.has(type)) {
-        licenses.set(type, new Set());
-      }
       specialTemplate(type, uncategorizedLicenseTemplate, true);
       break;
     case 'unlicensed':

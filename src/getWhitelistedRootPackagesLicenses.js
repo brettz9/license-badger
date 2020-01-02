@@ -5,11 +5,20 @@ module.exports = function (bundledRootPackages) {
     const packages = [];
     const flatten = (pkg) => {
       packages.push(pkg);
+      // Not able to replicate, but keeping as condition
+      /* istanbul ignore else */
       if (pkg.children) {
         pkg.children.forEach((p) => flatten(p));
       }
     };
     unflattenedPackages.forEach((p) => flatten(p));
+
+    /*
+    // Helped with logging below
+    packages.sort((pkg1, pkg2) => {
+      return pkg1.name > pkg2.name ? 1 : pkg1.name < pkg2.name ? -1 : 0;
+    });
+    */
 
     // console.log('packages', packages);
     const filteredPackages = packages.filter((pkg) => {
@@ -19,6 +28,8 @@ module.exports = function (bundledRootPackages) {
       //   but normally will be whitelisting devDep. that we are copying
       //   over
       // const isRootDep = pkg.package._requiredBy.includes('#USER');
+      // Wasn't able to replicate by `npm i --no-save`
+      /* istanbul ignore if */
       if (!pkg.package._requiredBy) {
         // May have been installed in `node_modules` but unused
         return false;
@@ -30,6 +41,8 @@ module.exports = function (bundledRootPackages) {
     // eslint-disable-next-line jsdoc/require-jsdoc
     function getDeps (pkgs) {
       pkgs.forEach((pkg) => {
+        // Not able to replicate, but keeping as condition
+        /* istanbul ignore if */
         if (!pkg) {
           return;
         }
@@ -38,6 +51,8 @@ module.exports = function (bundledRootPackages) {
           const pkgsToCheck = [];
           Object.keys(dependencies).forEach((dep) => {
             const findPkg = (pk) => {
+              // Not able to replicate, but keeping as condition
+              /* istanbul ignore if */
               if (!pk) {
                 return false;
               }

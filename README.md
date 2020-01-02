@@ -46,7 +46,7 @@ despite being listed first
 
 ## Immediate to-dos
 
-1. Fix `uncategorized` (really need to get to 100% test coverage first)
+1. Fix `uncategorized` and get to 100% test coverage in process
 1. Ability to merge license types from self, deps, devDeps, and optionally
     specific packages
 
