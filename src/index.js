@@ -132,8 +132,6 @@ module.exports = async ({
       specialTemplate(null, uncategorizedLicenseTemplate);
       break;
     case 'custom':
-      specialTemplate(type, uncategorizedLicenseTemplate);
-      break;
     case 'unlicensed':
     case 'missing':
       specialTemplate(type, uncategorizedLicenseTemplate);
