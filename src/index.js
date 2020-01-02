@@ -113,7 +113,7 @@ module.exports = async ({
     }
 
     const specialTemplate = (typ, templ) => {
-      const mapped = [...licenses.get(typ) || []].map((
+      const mapped = [...licenses.get(typ)].map((
         {name, version, custom}
       ) => {
         return template(templ, {
@@ -129,7 +129,6 @@ module.exports = async ({
 
     switch (type) {
     case 'uncategorized':
-      specialTemplate(null, uncategorizedLicenseTemplate);
       break;
     case 'custom':
     case 'unlicensed':
