@@ -22,19 +22,37 @@ only).
 
 This project is currently of benefit for those projects which bring over
 third-party dependencies into their final distribution files and/or repo via
-a copy routine but which do not need to actually include all of `node_modules`
-and use actual `bundledDependencies`. Projects may do this to take advantage
-of npm versioning but by using Github-based hosting which normally wouldn't
-bring in `node_modules`.
+a copy routine.
+
+Such projects may not wish to either:
+- include all of `node_modules` and use actual `bundledDependencies`,
+  creating a potentially very large repository
+- use the likes of [rollup-plugin-license](https://www.npmjs.com/package/rollup-plugin-license)
+  to grab licenses while pulling in modules during a bundling routine, perhaps
+  because the project wishes instead for their source to be usable within a live
+  ESM browser version for rapid debugging/development which has no need of
+  a bundling step (or wish not to need the bundling step for the ESM version).
+
+Projects may do this to take advantage of npm versioning but instead of only
+deploying to clients that have the capability to install `dependencies`,
+they may wish to deploy to Github-based hosting services (such as Github
+Pages) which normally wouldn't bring in `node_modules` yet can host static
+files copied into a repository.
+
+Current license checking tools typically only allow checking dependencies,
+devDependencies, or selected packages (but not their transitive dependencies).
+This project allows you to check selected packages with their transitive
+dependencies.
 
 The project currently checks a `licenseInfo.json` file for a
-`bundledRootPackages` array property to determine which of your
+`bundledRootPackages` array property to determine which of your top-level
 `devDependencies` you are bundling and uses this information to build a badge
-showing the license types within your distribution (not including your own
-project's license).
+showing the license types within your distribution, including those packages'
+transitive dependencies (not including your own project's license) and
+sorted by permissiveness (see below).
 
 In the future, plans are to also add your current project's license and that
-of its dependencies.
+of its direct dependencies.
 <!--
 license(s) and those of its dependencies.
 -->
