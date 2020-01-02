@@ -108,15 +108,11 @@ module.exports = async ({
   const licenseTypesWithUncategorized = licenseTypes.map((
     [type, {color, text}]
   ) => {
-    const oldType = type;
     if (!licenses.has(type)) {
-      type = 'uncategorized';
-      if (type !== null) {
-        licenses.set(type, new Set());
-      }
+      licenses.set(type, new Set());
     }
 
-    const specialTemplate = (typ, templ, clear) => {
+    const specialTemplate = (typ, templ) => {
       const mapped = [...licenses.get(typ) || []].map((
         {name, version, custom}
       ) => {
@@ -125,24 +121,22 @@ module.exports = async ({
         });
       });
       if (mapped.length) {
-        if (clear) {
-          // Get rid of objects now that data mapped
-          licenses.get(oldType).clear();
-        }
-        licenses.get(oldType).add(...mapped);
+        // Get rid of objects now that data mapped
+        licenses.get(type).clear();
+        licenses.get(type).add(...mapped);
       }
     };
 
-    switch (oldType) {
+    switch (type) {
     case 'uncategorized':
       specialTemplate(null, uncategorizedLicenseTemplate);
       break;
     case 'custom':
-      specialTemplate(type, uncategorizedLicenseTemplate, true);
+      specialTemplate(type, uncategorizedLicenseTemplate);
       break;
     case 'unlicensed':
     case 'missing':
-      specialTemplate(type, uncategorizedLicenseTemplate, true);
+      specialTemplate(type, uncategorizedLicenseTemplate);
       break;
     default:
       break;
@@ -151,7 +145,7 @@ module.exports = async ({
     const licenseList = [...licenses.get(type)];
     const licenseCount = licenseList.length;
     usedLicenses.push(...licenseList);
-    return [type, {color, text, oldType, licenseCount, licenseList}];
+    return [type, {color, text, licenseCount, licenseList}];
   });
 
   filteredTypes = filteredTypes
@@ -163,14 +157,14 @@ module.exports = async ({
   if (nonemptyPos > -1) {
     filteredTypes.splice(nonemptyPos, 1);
     filteredLicenseTypes = filteredLicenseTypes.filter((
-      [, {licenseCount, oldType}]
+      [type, {licenseCount}]
     ) => {
-      return licenseCount || filteredTypes.includes(oldType);
+      return licenseCount || filteredTypes.includes(type);
     });
   }
 
   const licensesWithColors = filteredLicenseTypes.map((
-    [type, {color, text, oldType, licenseCount, licenseList}]
+    [type, {color, text, licenseCount, licenseList}]
   ) => {
     const glue = (license, index) => {
       return template(licenseTemplate, {
@@ -188,8 +182,8 @@ module.exports = async ({
         }).join('')
         : ''
       }`,
-      ...(customLicenseTypeToColor.has(oldType)
-        ? customLicenseTypeToColor.get(oldType)
+      ...(customLicenseTypeToColor.has(type)
+        ? customLicenseTypeToColor.get(type)
         : color)
     ];
   });

@@ -15,6 +15,9 @@ const getFixturePath = (path) => {
 const licensePath = getFixturePath('licenseInfo.json');
 const licensePathSeeLicenseIn = getFixturePath('licenseInfo-seeLicenseIn.json');
 const licensePathUnlicensed = getFixturePath('licenseInfo-unlicensed.json');
+const licensePathUncategorized = getFixturePath(
+  'licenseInfo-uncategorized.json'
+);
 const licensePathReuseProtective = getFixturePath(
   'licenseInfo-reuseProtective.json'
 );
@@ -24,10 +27,11 @@ const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
 const seeLicenseInPath = getFixturePath('seeLicenseIn.svg');
 const unlicensedPath = getFixturePath('unlicensed.svg');
 const reuseProtectivePath = getFixturePath('reuseProtective.svg');
+const uncategorizedPath = getFixturePath('uncategorized.svg');
 
 describe('Main file', function () {
   const fixturePaths = [];
-  for (let i = 0; i <= 5; i++) {
+  for (let i = 0; i <= 6; i++) {
     fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));
   }
   const unlinker = async () => {
@@ -102,6 +106,17 @@ describe('Main file', function () {
     });
     const contents = await readFile(fixturePaths[5], 'utf8');
     const expected = await readFile(reuseProtectivePath, 'utf8');
+    expect(contents).to.equal(expected);
+  });
+
+  it('should work with an "uncategorized" license', async function () {
+    await licenseBadger({
+      corrections: true,
+      licensePath: licensePathUncategorized,
+      path: fixturePaths[6]
+    });
+    const contents = await readFile(fixturePaths[6], 'utf8');
+    const expected = await readFile(uncategorizedPath, 'utf8');
     expect(contents).to.equal(expected);
   });
 });
