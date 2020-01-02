@@ -38,8 +38,8 @@ be forced to either:
   to grab licenses while pulling in modules during a bundling routine (as useful
   as this can be), perhaps because the project wishes instead for their source
   to be usable within a live ESM browser version for rapid debugging/development
-  which has no need of a bundling step or wish has a bundling step but is not
-  needed for an online demo.
+  which has no need of a bundling step or which has a bundling step but is not
+  used for all files such as an online demo.
 
 Current license checking tools typically only allow checking dependencies or
 devDependencies, or they allow checking selected packages without transitive
