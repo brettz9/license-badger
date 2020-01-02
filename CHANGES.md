@@ -1,5 +1,10 @@
 # CHANGES for license-badger
 
+## ?
+
+- Refactoring: Remove redundant code
+- Testing: Fix per recent update
+
 ## 0.2.0
 
 - Fix: Uses badge-up version without vulnerabilities
