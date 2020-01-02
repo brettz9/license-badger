@@ -29,6 +29,10 @@ of its dependencies.
 license(s) and those of its dependencies.
 -->
 
+Here's a sample badge (see below on the format):
+
+[![testing badge](https://raw.githubusercontent.com/brettz9/license-badger/master/test/fixtures/esm-mocha-and-missing.svg?sanitize=true)](test/fixtures/esm-mocha-and-missing.svg)
+
 ## Installation
 
 ```
