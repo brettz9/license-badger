@@ -23,7 +23,7 @@ const redPublicDomainPath = getFixturePath('redPublicDomain.svg');
 const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
 const seeLicenseInPath = getFixturePath('seeLicenseIn.svg');
 const unlicensedPath = getFixturePath('unlicensed.svg');
-const reuseProtectivePath = getFixturePath('reuseProtectivePath.svg');
+const reuseProtectivePath = getFixturePath('reuseProtective.svg');
 
 describe('Main file', function () {
   const fixturePaths = [];
