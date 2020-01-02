@@ -22,13 +22,13 @@ Build a badge indicating the licenses of your project's dependencies
 
 This project is currently of benefit for those projects which bring over
 third-party dependencies into their final distribution files and/or repo via
-a copy routine run upon dependency updates.
+a copy routine (run upon dependency updates).
 
 Projects may do this to take advantage of npm versioning but instead of only
 deploying to clients that have the capability to install `dependencies`,
 they may wish to deploy to Github-based hosting services (such as Github
 Pages) which normally wouldn't bring in `node_modules` yet can host static
-files copied into a repository.
+files copied into a repository which can be viewed in browsers.
 
 Other current solutions may not be desired becayse a project may not wish to
 be forced to either:
