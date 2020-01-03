@@ -98,7 +98,7 @@ despite being listed first
 
 ## CLI
 
-![cli.svg](cli.svg)
+![cli.svg](https://raw.githubusercontent.com/brettz9/license-badger/master/cli.svg?sanitize=true)
 
 ## See also
 
