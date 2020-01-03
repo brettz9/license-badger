@@ -87,6 +87,11 @@ const optionDefinitions = [
     typeLabel: '{underline licenseTypeTemplate}'
   },
   {
+    name: 'packagePath', type: String,
+    description: 'Path to the `package.json` directory',
+    typeLabel: '{underline packagePath}'
+  },
+  {
     name: 'path', type: String, defaultOption: true,
     description: 'Path to which to save the file',
     typeLabel: '{underline path}'

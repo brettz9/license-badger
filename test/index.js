@@ -5,6 +5,8 @@ const {promisify} = require('util');
 const {join} = require('path');
 const licenseBadger = require('../src/index.js');
 
+const packagePath = join(__dirname, '../');
+
 const readFile = promisify(rf);
 const unlink = promisify(ul);
 
@@ -46,6 +48,7 @@ describe('Main file', function () {
   after(unlinker);
   it('should work with string text color', async function () {
     await licenseBadger({
+      packagePath,
       licensePath,
       path: fixturePaths[0],
       textColor: 'orange,s{blue}'
@@ -57,6 +60,7 @@ describe('Main file', function () {
 
   it('should work with license type color', async function () {
     await licenseBadger({
+      packagePath,
       licensePath,
       path: fixturePaths[1],
       licenseTypeColor: ['publicDomain=red,s{white}']
@@ -68,6 +72,7 @@ describe('Main file', function () {
 
   it('should work with `filteredTypes`', async function () {
     await licenseBadger({
+      packagePath,
       licensePath,
       path: fixturePaths[2],
       filteredTypes: 'nonempty'
@@ -80,6 +85,7 @@ describe('Main file', function () {
   it('should work with "see license in"', async function () {
     await licenseBadger({
       corrections: true,
+      packagePath,
       licensePath: licensePathSeeLicenseIn,
       path: fixturePaths[3]
     });
@@ -91,6 +97,7 @@ describe('Main file', function () {
   it('should work with "UNLICENSED"', async function () {
     await licenseBadger({
       corrections: true,
+      packagePath,
       licensePath: licensePathUnlicensed,
       path: fixturePaths[4]
     });
@@ -102,6 +109,7 @@ describe('Main file', function () {
   it('should work with Parity', async function () {
     await licenseBadger({
       corrections: true,
+      packagePath,
       licensePath: licensePathReuseProtective,
       path: fixturePaths[5]
     });
@@ -113,6 +121,7 @@ describe('Main file', function () {
   it('should work with an "uncategorized" license', async function () {
     await licenseBadger({
       corrections: true,
+      packagePath,
       licensePath: licensePathUncategorized,
       path: fixturePaths[6]
     });

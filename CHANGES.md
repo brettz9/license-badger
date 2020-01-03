@@ -1,7 +1,9 @@
 # CHANGES for license-badger
 
-## ?
+## 0.4.0
 
+- Fix: Add missing `packagePath` option!
+- Docs: Add samples and clarify
 - npm: Update devDeps
 
 ## 0.3.0

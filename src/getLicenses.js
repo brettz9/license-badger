@@ -1,7 +1,7 @@
 'use strict';
 
 const {promisify} = require('util');
-const {join, resolve} = require('path');
+const {resolve} = require('path');
 
 const getLicenseType = require('npm-consider/lib/getLicenseType');
 
@@ -28,7 +28,7 @@ const getWhitelistedRootPackagesLicenses = require(
  * @param {LicenseBadgerOptions#licensePath} licensePath
  * @returns {Promise<LicenseInfo>}
  */
-module.exports = async ({licensePath, corrections}) => {
+module.exports = async ({licensePath, corrections, packagePath}) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   const {bundledRootPackages} = require(
     resolve(process.cwd(), licensePath)
@@ -61,7 +61,7 @@ module.exports = async ({licensePath, corrections}) => {
         licenses: approvedLicenses
       },
       // Path to check
-      join(__dirname, '../')
+      packagePath
     );
   } catch (err) {
     /* istanbul ignore next */
