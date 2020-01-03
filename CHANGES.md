@@ -1,5 +1,13 @@
 # CHANGES for license-badger
 
+## 0.6.0
+
+- Breaking change: Switch from `licensePath` to `licenseInfoPath`.
+- Fix: Add intended defaults for `outputPath`, `licenseInfoPath`,
+  `packagePath`
+- Enhancement: Throw for bad output path
+- Docs: Fix jsdoc
+
 ## 0.5.0
 
 - Breaking change: Switch from `path` to `outputPath` (to distinguish

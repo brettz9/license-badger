@@ -25,13 +25,16 @@ const getWhitelistedRootPackagesLicenses = require(
 */
 
 /**
- * @param {LicenseBadgerOptions#licensePath} licensePath
+ * @param {PlainObject} cfg
+ * @param {LicenseBadgerOptions#licenseInfoPath} cfg.licenseInfoPath
+ * @param {LicenseBadgerOptions#corrections} cfg.corrections
+ * @param {LicenseBadgerOptions#packagePath} cfg.packagePath
  * @returns {Promise<LicenseInfo>}
  */
-module.exports = async ({licensePath, corrections, packagePath}) => {
+module.exports = async ({licenseInfoPath, corrections, packagePath}) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require
   const {bundledRootPackages} = require(
-    resolve(process.cwd(), licensePath)
+    resolve(process.cwd(), licenseInfoPath)
   );
   // console.log('bundledRootPackages', bundledRootPackages);
 

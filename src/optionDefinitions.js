@@ -28,19 +28,22 @@ const getBracketedChalkTemplateEscape = (s) => {
 const optionDefinitions = [
   {
     name: 'outputPath', type: String, defaultOption: true, alias: 'o',
-    description: 'Path to which to save the file',
+    description: 'Path to which to save the file; default to ' +
+      '"coverage-badge.svg" in the current working directory',
     typeLabel: '{underline outputPath}'
   },
   {
     name: 'packagePath', type: String, alias: 'p',
-    description: 'Path to the `package.json` directory',
+    description: 'Path to the `package.json` directory; defaults to the ' +
+      'current working directory',
     typeLabel: '{underline packagePath}'
   },
   {
-    name: 'licensePath', type: String, alias: 'l',
-    description: 'Path of licensesType.json file relative to the current ' +
-      'working directory; defaults to "./licensesType.json"',
-    typeLabel: '{underline licensePath}'
+    name: 'licenseInfoPath', type: String, alias: 'l',
+    description: 'Path of licenseInfo.json file relative to the current ' +
+      'working directory; defaults to "licenseInfo.json" of the current ' +
+      'working directory',
+    typeLabel: '{underline licenseInfoPath}'
   },
   {
     name: 'corrections', type: Boolean, alias: 'c',
@@ -119,7 +122,7 @@ const cliSections = [
   {
     // Add italics: `{italic textToItalicize}`
     content: pkg.description +
-      '\n\n{italic license-badger [--textColor=aColor] outputPath}'
+      '\n\n{italic license-badger -p=packagePath -l=licenseInfoPath outputPath}'
   },
   {
     optionList: optionDefinitions

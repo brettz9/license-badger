@@ -7,6 +7,7 @@
 
 const fs = require('fs');
 const {promisify} = require('util');
+const {resolve} = require('path');
 
 const bu = require('badge-up');
 const template = require('es6-template-strings');
@@ -68,9 +69,9 @@ const licenseTypes = [
  * @returns {Promise<void>}
  */
 module.exports = async ({
-  outputPath,
-  licensePath,
-  packagePath,
+  outputPath = resolve(process.cwd(), './coverage-badge.svg'),
+  licenseInfoPath = resolve(process.cwd(), './licenseInfoPath.json'),
+  packagePath = process.cwd(),
   corrections = false,
   textTemplate = 'Licenses',
   /* eslint-disable no-template-curly-in-string */
@@ -82,6 +83,9 @@ module.exports = async ({
   textColor = defaultTextColor,
   licenseTypeColor = []
 }) => {
+  if (!outputPath || typeof outputPath !== 'string') {
+    throw new TypeError('Bad output path provided.');
+  }
   if (typeof textColor === 'string') {
     textColor = textColor.split(',');
   }
@@ -96,7 +100,9 @@ module.exports = async ({
 
   let licenses;
   try {
-    ({licenses} = await getLicenses({licensePath, corrections, packagePath}));
+    ({licenses} = await getLicenses({
+      licenseInfoPath, corrections, packagePath
+    }));
   } catch (err) {
     /* istanbul ignore next */
     // eslint-disable-next-line no-console
