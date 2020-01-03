@@ -134,6 +134,7 @@ const cliSections = [
   }
 ];
 
+exports.getChalkTemplateSingleEscape = getChalkTemplateSingleEscape;
 exports.getBracketedChalkTemplateEscape = getBracketedChalkTemplateEscape;
 exports.definitions = optionDefinitions;
 exports.sections = cliSections;
