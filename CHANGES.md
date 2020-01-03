@@ -1,5 +1,11 @@
 # CHANGES for license-badger
 
+## 0.5.0
+
+- Breaking change: Switch from `path` to `outputPath` (to distinguish
+  from other path arguments). Is still the default, however.
+- Docs: Fix escaping of CLI options and order to put required at top
+
 ## 0.4.0
 
 - Fix: Add missing `packagePath` option!

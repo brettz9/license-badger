@@ -68,7 +68,7 @@ const licenseTypes = [
  * @returns {Promise<void>}
  */
 module.exports = async ({
-  path,
+  outputPath,
   licensePath,
   packagePath,
   corrections = false,
@@ -196,5 +196,5 @@ module.exports = async ({
   console.log('Printing sections', sections, '\nusing licenses:\n', licenses);
 
   const svg = await badgeUp(sections);
-  await writeFile(path, svg);
+  await writeFile(outputPath, svg);
 };

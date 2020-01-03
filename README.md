@@ -19,6 +19,9 @@
 
 Build a badge indicating the licenses of your project's dependencies
 (currently whitelist bundled dependencies only).
+<!--
+your project's license(s) and those of its dependencies.
+-->
 
 This project is currently of benefit for those projects which bring over
 third-party dependencies into their final distribution files and/or repo via
@@ -55,9 +58,6 @@ sorted by permissiveness (see below).
 
 In the future, plans are to also add your current project's license and that
 of its direct dependencies.
-<!--
-license(s) and those of its dependencies.
--->
 
 Here's a sample badge (see below on the format):
 
