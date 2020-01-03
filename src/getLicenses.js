@@ -19,10 +19,14 @@ const getWhitelistedRootPackagesLicenses = require(
 /**
 * @typedef {PlainObject} LicenseInfo
 * @property {Map} licenses
+*/
+
+/*
+If adding back to `LicenseInfo`
 * @property {GenericArray} approved
 * @property {GenericArray} nonApproved
 * @property {string[]} manuallyCorrected
-*/
+ */
 
 /**
  * @param {PlainObject} cfg
