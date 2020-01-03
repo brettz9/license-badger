@@ -118,8 +118,8 @@ const optionDefinitions = [
   },
   {
     name: 'logging', type: String,
-    description: 'Logging level; can be "verbose"; default is empty.',
-    typeLabel: '{underline logging}'
+    description: 'Logging level; default is "off".',
+    typeLabel: '{underline "verbose"|"off"}'
   }
 ];
 
