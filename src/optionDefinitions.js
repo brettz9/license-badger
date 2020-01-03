@@ -115,6 +115,11 @@ const optionDefinitions = [
       ) +
       '`$` with backslash for CLI use',
     typeLabel: '{underline licenseTypeTemplate}'
+  },
+  {
+    name: 'logging', type: String,
+    description: 'Logging level; can be "verbose"; default is empty.',
+    typeLabel: '{underline logging}'
   }
 ];
 

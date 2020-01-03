@@ -21,7 +21,12 @@ describe('Binary', function () {
     this.timeout(8000);
     const {stdout, stderr} = await execFile(
       binFile,
-      ['-l', 'test/fixtures/licenseInfo.json', '--packagePath', '.', 'test.svg']
+      [
+        '-l', 'test/fixtures/licenseInfo.json',
+        '--packagePath', '.',
+        '--logging', 'verbose',
+        'test.svg'
+      ]
     );
     if (stderr) {
       // eslint-disable-next-line no-console

@@ -5,6 +5,7 @@ const {promisify} = require('util');
 const {join} = require('path');
 const licenseBadger = require('../src/index.js');
 
+const logging = true;
 const packagePath = join(__dirname, '../');
 
 const readFile = promisify(rf);
@@ -39,7 +40,7 @@ describe('Main file', function () {
   it('should throw with a bad output path', async () => {
     let err;
     try {
-      await licenseBadger({outputPath: ''});
+      await licenseBadger({outputPath: '', logging});
     } catch (error) {
       err = error;
     }
@@ -50,7 +51,8 @@ describe('Main file', function () {
     await licenseBadger({
       packagePath,
       licenseInfoPath,
-      textColor: 'orange,s{blue}'
+      textColor: 'orange,s{blue}',
+      logging
     });
     const contents = await readFile(coverageBadgePath, 'utf8');
     const expected = await readFile(coverageBadgeFixturePath, 'utf8');
@@ -77,7 +79,8 @@ describe('Main file', function () {
         packagePath,
         licenseInfoPath,
         outputPath: fixturePaths[0],
-        textColor: 'orange,s{blue}'
+        textColor: 'orange,s{blue}',
+        logging
       });
       const contents = await readFile(fixturePaths[0], 'utf8');
       const expected = await readFile(esmAndMochaPath, 'utf8');
@@ -89,7 +92,8 @@ describe('Main file', function () {
         packagePath,
         licenseInfoPath,
         outputPath: fixturePaths[1],
-        licenseTypeColor: ['publicDomain=red,s{white}']
+        licenseTypeColor: ['publicDomain=red,s{white}'],
+        logging
       });
       const contents = await readFile(fixturePaths[1], 'utf8');
       const expected = await readFile(redPublicDomainPath, 'utf8');
@@ -101,7 +105,8 @@ describe('Main file', function () {
         packagePath,
         licenseInfoPath,
         outputPath: fixturePaths[2],
-        filteredTypes: 'nonempty'
+        filteredTypes: 'nonempty',
+        logging
       });
       const contents = await readFile(fixturePaths[2], 'utf8');
       const expected = await readFile(nonemptyFilteredTypes, 'utf8');
@@ -113,7 +118,8 @@ describe('Main file', function () {
         corrections: true,
         packagePath,
         licenseInfoPath: licenseInfoPathSeeLicenseIn,
-        outputPath: fixturePaths[3]
+        outputPath: fixturePaths[3],
+        logging
       });
       const contents = await readFile(fixturePaths[3], 'utf8');
       const expected = await readFile(seeLicenseInPath, 'utf8');
@@ -125,7 +131,8 @@ describe('Main file', function () {
         corrections: true,
         packagePath,
         licenseInfoPath: licenseInfoPathUnlicensed,
-        outputPath: fixturePaths[4]
+        outputPath: fixturePaths[4],
+        logging
       });
       const contents = await readFile(fixturePaths[4], 'utf8');
       const expected = await readFile(unlicensedPath, 'utf8');
@@ -137,7 +144,8 @@ describe('Main file', function () {
         corrections: true,
         packagePath,
         licenseInfoPath: licenseInfoPathReuseProtective,
-        outputPath: fixturePaths[5]
+        outputPath: fixturePaths[5],
+        logging
       });
       const contents = await readFile(fixturePaths[5], 'utf8');
       const expected = await readFile(reuseProtectivePath, 'utf8');

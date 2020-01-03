@@ -73,6 +73,7 @@ module.exports = async ({
   licenseInfoPath = resolve(process.cwd(), './licenseInfoPath.json'),
   packagePath = process.cwd(),
   corrections = false,
+  logging = false,
   textTemplate = 'Licenses',
   /* eslint-disable no-template-curly-in-string */
   licenseTemplate = '\n${index}. ${license}',
@@ -198,8 +199,10 @@ module.exports = async ({
     ...licensesWithColors
   ];
 
-  // eslint-disable-next-line no-console
-  console.log('Printing sections', sections, '\nusing licenses:\n', licenses);
+  if (logging === 'verbose') {
+    // eslint-disable-next-line no-console
+    console.log('Printing sections', sections, '\nusing licenses:\n', licenses);
+  }
 
   const svg = await badgeUp(sections);
   await writeFile(outputPath, svg);

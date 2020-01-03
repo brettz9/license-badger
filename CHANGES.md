@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- Enhancement: Adding `logging` option
+
 ## 0.6.0
 
 - Breaking change: Switch from `licensePath` to `licenseInfoPath`.
