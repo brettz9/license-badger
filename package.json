@@ -12,8 +12,7 @@
     "license-badger": "./bin/index.js -l test/fixtures/licenseInfo.json test.svg",
     "coverage-badge": "coveradge --color brightgreen badges/coverage-badge.svg",
     "eslint": "eslint --ext=js,md,html .",
-    "test:unit": "rm -rf node_modules/.cache && mocha --require test/bootstrap/node test/**",
-    "test:unit-with-badge": "rm -rf node_modules/.cache && mocha --require test/bootstrap/node test/** --reporter mocha-badge-generator --reporter-options badge_output=badges/tests-badge.svg",
+    "test:unit": "rm -rf node_modules/.cache && mocha --require test/bootstrap/node test/** --reporter-options configFile=mocha-multi-reporters.json",
     "test": "npm run eslint && npm run test:unit",
     "test-cov": "nyc --all npm run test:unit && npm run coverage-badge"
   },
@@ -71,6 +70,7 @@
     "eslint-plugin-unicorn": "^15.0.1",
     "mocha": "^7.0.0",
     "mocha-badge-generator": "https://github.com/brettz9/mocha-badge-generator#updated-badge-up",
+    "mocha-multi-reporters": "^1.1.7",
     "nyc": "^15.0.0",
     "q-combinators": "^1.0.0",
     "typescript": "^3.7.4"

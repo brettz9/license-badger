@@ -1,6 +1,4 @@
 module.exports = {
-  exclude: 'test/*/**'
-  // No multiple reporters yet!
-  // reporter: 'mocha-badge-generator',
-  // reporter: 'spec'
+  exclude: 'test/*/**',
+  reporter: 'mocha-multi-reporters'
 };
