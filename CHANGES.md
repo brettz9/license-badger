@@ -3,6 +3,7 @@
 ## ?
 
 - Enhancement: Adding `logging` option
+- npm: Update devDeps.
 
 ## 0.6.0
 
