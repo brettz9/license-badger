@@ -3,6 +3,8 @@
 ## ?
 
 - Enhancement: Adding `logging` option
+- Testing: Run multiple simultaneous reporters
+- npm: Remove now unneeded separate badge creation script
 - npm: Update devDeps.
 
 ## 0.6.0
