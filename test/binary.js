@@ -8,6 +8,8 @@ const execFile = promisify(ef);
 
 const binFile = join(__dirname, '../bin/index.js');
 
+const getLicenseTypeFile = join(__dirname, '../bin/get-license-type.js');
+
 describe('Binary', function () {
   it('should return help', async function () {
     this.timeout(8000);
@@ -33,6 +35,24 @@ describe('Binary', function () {
       console.log('stderr', stderr);
     }
     expect(stdout).to.contain('printing sections');
+    expect(stderr).to.equal('');
+  });
+});
+
+describe('getLicenseType', function () {
+  this.timeout(8000);
+  it('should log type of passed argument', async function () {
+    const {stdout, stderr} = await execFile(
+      getLicenseTypeFile,
+      [
+        'MIT'
+      ]
+    );
+    if (stderr) {
+      // eslint-disable-next-line no-console
+      console.log('stderr', stderr);
+    }
+    expect(stdout).to.contain('permissive');
     expect(stderr).to.equal('');
   });
 });
