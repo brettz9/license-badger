@@ -1,5 +1,10 @@
 # CHANGES for license-badger
 
+## 0.7.1
+
+- Fix: Make `licenseInfo.json` the default
+- npm: Bump devDep.
+
 ## 0.7.0
 
 - Change: `getLicenses` to a named export; add export `getTypesForLicense`

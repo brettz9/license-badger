@@ -74,7 +74,7 @@ module.exports = async ({
   allDevelopment,
   outputPath = resolve(process.cwd(), './coverage-badge.svg'),
   licenseInfoPath = !allDevelopment &&
-    resolve(process.cwd(), './licenseInfoPath.json'),
+    resolve(process.cwd(), './licenseInfo.json'),
   logging = false,
   textTemplate = 'Licenses',
   /* eslint-disable no-template-curly-in-string */
