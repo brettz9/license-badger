@@ -7,9 +7,12 @@
 - Enhancement: Add `allDevelopment` to check all devDeps (not
   filtered by bundled packages in `licenseInfoPath`)
 - Enhancement: Adding `logging` option
+- Enhancement: Add binary `get-license-type` as convenience for
+  checking license type
 - Testing: Bump timeout for other tests
 - Testing: Run multiple simultaneous reporters
 - npm: Remove now unneeded separate badge creation script
+- npm: Use own npm-consider fork to get updates on spdx deps.
 - npm: Update devDeps.
 
 ## 0.6.0
