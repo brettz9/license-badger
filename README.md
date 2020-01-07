@@ -142,9 +142,6 @@ despite being listed first
 
 ## Immediate to-dos
 
-1. Ensure tests check licenses with `AND`/`OR` (always
-    `uncategorized` for "AND"? If so, fix?). May even have problem with "OR"
-    per [this issue](https://github.com/delfrrr/npm-consider/issues/21).
 1. Ability to merge license types from self.
 
 ## To-dos
@@ -155,6 +152,11 @@ despite being listed first
   1. Extract jsdoc iterator from `eslint-plugin-jsdoc` to own repo and
       use to search for `@license` within files so as to be able to
       overwrite `filesByLicense` with dynamic info
+1. Get `npm-consider/lib/getLicenseType` to stop treating AND as
+    "uncategorized" (though each license is different, at least with
+    "permissive" or "public domain" which could normally submit to the
+    other type). May even have problem with "OR"
+    per [this issue](https://github.com/delfrrr/npm-consider/issues/21).
 1. Ability to normalize an AND/OR license, e.g.,
     `(MIT OR (MIT OR GPL-3.0))`, `(MIT AND (MIT AND GPL-3.0))`,
     or `(MIT AND (MIT OR GPL-3.0))`; use for overwriting of `license`
