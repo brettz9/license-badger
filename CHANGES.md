@@ -5,6 +5,7 @@
 - Change: `getLicenses` to a named export; add export `getTypesForLicense`
 - Enhancement: Add `packageJson` boolean option
 - Enhancement: Throw if insufficient info given
+- Enhancement: Add `satisfies` binary
 - Enhancement: Add `command-line-basics` to `get-license-type`
   (help, version, usage)
 - Enhancement: Add `production` option to allow checking it

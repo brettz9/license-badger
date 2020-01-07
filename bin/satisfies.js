@@ -2,11 +2,11 @@
 'use strict';
 
 const {join} = require('path');
-const getLicenseType = require('npm-consider/lib/getLicenseType');
+const satisfies = require('npm-consider/lib/satisfies');
 const {cliBasics} = require('command-line-basics');
 
 const optionDefinitions = cliBasics(
-  join(__dirname, '../src/glt-optionDefinitions.js')
+  join(__dirname, '../src/satisfies-optionDefinitions.js')
 );
 
 if (!optionDefinitions) { // cliBasics handled
@@ -14,4 +14,4 @@ if (!optionDefinitions) { // cliBasics handled
 }
 
 // eslint-disable-next-line no-console
-console.log(getLicenseType(optionDefinitions.licenseExpression));
+console.log(satisfies(...optionDefinitions.licenseExpressions));

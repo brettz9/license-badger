@@ -5,10 +5,12 @@
   "main": "src/index.js",
   "bin": {
     "license-badger": "./bin/index.js",
-    "get-license-type": "./bin/get-license-type.js"
+    "get-license-type": "./bin/get-license-type.js",
+    "satisfies": "./bin/satisfies.js"
   },
   "scripts": {
     "get-license-type": "./bin/get-license-type.js",
+    "satisfies": "./bin/satisfies.js",
     "build-cli-svg": "clp -c src/optionDefinitions.js cli.svg",
     "help": "./bin/index.js -h",
     "license-badger": "./bin/index.js -l test/fixtures/licenseInfo.json test.svg",
