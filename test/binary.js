@@ -32,7 +32,7 @@ describe('Binary', function () {
       // eslint-disable-next-line no-console
       console.log('stderr', stderr);
     }
-    expect(stdout).to.contain('Printing sections');
+    expect(stdout).to.contain('printing sections');
     expect(stderr).to.equal('');
   });
 });

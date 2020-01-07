@@ -28,18 +28,36 @@ If adding back to `LicenseInfo`
 * @property {string[]} manuallyCorrected
  */
 
+/* eslint-disable max-len */
 /**
  * @param {PlainObject} cfg
- * @param {LicenseBadgerOptions#licenseInfoPath} cfg.licenseInfoPath
- * @param {LicenseBadgerOptions#corrections} cfg.corrections
- * @param {LicenseBadgerOptions#packagePath} cfg.packagePath
+ * @param {LicenseBadgerOptions#licenseInfoPath} [cfg.licenseInfoPath=resolve(process.cwd(), './licenseInfoPath.json')]
+ * Not used, nor default obtained, when `filter` is `false`.
+ * @param {LicenseBadgerOptions#packagePath} [cfg.packagePath=process.cwd()]
+ * @param {LicenseBadgerOptions#corrections} [cfg.corrections=false]
+ * @param {LicenseBadgerOptions#production} [cfg.production=false]
+ * @param {LicenseBadgerOptions#allDevelopment} [cfg.allDevelopment=false]
+ * @param {Map} [cfg.licenses=new Map()]
  * @returns {Promise<LicenseInfo>}
  */
-module.exports = async ({licenseInfoPath, corrections, packagePath}) => {
-  // eslint-disable-next-line import/no-dynamic-require, global-require
-  const {bundledRootPackages} = require(
-    resolve(process.cwd(), licenseInfoPath)
-  );
+module.exports = async ({
+  /* eslint-enable max-len */
+  licenseInfoPath,
+  packagePath = process.cwd(),
+  corrections = false,
+  production = false,
+  allDevelopment = false,
+  licenses = new Map()
+} = {}) => {
+  let bundledRootPackages;
+  if (allDevelopment) {
+    bundledRootPackages = true;
+  } else if (licenseInfoPath) {
+    // eslint-disable-next-line import/no-dynamic-require, global-require
+    ({bundledRootPackages} = require(
+      resolve(process.cwd(), licenseInfoPath)
+    ));
+  }
   // console.log('bundledRootPackages', bundledRootPackages);
 
   // This doesn't filter; it affects whether an `approved` property is added
@@ -50,9 +68,11 @@ module.exports = async ({licenseInfoPath, corrections, packagePath}) => {
     ]
   };
 
-  const filterPackages = getWhitelistedRootPackagesLicenses(
-    bundledRootPackages
-  );
+  const filterPackages = allDevelopment || licenseInfoPath
+    ? getWhitelistedRootPackagesLicenses(
+      bundledRootPackages
+    )
+    : undefined;
 
   let results;
   try {
@@ -65,6 +85,7 @@ module.exports = async ({licenseInfoPath, corrections, packagePath}) => {
           // 'load-stylesheets': '*'
         },
         filterPackages,
+        productionOnly: production,
         licenses: approvedLicenses
       },
       // Path to check
@@ -129,7 +150,6 @@ module.exports = async ({licenseInfoPath, corrections, packagePath}) => {
   ).map(({name}) => (name)).sort();
   */
 
-  const licenses = new Map();
   [...new Set(results)].forEach(({license, name, version}) => {
     let type, custom;
     if (!license || typeof license !== 'string') {

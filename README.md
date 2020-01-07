@@ -18,46 +18,11 @@
 **This project is in early beta.**
 
 Build a badge indicating the licenses of your project's dependencies
-(currently whitelist bundled dependencies only).
+(currently dependencies, devDependencies, or whitelist-bundled
+devDependencies only).
 <!--
-your project's license(s) and those of its dependencies.
+Todo: your project's license(s) and those of its dependencies.
 -->
-
-This project is currently of benefit for those projects which bring over
-third-party dependencies into their final distribution files and/or repo via
-a copy routine (e.g., one run upon dependency updates).
-
-Projects may do this to take advantage of npm versioning but instead of only
-deploying to clients that have the capability to install `dependencies`,
-they may wish to deploy to Github-based hosting services (such as Github
-Pages) which normally wouldn't bring in `node_modules` yet can host static
-files copied into a repository which can be viewed in browsers.
-
-Other current solutions may not be desired because a project may not wish to
-be forced to either:
-- include all of `node_modules` and use actual `bundledDependencies`,
-  creating a potentially very large repository
-- use the likes of [rollup-plugin-license](https://www.npmjs.com/package/rollup-plugin-license)
-  to grab licenses while pulling in modules during a bundling routine (as useful
-  as this can be), perhaps because the project wishes instead for their source
-  to be usable within a live ESM browser version for rapid debugging/development
-  which has no need of a bundling step or which has a bundling step but is not
-  used for all files such as an online demo.
-
-Current license checking tools typically only allow checking dependencies or
-devDependencies, or they allow checking selected packages without transitive
-dependencies. This project allows you to check specific selected packages but
-*with* their transitive dependencies.
-
-The project currently checks a `licenseInfo.json` file for a
-`bundledRootPackages` array property to determine which of your top-level
-`devDependencies` you are bundling and uses this information to build a badge
-showing the license types within your distribution, including those packages'
-transitive dependencies (not including your own project's license) and
-sorted by permissiveness (see below).
-
-In the future, plans are to also add your current project's license and that
-of its direct dependencies.
 
 Here's a sample badge (see below on the format):
 
@@ -66,6 +31,76 @@ Here's a sample badge (see below on the format):
 You can also opt to only show non-empty types:
 
 [![testing badge](https://raw.githubusercontent.com/brettz9/license-badger/master/test/fixtures/nonemptyFilteredTypes.svg?sanitize=true)](test/fixtures/nonemptyFilteredTypes.svg)
+
+## License selections
+
+This project allows licenses to be selected in several different manners.
+
+Current license checking tools typically only allow checking `dependencies` or
+`devDependencies`, or they allow checking selected packages without transitive
+dependencies. This project allows you to check specific selected packages but
+*with* their transitive dependencies.
+
+You can also create a badge which combines whitelisted licenses (or all
+`devDependencies`) with the licenses in `dependencies`.
+
+The following section. gives more detail on the three types and which can
+be combined.
+
+In the future, plans are to also add your current project's license.
+<!-- Todo: Remove if implemented -->
+
+### Those wishing for all of `dependencies` (`production`)
+
+This option gathers license data from all `dependencies` in `package.json`
+and can be combined with either of the other two options.
+
+Note that if you do not want to check a `licenseInfoPath` and only want
+`dependencies` checked, you need to specify an empty string for
+`licenseInfoPath`.
+
+### Those wishing for all `devDependencies` (`allDevelopment`)
+
+This option gathers license data from all `devDependencies` in `package.json`
+and can be combined with the `production` option. `licenseInfoPath` will
+not be used if this is set.
+
+### Those wishing a subset of `devDependencies` (`licenseInfoPath`)
+
+Projects may wish to bring over third-party dependencies into their final
+distribution files and/or repo via a copy routine (e.g., one run
+upon dependency updates).
+
+This license selection type is done through the argument `licenseInfoPath`
+pointing to a JSON file (recommended as `licenseInfo.json` at project root)
+with an array `bundledRootPackages` property indicating the `devDependencies`
+that are bundled. It can be combined with `production` but `allDevelopment`
+will override this setting and include *all* `devDependencies` instead.
+
+This whitelist will determine which of your top-level `devDependencies`
+you are bundling and uses this information to build a badge
+showing the license types within your distribution, including those packages'
+transitive dependencies (not including your own project's license) and
+sorted by permissiveness (see below for more permissiveness degrees).
+
+Projects may use this selection type to take advantage of npm versioning,
+but instead of only deploying to clients that have the capability to install
+`dependencies`, they may wish to deploy to Github-based hosting services
+(such as Github Pages) which normally wouldn't bring in `node_modules` yet
+can host static files copied into a repository which can be viewed in
+browsers.
+
+Other current solutions may not be desired because a project may not wish to
+be forced to either:
+
+- include all of `node_modules` and use actual `bundledDependencies`,
+  creating a potentially very large repository
+- use the likes of [rollup-plugin-license](https://www.npmjs.com/package/rollup-plugin-license)
+  to grab licenses while pulling in modules during a bundling routine (as useful
+  as this can be), perhaps because the project wishes instead for their source
+  to be usable within a live ESM browser version for rapid debugging/development
+  which has no need of a bundling step or which has a bundling step but is not
+  used for all files such as an online demo.
 
 ## Installation
 
@@ -107,20 +142,26 @@ despite being listed first
 
 ## Immediate to-dos
 
-1. Ability to merge license types from self, deps, devDeps, and optionally
-    specific packages
+1. Ensure tests check licenses with `AND`/`OR` (always
+    `uncategorized` for "AND"? If so, fix?). May even have problem with "OR"
+    per [this issue](https://github.com/delfrrr/npm-consider/issues/21).
+1. Ability to merge license types from self.
 
 ## To-dos
 
 1. Document above
 1. Process `licenseeInfo.json` `filesByLicense` to overwrite `license`
     in `package.json`
-    1. Ability to normalize an AND/OR license, e.g.,
-        `(MIT OR (MIT OR GPL-3.0))`, `(MIT AND (MIT AND GPL-3.0))`,
-        or `(MIT AND (MIT OR GPL-3.0))`
-    1. Extract jsdoc iterator from `eslint-plugin-jsdoc` to own repo and
-        use to search for `@license` within files so as to be able to
-        overwrite `filesByLicense` with dynamic info
+  1. Extract jsdoc iterator from `eslint-plugin-jsdoc` to own repo and
+      use to search for `@license` within files so as to be able to
+      overwrite `filesByLicense` with dynamic info
+1. Ability to normalize an AND/OR license, e.g.,
+    `(MIT OR (MIT OR GPL-3.0))`, `(MIT AND (MIT AND GPL-3.0))`,
+    or `(MIT AND (MIT OR GPL-3.0))`; use for overwriting of `license`
+    mentioned above and for feeding current license and other licenses
+    for license badge creation.
+    1. See <https://www.npmjs.com/package/spdx-expression-parse> and
+      <https://github.com/nexB/license-expression/blob/master/src/license_expression/_pyahocorasick.py>
 1. Generate reports (MD, HTML, JSON, CLI) creating a
     `bundledPackagesByLicense` (and repeating `filesByLicense` info), and
     using `licenseeInfo.json`'s `bundledRootPackages` (and optionally

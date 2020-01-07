@@ -35,7 +35,10 @@ module.exports = function (bundledRootPackages) {
         return false;
       }
       const isRootDevDep = pkg.package._requiredBy.includes('#DEV:/');
-      return isRootDevDep && bundledRootPackages.includes(pkg.name);
+      return isRootDevDep &&
+        (bundledRootPackages === true ||
+          (Array.isArray(bundledRootPackages) &&
+            bundledRootPackages.includes(pkg.name)));
     });
 
     // eslint-disable-next-line jsdoc/require-jsdoc

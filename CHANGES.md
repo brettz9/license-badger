@@ -1,8 +1,13 @@
 # CHANGES for license-badger
 
-## ?
+## 0.7.0
 
+- Enhancement: Add `production` option to allow checking it
+  with or without `licenseInfoPath`
+- Enhancement: Add `allDevelopment` to check all devDeps (not
+  filtered by bundled packages in `licenseInfoPath`)
 - Enhancement: Adding `logging` option
+- Testing: Bump timeout for other tests
 - Testing: Run multiple simultaneous reporters
 - npm: Remove now unneeded separate badge creation script
 - npm: Update devDeps.

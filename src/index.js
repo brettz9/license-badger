@@ -69,10 +69,13 @@ const licenseTypes = [
  * @returns {Promise<void>}
  */
 module.exports = async ({
+  packagePath,
+  corrections,
+  production,
+  allDevelopment,
   outputPath = resolve(process.cwd(), './coverage-badge.svg'),
-  licenseInfoPath = resolve(process.cwd(), './licenseInfoPath.json'),
-  packagePath = process.cwd(),
-  corrections = false,
+  licenseInfoPath = !allDevelopment &&
+    resolve(process.cwd(), './licenseInfoPath.json'),
   logging = false,
   textTemplate = 'Licenses',
   /* eslint-disable no-template-curly-in-string */
@@ -101,9 +104,22 @@ module.exports = async ({
 
   let licenses;
   try {
-    ({licenses} = await getLicenses({
-      licenseInfoPath, corrections, packagePath
-    }));
+    if (allDevelopment) {
+      ({licenses} = await getLicenses({
+        packagePath, corrections, allDevelopment
+      }));
+    } else if (licenseInfoPath) {
+      ({licenses} = await getLicenses({
+        licenseInfoPath, packagePath, corrections
+      }));
+    }
+    if (production) {
+      ({licenses} = await getLicenses({
+        packagePath, corrections,
+        licenses,
+        production
+      }));
+    }
   } catch (err) {
     /* istanbul ignore next */
     // eslint-disable-next-line no-console
@@ -201,7 +217,7 @@ module.exports = async ({
 
   if (logging === 'verbose') {
     // eslint-disable-next-line no-console
-    console.log('Printing sections', sections, '\nusing licenses:\n', licenses);
+    console.log('Using licenses', licenses, '\nprinting sections:\n', sections);
   }
 
   const svg = await badgeUp(sections);

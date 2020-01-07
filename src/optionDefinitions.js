@@ -42,13 +42,25 @@ const optionDefinitions = [
     name: 'licenseInfoPath', type: String, alias: 'l',
     description: 'Path of licenseInfo.json file relative to the current ' +
       'working directory; defaults to "licenseInfo.json" of the current ' +
-      'working directory',
+      'working directory. Set to empty string to avoid checking (e.g., if ' +
+      'setting `production` only).',
     typeLabel: '{underline licenseInfoPath}'
   },
   {
     name: 'corrections', type: Boolean, alias: 'c',
     description: 'Whether to apply corrections of licensee.js. ' +
       'Default is `false`.'
+  },
+  {
+    name: 'production', type: Boolean,
+    description: 'Whether to check production dependencies (in addition to ' +
+      'any whitelisted by `licenseInfoPath`). Default is `false`.'
+  },
+  {
+    name: 'allDevelopment', type: Boolean,
+    description: 'Whether to check all development dependencies. Overrides ' +
+      '`licenseInfoPath` as will not be limited to the packages whitelisted ' +
+      'by `bundledDependencies` in the JSON file at `licenseInfoPath`).'
   },
   {
     name: 'filteredTypes', type: String, alias: 'f',
