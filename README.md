@@ -143,6 +143,7 @@ despite being listed first
 ## Immediate to-dos
 
 1. Ability to merge license types from self.
+1. See "Todo" in comments above.
 
 ## To-dos
 
