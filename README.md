@@ -156,13 +156,16 @@ get-license-type "license expression"
 - [mocha-badge-generator](https://github.com/ianpogi5/mocha-badge-generator) - Locally created badges for Mocha test results
 - [coveradge](https://github.com/brettz9/coveradge) - Locally-created badges for nyc/istanbul coverage
 
-## To-dos
+## Immediate to-dos
 
 1. Get `npm-consider/lib/getLicenseType` to stop treating AND as
     "uncategorized" (though each license is different, at least with
     "permissive" or "public domain" which could normally submit to the
     other type). May even have problem with "OR"
     per [this issue](https://github.com/delfrrr/npm-consider/issues/21).
+
+## To-dos
+
 1. Ability to normalize an AND/OR license, e.g.,
     `(MIT OR (MIT OR GPL-3.0))`, `(MIT AND (MIT AND GPL-3.0))`,
     or `(MIT AND (MIT OR GPL-3.0))`; use for overwriting of `license`
