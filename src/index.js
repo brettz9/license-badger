@@ -15,9 +15,7 @@ const template = require('es6-template-strings');
 const writeFile = promisify(fs.writeFile);
 const badgeUp = promisify(bu.v2.bind(bu.v2));
 
-const getLicenses = require(
-  './getLicenses.js'
-);
+const {getLicenses} = require('./getLicenses.js');
 
 const defaultTextColor = ['navy'];
 const licenseTypes = [

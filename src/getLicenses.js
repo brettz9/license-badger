@@ -15,6 +15,54 @@ const getWhitelistedRootPackagesLicenses = require(
   './getWhitelistedRootPackagesLicenses.js'
 );
 
+/**
+ * @param {PlainObject} typeInfo
+ * @param {Map} typeInfo.licenses
+ * @param {string} typeInfo.license
+ * @param {string} [typeInfo.name] Optional if license is known to be
+ * a positive-length string, and is not "UNLICENSED", with "SEE LICENSE IN ",
+ * beginning with "RPL-" or "Parity-", or of type "uncategorized"
+ * @param {string} [typeInfo.version] See `typeInfo.name`.
+ * @returns {void}
+ */
+const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
+  licenses, license, name, version
+}) {
+  let type, custom;
+  if (!license || typeof license !== 'string') {
+    type = 'missing';
+    license = null;
+  } else if (license === 'UNLICENSED') {
+    type = 'unlicensed';
+    license = null;
+  } else if (license.startsWith('SEE LICENSE IN ')) {
+    type = 'custom';
+    custom = license.replace('SEE LICENSE IN ', '');
+    license = null;
+  } else if ((/^(?:RPL|Parity)-/u).test(license)) {
+    type = 'reuseProtective';
+  } else {
+    type = getLicenseType(license);
+  }
+
+  if (!licenses.has(type)) {
+    licenses.set(type, new Set());
+  }
+  const set = licenses.get(type);
+  set.add(
+    type !== 'uncategorized' && license
+      ? license
+      : {name, version, license, ...(
+        type === 'custom'
+          ? {
+            custom
+          }
+          : {}
+      )}
+  );
+  licenses.set(type, set);
+};
+
 // Todo: When stabilized, list more specific types than `Map` and `GenericArray`
 /**
 * @typedef {PlainObject} LicenseInfo
@@ -40,7 +88,7 @@ If adding back to `LicenseInfo`
  * @param {Map} [cfg.licenses=new Map()]
  * @returns {Promise<LicenseInfo>}
  */
-module.exports = async ({
+exports.getLicenses = async ({
   /* eslint-enable max-len */
   licenseInfoPath,
   packagePath = process.cwd(),
@@ -150,40 +198,15 @@ module.exports = async ({
   ).map(({name}) => (name)).sort();
   */
 
-  [...new Set(results)].forEach(({license, name, version}) => {
-    let type, custom;
-    if (!license || typeof license !== 'string') {
-      type = 'missing';
-      license = null;
-    } else if (license === 'UNLICENSED') {
-      type = 'unlicensed';
-      license = null;
-    } else if (license.startsWith('SEE LICENSE IN ')) {
-      type = 'custom';
-      custom = license.replace('SEE LICENSE IN ', '');
-      license = null;
-    } else if ((/^(?:RPL|Parity)-/u).test(license)) {
-      type = 'reuseProtective';
-    } else {
-      type = getLicenseType(license);
-    }
+  /**
+  * @typedef {GenericArray} TypeInfoArray
+  * @property {string} 0 type
+  * @property {string|null} 1 license
+  * @property {string|undefined} 2 custom
+  */
 
-    if (!licenses.has(type)) {
-      licenses.set(type, new Set());
-    }
-    const set = licenses.get(type);
-    set.add(
-      type !== 'uncategorized' && license
-        ? license
-        : {name, version, license, ...(
-          type === 'custom'
-            ? {
-              custom
-            }
-            : {}
-        )}
-    );
-    licenses.set(type, set);
+  [...new Set(results)].forEach(({license, name, version}) => {
+    getTypeInfoForLicense({licenses, license, name, version});
   });
 
   // console.log('license approvals', approved, nonApproved, manuallyCorrected);

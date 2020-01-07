@@ -11,8 +11,8 @@ const binFile = join(__dirname, '../bin/index.js');
 const getLicenseTypeFile = join(__dirname, '../bin/get-license-type.js');
 
 describe('Binary', function () {
+  this.timeout(8000);
   it('should return help', async function () {
-    this.timeout(8000);
     const {stdout} = await execFile(binFile, ['-h']);
     expect(stdout).to.contain(
       "Builds a badge indicating your project's license(s)"
@@ -20,7 +20,6 @@ describe('Binary', function () {
   });
 
   it('should return execute', async function () {
-    this.timeout(8000);
     const {stdout, stderr} = await execFile(
       binFile,
       [
@@ -41,6 +40,12 @@ describe('Binary', function () {
 
 describe('getLicenseType', function () {
   this.timeout(8000);
+  it('should return help', async function () {
+    const {stdout} = await execFile(getLicenseTypeFile, ['-h']);
+    expect(stdout).to.contain(
+      'License expression for which to'
+    );
+  });
   it('should log type of passed argument', async function () {
     const {stdout, stderr} = await execFile(
       getLicenseTypeFile,

@@ -1,7 +1,7 @@
 'use strict';
 
 const {join} = require('path');
-const getLicenses = require('../src/getLicenses.js');
+const {getLicenses} = require('../src/getLicenses.js');
 
 const packagePath = join(__dirname, '../');
 
