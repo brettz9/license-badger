@@ -78,7 +78,7 @@ describe('Main file', function () {
 
   describe('Main functionality', function () {
     const fixturePaths = [];
-    for (let i = 0; i <= 9; i++) {
+    for (let i = 0; i <= 10; i++) {
       fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));
     }
     let j = 0;
@@ -175,6 +175,22 @@ describe('Main file', function () {
         outputPath,
         logging
       });
+      const contents = await readFile(outputPath, 'utf8');
+      const expected = await readFile(packageJsonPath, 'utf8');
+      expect(contents).to.equal(expected);
+    });
+
+    it('should work with `packageJson`', async function () {
+      const cwd = process.cwd();
+      process.chdir(join(__dirname, '../'));
+      const outputPath = getNextFixturePath();
+      await licenseBadger({
+        packageJson: true,
+        licenseInfoPath: '',
+        outputPath,
+        logging
+      });
+      process.chdir(cwd);
       const contents = await readFile(outputPath, 'utf8');
       const expected = await readFile(packageJsonPath, 'utf8');
       expect(contents).to.equal(expected);

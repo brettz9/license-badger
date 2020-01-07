@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## 0.7.2
+
+- Fix: Default to `process.cwd()` for `packagePath` with `packageJson`.
+
 ## 0.7.1
 
 - Fix: Make `licenseInfo.json` the default

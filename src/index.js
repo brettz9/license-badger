@@ -120,7 +120,7 @@ module.exports = async ({
     if (packageJson) {
       // eslint-disable-next-line import/no-dynamic-require, global-require
       const {name, version, license} = require(
-        join(packagePath, 'package.json')
+        join(packagePath || process.cwd(), 'package.json')
       );
       licenses = getTypeInfoForLicense({
         licenses, license, name, version
