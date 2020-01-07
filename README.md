@@ -159,10 +159,12 @@ get-license-type "license expression"
 ## Immediate to-dos
 
 1. Get `npm-consider/lib/getLicenseType` to stop treating AND as
-    "uncategorized" (though each license is different, at least with
-    "permissive" or "public domain" which could normally submit to the
-    other type). May even have problem with "OR"
-    per [this issue](https://github.com/delfrrr/npm-consider/issues/21).
+    potentially getting stricter one (though each license is different,
+    at least with "permissive" or "public domain" which could normally
+    submit to the other type). Filed <https://github.com/delfrrr/npm-consider/pull/26>.
+    May even have problem with "OR" per
+    [this issue](https://github.com/delfrrr/npm-consider/issues/21),
+    though this seems due to an outdated dep.
 
 ## To-dos
 
