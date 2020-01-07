@@ -102,17 +102,7 @@ be forced to either:
   which has no need of a bundling step or which has a bundling step but is not
   used for all files such as an online demo.
 
-## Installation
-
-```
-npm i -g license-badger
-```
-
-## Usage
-
-```sh
-license-badger  --filteredTypes=weaklyProtective,protective --textTemplate \"License types (\\${licenseCount})\" --licenseTypeColor networkProtective=blue,s{white} -l test/fixtures/licenseInfo.json test.svg
-```
+## Notes on license categories
 
 Adopts helpful categories of [npm-consider](https://github.com/delfrrr/npm-consider):
 "publicDomain", "permissive", "weaklyProtective", "protective", "networkProtective",
@@ -126,10 +116,35 @@ unspecified).
 (See [#24](https://github.com/delfrrr/npm-consider/issues/24) and [#18](https://github.com/delfrrr/npm-consider/issues/18#issuecomment-568872477) of `npm-consider` for tracking these recommendations)
 -->
 
-<!--
-Todo: In explaining categories, mention potential problems with public domain,
-despite being listed first
--->
+It might be worth bearing in mind that "public domain" is a reference to specific
+licenses which seek to enforce that general principle (otherwise,
+the principle of public domain does not automatically apply world-wide), so
+this should make sense as the first category.
+
+It might also be worth noting that these categories are only rough and items
+in the same category do not substitute for one another, e.g., different
+"permissive" licenses still have certain requirements. And even the same
+license may have different needs depending on the project for which it was
+used--e.g., the need to preserve the copyright notice for each package
+and/or file.
+
+## Installation
+
+```
+npm i -g license-badger
+```
+
+## Usage
+
+```sh
+license-badger  --filteredTypes=weaklyProtective,protective --textTemplate \"License types (\\${licenseCount})\" --licenseTypeColor networkProtective=blue,s{white} -l test/fixtures/licenseInfo.json test.svg
+```
+
+There is also a helper which only takes one argument and returns:
+
+```sh
+get-license-type "license expression"
+```
 
 ## CLI
 
@@ -142,8 +157,8 @@ despite being listed first
 
 ## Immediate to-dos
 
-1. Ability to merge license types from self.
-1. See "Todo" in comments above.
+1. Ability to merge license types from self
+  1. Adjust per comments with "Todo" above when complete.
 
 ## To-dos
 
