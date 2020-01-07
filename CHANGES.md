@@ -2,6 +2,11 @@
 
 ## 0.7.0
 
+- Change: `getLicenses` to a named export; add export `getTypesForLicense`
+- Enhancement: Add `packageJson` boolean option
+- Enhancement: Throw if insufficient info given
+- Enhancement: Add `command-line-basics` to `get-license-type`
+  (help, version, usage)
 - Enhancement: Add `production` option to allow checking it
   with or without `licenseInfoPath`
 - Enhancement: Add `allDevelopment` to check all devDeps (not
@@ -9,7 +14,9 @@
 - Enhancement: Adding `logging` option
 - Enhancement: Add binary `get-license-type` as convenience for
   checking license type
+- Docs: More on types
 - Testing: Bump timeout for other tests
+- Testing: Consolidate timeouts
 - Testing: Run multiple simultaneous reporters
 - npm: Remove now unneeded separate badge creation script
 - npm: Use own npm-consider fork to get updates on spdx deps.

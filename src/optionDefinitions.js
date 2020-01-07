@@ -47,6 +47,12 @@ const optionDefinitions = [
     typeLabel: '{underline licenseInfoPath}'
   },
   {
+    name: 'packageJson', type: Boolean, alias: 'j',
+    description: 'Whether to include `license` within the `package.json` ' +
+      'pointed to by `packagePath`) (possibly also using name and version); ' +
+      'defaults to `false`.'
+  },
+  {
     name: 'corrections', type: Boolean, alias: 'c',
     description: 'Whether to apply corrections of licensee.js. ' +
       'Default is `false`.'

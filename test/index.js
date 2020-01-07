@@ -32,6 +32,7 @@ const esmAndMochaPath = getFixturePath('esm-mocha-and-missing.svg');
 const redPublicDomainPath = getFixturePath('redPublicDomain.svg');
 const allDevelopmentPath = getFixturePath('allDevelopment.svg');
 const productionPath = getFixturePath('production.svg');
+const packageJsonPath = getFixturePath('packageJson.svg');
 const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
 const seeLicenseInPath = getFixturePath('seeLicenseIn.svg');
 const unlicensedPath = getFixturePath('unlicensed.svg');
@@ -50,6 +51,19 @@ describe('Main file', function () {
     expect(err.message).to.equal('Bad output path provided.');
   });
 
+  it('should throw with insufficient package type info', async function () {
+    let err;
+    try {
+      await licenseBadger({outputPath: 'test', licenseInfoPath: '', logging});
+    } catch (error) {
+      err = error;
+    }
+    expect(err.message).to.equal(
+      'You must specify at least `allDevelopment`, `licenseInfoPath`, ' +
+      '`packageJson`, or `production`'
+    );
+  });
+
   it('should work with default output path', async function () {
     await licenseBadger({
       packagePath,
@@ -64,7 +78,7 @@ describe('Main file', function () {
 
   describe('Main functionality', function () {
     const fixturePaths = [];
-    for (let i = 0; i <= 8; i++) {
+    for (let i = 0; i <= 9; i++) {
       fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));
     }
     let j = 0;
@@ -149,6 +163,20 @@ describe('Main file', function () {
       });
       const contents = await readFile(outputPath, 'utf8');
       const expected = await readFile(productionPath, 'utf8');
+      expect(contents).to.equal(expected);
+    });
+
+    it('should work with `packageJson`', async function () {
+      const outputPath = getNextFixturePath();
+      await licenseBadger({
+        packageJson: true,
+        licenseInfoPath: '',
+        packagePath,
+        outputPath,
+        logging
+      });
+      const contents = await readFile(outputPath, 'utf8');
+      const expected = await readFile(packageJsonPath, 'utf8');
       expect(contents).to.equal(expected);
     });
 

@@ -1,7 +1,7 @@
 'use strict';
 
 const {join} = require('path');
-const {getLicenses} = require('../src/getLicenses.js');
+const {getLicenses, getTypeInfoForLicense} = require('../src/getLicenses.js');
 
 const packagePath = join(__dirname, '../');
 
@@ -12,6 +12,12 @@ describe('Main file', function () {
   it('should work with no arguments', async () => {
     const {licenses} = await getLicenses();
     expect(licenses).to.be.a('Map');
+    const permissive = licenses.get('permissive');
+    expect(permissive).to.be.a('Set');
+    expect(permissive.has('MIT')).to.be.true;
+  });
+  it('should work with empty `licenses`', () => {
+    const licenses = getTypeInfoForLicense({license: 'MIT'});
     const permissive = licenses.get('permissive');
     expect(permissive).to.be.a('Set');
     expect(permissive.has('MIT')).to.be.true;

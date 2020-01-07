@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const {promisify} = require('util');
-const {resolve} = require('path');
+const {join, resolve} = require('path');
 
 const bu = require('badge-up');
 const template = require('es6-template-strings');
@@ -15,7 +15,7 @@ const template = require('es6-template-strings');
 const writeFile = promisify(fs.writeFile);
 const badgeUp = promisify(bu.v2.bind(bu.v2));
 
-const {getLicenses} = require('./getLicenses.js');
+const {getLicenses, getTypeInfoForLicense} = require('./getLicenses.js');
 
 const defaultTextColor = ['navy'];
 const licenseTypes = [
@@ -68,6 +68,7 @@ const licenseTypes = [
  */
 module.exports = async ({
   packagePath,
+  packageJson,
   corrections,
   production,
   allDevelopment,
@@ -110,6 +111,20 @@ module.exports = async ({
       ({licenses} = await getLicenses({
         licenseInfoPath, packagePath, corrections
       }));
+    } else if (!production && !packageJson) {
+      throw new TypeError(
+        'You must specify at least `allDevelopment`, `licenseInfoPath`, ' +
+        '`packageJson`, or `production`'
+      );
+    }
+    if (packageJson) {
+      // eslint-disable-next-line import/no-dynamic-require, global-require
+      const {name, version, license} = require(
+        join(packagePath, 'package.json')
+      );
+      licenses = getTypeInfoForLicense({
+        licenses, license, name, version
+      });
     }
     if (production) {
       ({licenses} = await getLicenses({

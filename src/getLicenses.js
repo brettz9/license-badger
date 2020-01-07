@@ -17,16 +17,16 @@ const getWhitelistedRootPackagesLicenses = require(
 
 /**
  * @param {PlainObject} typeInfo
- * @param {Map} typeInfo.licenses
+ * @param {Map} [typeInfo.licenses = new Map()]
  * @param {string} typeInfo.license
  * @param {string} [typeInfo.name] Optional if license is known to be
  * a positive-length string, and is not "UNLICENSED", with "SEE LICENSE IN ",
  * beginning with "RPL-" or "Parity-", or of type "uncategorized"
  * @param {string} [typeInfo.version] See `typeInfo.name`.
- * @returns {void}
+ * @returns {Map}
  */
 const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
-  licenses, license, name, version
+  licenses = new Map(), license, name, version
 }) {
   let type, custom;
   if (!license || typeof license !== 'string') {
@@ -61,6 +61,7 @@ const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
       )}
   );
   licenses.set(type, set);
+  return licenses;
 };
 
 // Todo: When stabilized, list more specific types than `Map` and `GenericArray`

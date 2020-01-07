@@ -18,11 +18,8 @@
 **This project is in early beta.**
 
 Build a badge indicating the licenses of your project's dependencies
-(currently dependencies, devDependencies, or whitelist-bundled
-devDependencies only).
-<!--
-Todo: your project's license(s) and those of its dependencies.
--->
+(dependencies, devDependencies, whitelist-bundled devDependencies, and/or
+your project's own license).
 
 Here's a sample badge (see below on the format):
 
@@ -44,16 +41,20 @@ dependencies. This project allows you to check specific selected packages but
 You can also create a badge which combines whitelisted licenses (or all
 `devDependencies`) with the licenses in `dependencies`.
 
-The following section. gives more detail on the three types and which can
+The following section. gives more detail on the types and which can
 be combined.
 
-In the future, plans are to also add your current project's license.
-<!-- Todo: Remove if implemented -->
+### Your own license (`packageJson`)
+
+This option if set will check the `license` within the `package.json` pointed
+to by `packagePath` (possibly also using `name` and `version`).
+
+This option can be combined with any of the options.
 
 ### Those wishing for all of `dependencies` (`production`)
 
 This option gathers license data from all `dependencies` in `package.json`
-and can be combined with either of the other two options.
+and can be combined with any of the options.
 
 Note that if you do not want to check a `licenseInfoPath` and only want
 `dependencies` checked, you need to specify an empty string for
@@ -154,11 +155,6 @@ get-license-type "license expression"
 
 - [mocha-badge-generator](https://github.com/ianpogi5/mocha-badge-generator) - Locally created badges for Mocha test results
 - [coveradge](https://github.com/brettz9/coveradge) - Locally-created badges for nyc/istanbul coverage
-
-## Immediate to-dos
-
-1. Ability to merge license types from self
-  1. Adjust per comments with "Todo" above when complete.
 
 ## To-dos
 
