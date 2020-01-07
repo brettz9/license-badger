@@ -201,8 +201,8 @@ describe('Main file', function () {
           corrections: true,
           packagePath,
           licenseInfoPath: licenseInfoPathUncategorized,
-          outputPath,
-          logging
+          outputPath
+          // No `logging` is deliberate for the sake of full coverage
         });
         const contents = await readFile(outputPath, 'utf8');
         const expected = await readFile(uncategorizedPath, 'utf8');
