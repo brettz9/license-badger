@@ -4,9 +4,11 @@
   "description": "Builds a badge indicating your project's license(s) and those of its dependencies.",
   "main": "src/index.js",
   "bin": {
-    "license-badger": "./bin/index.js"
+    "license-badger": "./bin/index.js",
+    "get-license-type": "./bin/get-license-type.js"
   },
   "scripts": {
+    "get-license-type": "./bin/get-license-type.js",
     "build-cli-svg": "clp -c src/optionDefinitions.js cli.svg",
     "help": "./bin/index.js -h",
     "license-badger": "./bin/index.js -l test/fixtures/licenseInfo.json test.svg",
