@@ -138,7 +138,7 @@ npm i -g license-badger
 ## Usage
 
 ```sh
-license-badger  --filteredTypes=weaklyProtective,protective --textTemplate \"License types (\\${licenseCount})\" --licenseTypeColor networkProtective=blue,s{white} -l test/fixtures/licenseInfo.json test.svg
+license-badger --filteredTypes=weaklyProtective,protective --textTemplate \"License types (\\${licenseCount})\" --licenseTypeColor networkProtective=blue,s{white} -l test/fixtures/licenseInfo.json test.svg
 ```
 
 There is also a helper which only takes one argument and returns:
