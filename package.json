@@ -16,9 +16,9 @@
     "license-badger": "./bin/index.js -l test/fixtures/licenseInfo.json test.svg",
     "coverage-badge": "coveradge --color brightgreen badges/coverage-badge.svg",
     "eslint": "eslint --ext=js,md,html .",
-    "test:unit": "rm -rf node_modules/.cache && mocha --require test/bootstrap/node test/** --reporter-options configFile=mocha-multi-reporters.json",
-    "test": "npm run eslint && npm run test:unit",
-    "test-cov": "nyc --all npm run test:unit && npm run coverage-badge"
+    "mocha": "mocha --require test/bootstrap/node test/** --reporter-options configFile=mocha-multi-reporters.json",
+    "test": "npm run eslint && npm run mocha",
+    "test-cov": "rm -rf node_modules/.cache && nyc --all npm run mocha && npm run coverage-badge"
   },
   "nyc": {
     "reporter": [

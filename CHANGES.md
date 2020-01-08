@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- npm: Rename `test:unit` to `mocha`; only remove .cache for nyc
+
 ## 0.8.0
 
 - Change: Use a darker yellow for readability of `weaklyProtective`
