@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## 0.9.1
+
+- npm: Update to support CC-BY-3.0 (as "permissive")
+
 ## 0.9.0
 
 - Enhancement: Integrate `AND` components separately
