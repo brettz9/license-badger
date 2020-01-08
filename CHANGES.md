@@ -1,8 +1,10 @@
 # CHANGES for license-badger
 
-## ?
+## 0.9.0
 
-- npm: Rename `test:unit` to `mocha`; only remove .cache for nyc
+- Enhancement: Integrate `AND` components separately
+- Testing: Update tests per new colors/behaviors
+- npm: Rename `test:unit` to `mocha`; only remove `.cache` for `nyc`
 
 ## 0.8.0
 

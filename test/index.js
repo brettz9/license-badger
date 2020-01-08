@@ -41,7 +41,7 @@ const reuseProtectivePath = getFixturePath('reuseProtective.svg');
 const uncategorizedPath = getFixturePath('uncategorized.svg');
 
 describe('Main file', function () {
-  this.timeout(5000);
+  this.timeout(7000);
   it('should throw with a bad output path', async () => {
     let err;
     try {

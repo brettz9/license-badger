@@ -3,6 +3,7 @@
 const {promisify} = require('util');
 const {resolve} = require('path');
 
+const parse = require('spdx-expression-parse');
 const getLicenseType = require('npm-consider/lib/getLicenseType');
 
 // May change implementation of `licensee` to Promise but only after
@@ -15,6 +16,19 @@ const getWhitelistedRootPackagesLicenses = require(
   './getWhitelistedRootPackagesLicenses.js'
 );
 
+// Todo: Have stringification avoid extra parentheses when multiple joined
+//  conjunctions of the same type?
+const stringifyLicense = (ast) => {
+  if (ast.license) {
+    return ast.license +
+      // Todo: Is this correct?
+      (ast.plus ? '-or-later' : '') +
+      (ast.exception ? ('-with-' + ast.exception) : '');
+  }
+  return `(${stringifyLicense(ast.left)} ${ast.conjunction.toUpperCase()} ` +
+      `${stringifyLicense(ast.right)})`;
+};
+
 /**
  * @param {PlainObject} typeInfo
  * @param {Map} [typeInfo.licenses = new Map()]
@@ -26,41 +40,100 @@ const getWhitelistedRootPackagesLicenses = require(
  * @returns {Map}
  */
 const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
-  licenses = new Map(), license, name, version
+  licenses = new Map(), license: licns, name, version, licenseAsAST
 }) {
-  let type, custom;
-  if (!license || typeof license !== 'string') {
-    type = 'missing';
-    license = null;
-  } else if (license === 'UNLICENSED') {
-    type = 'unlicensed';
-    license = null;
-  } else if (license.startsWith('SEE LICENSE IN ')) {
-    type = 'custom';
-    custom = license.replace('SEE LICENSE IN ', '');
-    license = null;
-  } else if ((/^(?:RPL|Parity)-/u).test(license)) {
-    type = 'reuseProtective';
-  } else {
-    type = getLicenseType(license);
-  }
+  const addType = (type, license) => {
+    if (!licenses.has(type)) {
+      licenses.set(type, new Set());
+    }
+    const set = licenses.get(type);
+    set.add(
+      type !== 'uncategorized' && license
+        ? license
+        : {name, version, license, ...(
+          type === 'custom'
+            ? {
+              custom
+            }
+            : {}
+        )}
+    );
+    licenses.set(type, set);
+  };
 
-  if (!licenses.has(type)) {
-    licenses.set(type, new Set());
+  const getTypeInfo = (license, noParsing) => {
+    let type, custom;
+    if (!licenseAsAST) {
+      if (!license || typeof license !== 'string') {
+        type = 'missing';
+        license = null;
+      } else if (license === 'UNLICENSED') {
+        type = 'unlicensed';
+        license = null;
+      } else if (license.startsWith('SEE LICENSE IN ')) {
+        type = 'custom';
+        custom = license.replace('SEE LICENSE IN ', '');
+        license = null;
+      } else if ((/^(?:RPL|Parity)-/u).test(license)) {
+        type = 'reuseProtective';
+      } else if (noParsing) {
+        type = getLicenseType(license);
+      }
+    }
+    if (!type) {
+      const getTypes = (ast) => {
+        licenseAsAST = false;
+        let typ, lic;
+        if ('license' in ast) {
+          // Todo: also may have `plus` (i.e., "or later") and/or `exception`
+          //  (also more permissive) with `license`
+          [typ, , lic] = getTypeInfo(ast.license, true);
+          lic = ast.license;
+        } else if (ast.conjunction === 'or') {
+          // Todo: This is more complex than the commented out, as
+          //  we'd only want to add these items if more permissive
+          //  than the other branch (faster if not safer if can
+          //  first be normalized); for now, we just reserialize
+          //  this branch and add the type of evaluating the
+          //  whole expression.
+          // getTypeInfoForLicense({license: ast.left});
+          // getTypeInfoForLicense({license: ast.right});
+          const stringified = stringifyLicense(ast);
+          [typ, , lic] = getTypeInfo(stringified, true);
+        } else {
+          getTypeInfoForLicense({
+            licenses, name, version,
+            license: ast.left,
+            licenseAsAST: true
+          });
+          getTypeInfoForLicense({
+            licenses, name, version,
+            license: ast.right,
+            licenseAsAST: true
+          });
+        }
+        return [typ, undefined, lic];
+      };
+      let parsed;
+      if (!licenseAsAST) {
+        try {
+          parsed = parse(licns);
+        } catch (err) {
+          return [getLicenseType(licns), undefined, licns];
+        }
+      }
+      [type, , license] = getTypes(licenseAsAST ? licns : parsed);
+    }
+
+    return [type, custom, license];
+  };
+
+  let type, custom;
+  [type, custom, licns] = getTypeInfo(licns);
+
+  if (type) {
+    addType(type, licns);
   }
-  const set = licenses.get(type);
-  set.add(
-    type !== 'uncategorized' && license
-      ? license
-      : {name, version, license, ...(
-        type === 'custom'
-          ? {
-            custom
-          }
-          : {}
-      )}
-  );
-  licenses.set(type, set);
   return licenses;
 };
 
