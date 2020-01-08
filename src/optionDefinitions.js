@@ -119,9 +119,10 @@ const optionDefinitions = [
     description: 'Template for listing individual uncategorized projects; ' +
       getChalkTemplateSingleEscape(
         // eslint-disable-next-line no-template-curly-in-string
-        'defaults to: "${name} (${version})"; passed `license`, `name`, and '
+        'defaults to: "${name} (${version})"; passed `license`, `name`, '
       ) +
-      '`version`; remember to escape `$` with backslash for CLI use',
+      '`custom` (license text after "SEE LICENSE IN "), and `version`; ' +
+      'remember to escape `$` with backslash for CLI use',
     typeLabel: '{underline uncategorizedLicenseTemplate}'
   },
   {

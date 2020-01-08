@@ -1,5 +1,10 @@
 # CHANGES for license-badger
 
+## 0.7.4
+
+- Fix: Pass in `license` to uncategorized templates
+- Docs: Fix CLI docs to mention passing `custom`
+
 ## 0.7.3
 
 - Fix: "uncategorized", "custom", "unlicensed", and "missing" were showing

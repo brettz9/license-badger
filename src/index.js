@@ -151,10 +151,10 @@ module.exports = async ({
 
     const specialTemplate = (typ, templ) => {
       const mapped = [...licenses.get(typ)].map((
-        {name, version, custom}
+        {name, version, custom, license}
       ) => {
         return template(templ, {
-          name, version, custom
+          name, version, custom, license
         });
       });
       if (mapped.length) {
