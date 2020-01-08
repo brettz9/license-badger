@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- npm: Update devDep.
+
 ## 0.9.2
 
 - npm: Update to support CC-BY-4.0 (as "permissive")
