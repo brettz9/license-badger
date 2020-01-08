@@ -159,8 +159,11 @@ module.exports = async ({
       });
       if (mapped.length) {
         // Get rid of objects now that data mapped
-        licenses.get(type).clear();
-        licenses.get(type).add(...mapped);
+        const set = licenses.get(type);
+        set.clear();
+        mapped.forEach((item) => {
+          set.add(item);
+        });
       }
     };
 

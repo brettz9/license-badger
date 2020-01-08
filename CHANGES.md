@@ -1,5 +1,10 @@
 # CHANGES for license-badger
 
+## 0.7.3
+
+- Fix: "uncategorized", "custom", "unlicensed", and "missing" were showing
+  only a single item
+
 ## 0.7.2
 
 - Fix: Default to `process.cwd()` for `packagePath` with `packageJson`.
