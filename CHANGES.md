@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## 0.8.0
+
+- Change: Use a darker yellow for readability of `weaklyProtective`
+
 ## 0.7.4
 
 - Fix: Pass in `license` to uncategorized templates

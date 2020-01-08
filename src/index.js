@@ -28,7 +28,7 @@ const licenseTypes = [
     text: 'Permissive'
   }],
   ['weaklyProtective', {
-    color: ['yellow'],
+    color: ['CCCC00'], // dark yellow
     text: 'Weakly\nprotective'
   }],
   ['protective', {
@@ -36,7 +36,7 @@ const licenseTypes = [
     text: 'Protective'
   }],
   ['networkProtective', {
-    color: ['FF69B4'],
+    color: ['FF69B4'], // pink
     text: 'Network\nprotective'
   }],
   ['reuseProtective', {
