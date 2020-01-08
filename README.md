@@ -47,7 +47,8 @@ be combined.
 ### Your own license (`packageJson`)
 
 This option if set will check the `license` within the `package.json` pointed
-to by `packagePath` (possibly also using `name` and `version`).
+to by `packagePath` (possibly also using `name` and `version`), where
+`packagePath` defaults to the current working directory.
 
 This option can be combined with any of the options.
 
