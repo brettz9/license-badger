@@ -1,6 +1,6 @@
 {
   "name": "license-badger",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "description": "Builds a badge indicating your project's license(s) and those of its dependencies.",
   "main": "src/index.js",
   "bin": {
@@ -84,7 +84,7 @@
     "command-line-basics": "^0.6.2",
     "es6-template-strings": "^2.0.1",
     "licensee": "https://github.com/brettz9/licensee.js#filterPackages",
-    "npm-consider": "https://github.com/brettz9/npm-consider#cc-by-4",
+    "npm-consider": "https://github.com/brettz9/npm-consider#fixes",
     "spdx-expression-parse": "^3.0.0"
   }
 }

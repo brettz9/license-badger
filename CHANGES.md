@@ -1,7 +1,9 @@
 # CHANGES for license-badger
 
-## ?
+## 0.9.3
 
+- npm: Point to `npm-consider` branch which integrates fix for
+  UNLICENSED along with previous fixes
 - npm: Update devDep.
 
 ## 0.9.2
