@@ -87,7 +87,7 @@ const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
         if ('license' in ast) {
           // Todo: also may have `plus` (i.e., "or later") and/or `exception`
           //  (also more permissive) with `license`
-          [typ, , lic] = getTypeInfo(ast.license, true);
+          [typ] = getTypeInfo(ast.license, true);
           lic = ast.license;
         } else if (ast.conjunction === 'or') {
           // Todo: This is more complex than the commented out, as
