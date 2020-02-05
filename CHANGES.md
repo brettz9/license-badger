@@ -1,5 +1,10 @@
 # CHANGES for license-badger
 
+## 0.10.0
+
+- Docs: Update CLI docs
+- npm: Update dep. (command-line-basics); devDeps
+
 ## 0.9.3
 
 - npm: Point to `npm-consider` branch which integrates fix for
