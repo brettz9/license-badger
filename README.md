@@ -171,6 +171,7 @@ get-license-type "license expression"
 
 ## To-dos
 
+1. Get to work with Git submodules
 1. Ability to normalize an AND/OR license, e.g.,
     `(MIT OR (MIT OR GPL-3.0))`, `(MIT AND (MIT AND GPL-3.0))`,
     or `(MIT AND (MIT OR GPL-3.0))`; use for overwriting of `license`
