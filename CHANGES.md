@@ -1,8 +1,10 @@
 # CHANGES for license-badger
 
-## ?
+## 0.11.0
 
+- Docs: Update test badge
 - Refactoring: Use `badge-up` fork version that returns a Promise
+- Testing: Update expected test file (per new devDeps.)
 - npm: Update devDeps.
 
 ## 0.10.0
