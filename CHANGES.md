@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## 0.11.1
+
+- npm: Update `mocha-badge-generator` and `package-lock.json`
+
 ## 0.11.0
 
 - Docs: Update test badge
