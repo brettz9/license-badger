@@ -9,11 +9,10 @@ const fs = require('fs');
 const {promisify} = require('util');
 const {join, resolve} = require('path');
 
-const bu = require('badge-up');
+const badgeUp = require('badge-up').v2;
 const template = require('es6-template-strings');
 
 const writeFile = promisify(fs.writeFile);
-const badgeUp = promisify(bu.v2.bind(bu.v2));
 
 const {getLicenses, getTypeInfoForLicense} = require('./getLicenses.js');
 

@@ -1,5 +1,10 @@
 # CHANGES for license-badger
 
+## ?
+
+- Refactoring: Use `badge-up` fork version that returns a Promise
+- npm: Update devDeps.
+
 ## 0.10.0
 
 - Docs: Update CLI docs
