@@ -1,5 +1,11 @@
 # CHANGES for license-badger
 
+## ?
+
+- npm: Point to updated, stable `mocha-badge-generator`
+- npm: Rename `build-cli-svg` script to `build-cli`
+- npm: Update devDeps
+
 ## 0.11.1
 
 - npm: Update `mocha-badge-generator` and `package-lock.json`
