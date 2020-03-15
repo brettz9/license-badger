@@ -1,6 +1,6 @@
 {
   "name": "license-badger",
-  "version": "0.11.1",
+  "version": "0.12.0",
   "description": "Builds a badge indicating your project's license(s) and those of its dependencies.",
   "main": "src/index.js",
   "bin": {
@@ -54,7 +54,7 @@
     "command-line-publish": "^0.7.0",
     "coveradge": "^0.3.0",
     "eslint": "^6.8.0",
-    "eslint-config-ash-nazg": "^17.3.0",
+    "eslint-config-ash-nazg": "^17.4.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-array-func": "^3.1.4",
     "eslint-plugin-chai-expect": "^2.1.0",
@@ -63,7 +63,7 @@
     "eslint-plugin-eslint-comments": "^3.1.2",
     "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsdoc": "^22.0.0",
+    "eslint-plugin-jsdoc": "^22.0.1",
     "eslint-plugin-markdown": "^1.0.2",
     "eslint-plugin-no-unsanitized": "^3.0.2",
     "eslint-plugin-no-use-extend-native": "^0.4.1",
@@ -71,7 +71,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-sonarjs": "^0.5.0",
     "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-unicorn": "^16.1.1",
+    "eslint-plugin-unicorn": "^17.2.0",
     "mocha": "^7.1.0",
     "mocha-badge-generator": "^0.5.0",
     "mocha-multi-reporters": "^1.1.7",
@@ -81,7 +81,7 @@
   },
   "dependencies": {
     "badge-up": "https://github.com/brettz9/badge-up#npm-and-testing-with-promise",
-    "command-line-basics": "^0.7.0",
+    "command-line-basics": "^0.8.0",
     "es6-template-strings": "^2.0.1",
     "licensee": "https://github.com/brettz9/licensee.js#filterPackages",
     "npm-consider": "https://github.com/brettz9/npm-consider#fixes",

@@ -1,3 +1,5 @@
 test
 coverage
 .nyc_output
+.mocharc.js
+mocha-multi-reporters.json
