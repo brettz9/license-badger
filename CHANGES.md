@@ -1,5 +1,12 @@
 # CHANGES for license-badger
 
+## 0.12.1
+
+- Fix: Change from "coverage-badge.svg" -> "license-badge.svg" as
+  default (copy-paste error)
+- Maintenance: Special indent for MD files
+- npm: Update devDeps.
+
 ## 0.12.0
 
 - npm: Point to updated, stable `mocha-badge-generator`

@@ -26,8 +26,8 @@ const licenseInfoPathUncategorized = getFixturePath(
 const licenseInfoPathReuseProtective = getFixturePath(
   'licenseInfo-reuseProtective.json'
 );
-const coverageBadgePath = join(__dirname, '../coverage-badge.svg');
-const coverageBadgeFixturePath = getFixturePath('coverage-badge.svg');
+const licenseBadgePath = join(__dirname, '../license-badge.svg');
+const licenseBadgeFixturePath = getFixturePath('license-badge.svg');
 const esmAndMochaPath = getFixturePath('esm-mocha-and-missing.svg');
 const redPublicDomainPath = getFixturePath('redPublicDomain.svg');
 const allDevelopmentPath = getFixturePath('allDevelopment.svg');
@@ -72,8 +72,8 @@ describe('Main file', function () {
       textColor: 'orange,s{blue}',
       logging
     });
-    const contents = await readFile(coverageBadgePath, 'utf8');
-    const expected = await readFile(coverageBadgeFixturePath, 'utf8');
+    const contents = await readFile(licenseBadgePath, 'utf8');
+    const expected = await readFile(licenseBadgeFixturePath, 'utf8');
     expect(contents).to.equal(expected);
   });
 

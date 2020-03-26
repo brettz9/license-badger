@@ -71,7 +71,7 @@ module.exports = async ({
   corrections,
   production,
   allDevelopment,
-  outputPath = resolve(process.cwd(), './coverage-badge.svg'),
+  outputPath = resolve(process.cwd(), './license-badge.svg'),
   licenseInfoPath = !allDevelopment &&
     resolve(process.cwd(), './licenseInfo.json'),
   logging = false,

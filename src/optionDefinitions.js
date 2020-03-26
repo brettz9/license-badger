@@ -29,7 +29,7 @@ const optionDefinitions = [
   {
     name: 'outputPath', type: String, defaultOption: true, alias: 'o',
     description: 'Path to which to save the file; default to ' +
-      '"coverage-badge.svg" in the current working directory',
+      '"license-badge.svg" in the current working directory',
     typeLabel: '{underline outputPath}'
   },
   {
