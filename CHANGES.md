@@ -1,7 +1,8 @@
 # CHANGES for license-badger
 
-## ?
+## 0.12.2
 
+- Docs: Update `cli.svg`
 - Docs: Dog food showing our own license badges
 
 ## 0.12.1
