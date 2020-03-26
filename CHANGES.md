@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- Docs: Dog food showing our own license badges
+
 ## 0.12.1
 
 - Fix: Change from "coverage-badge.svg" -> "license-badge.svg" as
