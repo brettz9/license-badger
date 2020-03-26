@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## 0.12.4
+
+- Docs: Indicate missing defaults
+
 ## 0.12.3
 
 - Docs: Indicate `outputPath` as optional

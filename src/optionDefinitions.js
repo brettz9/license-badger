@@ -28,7 +28,7 @@ const getBracketedChalkTemplateEscape = (s) => {
 const optionDefinitions = [
   {
     name: 'outputPath', type: String, defaultOption: true, alias: 'o',
-    description: 'Path to which to save the file; default to ' +
+    description: 'Path to which to save the file; defaults to ' +
       '"license-badge.svg" in the current working directory',
     typeLabel: '{underline outputPath}'
   },
@@ -55,18 +55,19 @@ const optionDefinitions = [
   {
     name: 'corrections', type: Boolean, alias: 'c',
     description: 'Whether to apply corrections of licensee.js. ' +
-      'Default is `false`.'
+      'Defaults to `false`.'
   },
   {
     name: 'production', type: Boolean,
     description: 'Whether to check production dependencies (in addition to ' +
-      'any whitelisted by `licenseInfoPath`). Default is `false`.'
+      'any whitelisted by `licenseInfoPath`). Defaults to `false`.'
   },
   {
     name: 'allDevelopment', type: Boolean,
     description: 'Whether to check all development dependencies. Overrides ' +
       '`licenseInfoPath` as will not be limited to the packages whitelisted ' +
-      'by `bundledDependencies` in the JSON file at `licenseInfoPath`).'
+      'by `bundledDependencies` in the JSON file at `licenseInfoPath`). ' +
+      'Defaults to `false`.'
   },
   {
     name: 'filteredTypes', type: String, alias: 'f',
@@ -80,7 +81,7 @@ const optionDefinitions = [
   {
     name: 'textColor', type: String,
     description: 'Color for "Licenses" subject. Follow by comma for ' +
-      'additional (e.g., to add a stroke color)',
+      'additional (e.g., to add a stroke color). Defaults to "navy".',
     typeLabel: getBracketedChalkTemplateEscape(
       'underline <typeName>=<color> (<color>: CSS-Color|Hex as: ' +
         'ffffff|Hex stroke as s{ffffff})'
@@ -91,7 +92,8 @@ const optionDefinitions = [
     multiple: true,
     description: 'Key-value set for mapping a license type name to color. ' +
       'Reuse for different types. Follow by comma for additional (e.g., to ' +
-      'add a stroke color)',
+      'add a stroke color). See `src/index.js` for default colors of each ' +
+      'license type.',
     typeLabel: getBracketedChalkTemplateEscape(
       'underline <typeName>=<color> (<color>: CSS-Color|Hex as: ' +
         'ffffff|Hex stroke as s{ffffff})'
@@ -137,7 +139,7 @@ const optionDefinitions = [
   },
   {
     name: 'logging', type: String,
-    description: 'Logging level; default is "off".',
+    description: 'Logging level; defaults to "off".',
     typeLabel: '{underline "verbose"|"off"}'
   }
 ];
