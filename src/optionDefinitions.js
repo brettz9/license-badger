@@ -146,7 +146,8 @@ const cliSections = [
   {
     // Add italics: `{italic textToItalicize}`
     content: pkg.description +
-      '\n\n{italic license-badger -p=packagePath -l=licenseInfoPath outputPath}'
+      '\n\n{italic license-badger -p=packagePath ' +
+        '-l=licenseInfoPath [outputPath]}'
   },
   {
     optionList: optionDefinitions

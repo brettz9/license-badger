@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- Docs: Indicate `outputPath` as optional
+
 ## 0.12.2
 
 - Docs: Update `cli.svg`
