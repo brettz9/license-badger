@@ -9,6 +9,9 @@
     "satisfies": "./bin/satisfies.js"
   },
   "scripts": {
+    "license-badge": "./bin/index.js --corrections --uncategorizedLicenseTemplate \"\\${license} (\\${name} (\\${version}))\" --filteredTypes=nonempty --textTemplate \"License types\n(project, deps, and bundled devDeps)\" --packageJson --production badges/licenses-badge.svg",
+    "license-badge-dev": "./bin/index.js --corrections --filteredTypes=nonempty --textTemplate \"License types\n(all devDeps)\" --allDevelopment badges/licenses-badge-dev.svg",
+    "license-badges": "npm run license-badge && npm run license-badge-dev",
     "get-license-type": "./bin/get-license-type.js",
     "satisfies": "./bin/satisfies.js",
     "build-cli": "clp -c src/optionDefinitions.js cli.svg",
