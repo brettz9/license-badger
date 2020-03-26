@@ -1,6 +1,6 @@
 # CHANGES for license-badger
 
-## ?
+## 0.12.3
 
 - Docs: Indicate `outputPath` as optional
 
