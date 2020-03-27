@@ -12,9 +12,9 @@
 [![Code Quality: Javascript](https://img.shields.io/lgtm/grade/javascript/g/brettz9/license-badger.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/brettz9/license-badger/context:javascript)
 
 <!--[![License](https://img.shields.io/npm/l/license-badger.svg)](LICENSE-MIT.txt)-->
-[![Licenses badge](https://raw.githubusercontent.com/brettz9/nogin/master/readme_includes/licenses-badge.svg?sanitize=true)](readme_includes/licenses-badge.svg)
+[![Licenses badge](https://raw.githubusercontent.com/brettz9/license-badger/master/badges/licenses-badge.svg?sanitize=true)](badges/licenses-badge.svg)
 
-(see also [licenses for dev. deps.](https://raw.githubusercontent.com/brettz9/nogin/master/readme_includes/licenses-badge-dev.svg?sanitize=true))
+(see also [licenses for dev. deps.](https://raw.githubusercontent.com/brettz9/license-badger/master/badges/licenses-badge-dev.svg?sanitize=true))
 
 [![issuehunt-to-marktext](https://issuehunt.io/static/embed/issuehunt-button-v1.svg)](https://issuehunt.io/r/brettz9/license-badger)
 

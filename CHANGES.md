@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## 0.12.5
+
+- Docs: Point to correct license badges
+
 ## 0.12.4
 
 - Docs: Indicate missing defaults
