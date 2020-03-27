@@ -1,7 +1,8 @@
 # CHANGES for license-badger
 
-## ?
+## 0.12.6
 
+- npm: Update licensee copy, avoiding failing on (peerDep) errors
 - npm: Update devDep.
 
 ## 0.12.5
