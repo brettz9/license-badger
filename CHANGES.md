@@ -1,5 +1,10 @@
 # CHANGES for license-badger
 
+## 0.12.7
+
+- Fix: Add missing `disableLsErrorAborting` setting to avoid the
+    peerDep errors
+
 ## 0.12.6
 
 - npm: Update licensee copy, avoiding failing on (peerDep) errors

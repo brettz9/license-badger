@@ -202,6 +202,7 @@ exports.getLicenses = async ({
       {
         // The manual corrections are useful but automatic ones are critical
         //   handling old objects, arrays of objects etc.
+        disableLsErrorAborting: true,
         corrections,
         packages: {
           // 'load-stylesheets': '*'
