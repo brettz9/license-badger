@@ -3,6 +3,8 @@
 ## 0.12.5
 
 - Docs: Point to correct license badges
+- Testing: Drop need for external bootstrap file
+- npm: Update devDeps
 
 ## 0.12.4
 
