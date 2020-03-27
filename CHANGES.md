@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- npm: Update devDep.
+
 ## 0.12.5
 
 - Docs: Point to correct license badges
