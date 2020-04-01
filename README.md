@@ -145,6 +145,10 @@ npm i -g license-badger
 license-badger --filteredTypes=weaklyProtective,protective --textTemplate \"License types (\\${licenseCount})\" --licenseTypeColor networkProtective=blue,s{white} -l test/fixtures/licenseInfo.json test.svg
 ```
 
+It is recommended you add this to a `package.json` [`prepare`](https://docs.npmjs.com/misc/scripts#description) script so that you have the
+latest info reflected upon adding new dependencies (or use a
+`prepublishOnly` script if only wishing to update for releases).
+
 There is also a helper which only takes one argument and returns:
 
 ```sh
