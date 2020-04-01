@@ -182,6 +182,8 @@ get-license-type "license expression"
     for license badge creation.
     1. See <https://www.npmjs.com/package/spdx-expression-parse> and
       <https://github.com/nexB/license-expression/blob/master/src/license_expression/_pyahocorasick.py>
+1. Add Rollup plugin that can ovewrite `bundledRootPackages` in
+    `licenseInfoPath`/`licenseInfo.json`
 1. Process `licenseeInfo.json` `filesByLicense` to optionally overwrite
     `license` in `package.json`
   1. Extract jsdoc iterator from `eslint-plugin-jsdoc` to own repo and
