@@ -100,7 +100,7 @@ be forced to either:
 
 - include all of `node_modules` and use actual `bundledDependencies`,
   creating a potentially very large repository
-- use the likes of [rollup-plugin-license](https://www.npmjs.com/package/rollup-plugin-license)
+- use the likes of [rollup-plugin-license](https://www.npmjs.com/package/rollup-plugin-license) (though see to-do below which might combine the functionalities)
   to grab licenses while pulling in modules during a bundling routine (as useful
   as this can be), perhaps because the project wishes instead for their source
   to be usable within a live ESM browser version for rapid debugging/development
@@ -187,7 +187,8 @@ get-license-type "license expression"
     1. See <https://www.npmjs.com/package/spdx-expression-parse> and
       <https://github.com/nexB/license-expression/blob/master/src/license_expression/_pyahocorasick.py>
 1. Add Rollup plugin that can ovewrite `bundledRootPackages` in
-    `licenseInfoPath`/`licenseInfo.json`
+    `licenseInfoPath`/`licenseInfo.json`; might adapt
+    [rollup-plugin-license](https://www.npmjs.com/package/rollup-plugin-license)
 1. Process `licenseeInfo.json` `filesByLicense` to optionally overwrite
     `license` in `package.json`
   1. Extract jsdoc iterator from `eslint-plugin-jsdoc` to own repo and
