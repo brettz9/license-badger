@@ -39,9 +39,10 @@ const seeLicenseInPath = getFixturePath('seeLicenseIn.svg');
 const unlicensedPath = getFixturePath('unlicensed.svg');
 const reuseProtectivePath = getFixturePath('reuseProtective.svg');
 const uncategorizedPath = getFixturePath('uncategorized.svg');
+const completePackageList = getFixturePath('completePackageList.svg');
 
 describe('Main file', function () {
-  this.timeout(7000);
+  this.timeout(15000);
   it('should throw with a bad output path', async () => {
     let err;
     try {
@@ -272,6 +273,50 @@ describe('Main file', function () {
         const expected = await readFile(uncategorizedPath, 'utf8');
         expect(contents).to.equal(expected);
       });
+    });
+  });
+
+  describe('`completePackageList`', function () {
+    const fixturePaths = [];
+    ['completePackageList'].forEach((path) => {
+      fixturePaths.push(join(__dirname, `fixtures/temp-${path}.svg`));
+    });
+    const unlinker = async () => {
+      try {
+        await Promise.all(fixturePaths.map((fixturePath) => {
+          return unlink(fixturePath);
+        }));
+      } catch (err) {}
+    };
+    before(unlinker);
+    after(unlinker);
+    it('Should allow use of `completePackageList`', async function () {
+      const outputPath = join(
+        __dirname, `fixtures/temp-completePackageList.svg`
+      );
+
+      const licenseMap = new Map();
+      const permissiveSet = new Set();
+      permissiveSet.add('MIT');
+      permissiveSet.add('ISC');
+      licenseMap.set('permissive', permissiveSet);
+
+      const protectiveSet = new Set();
+      protectiveSet.add('GPL-3.0-only');
+      protectiveSet.add('GPL-3.0-or-later');
+      licenseMap.set('protective', protectiveSet);
+
+      await licenseBadger({
+        packagePath,
+        completePackageList: licenseMap,
+        licenseInfoPath,
+        outputPath,
+        textColor: 'orange,s{blue}',
+        logging
+      });
+      const contents = await readFile(outputPath, 'utf8');
+      const expected = await readFile(completePackageList, 'utf8');
+      expect(contents).to.equal(expected);
     });
   });
 });

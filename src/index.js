@@ -61,45 +61,14 @@ const licenseTypes = [
   }]
 ];
 
-/**
- * @param {LicenseBadgerOptions} options
- * @returns {Promise<void>}
- */
-module.exports = async ({
-  packagePath,
-  packageJson,
-  corrections,
-  production,
+const getLicensesMap = exports.getLicensesMap = async function ({
   allDevelopment,
-  outputPath = resolve(process.cwd(), './license-badge.svg'),
-  licenseInfoPath = !allDevelopment &&
-    resolve(process.cwd(), './licenseInfo.json'),
-  logging = false,
-  textTemplate = 'Licenses',
-  /* eslint-disable no-template-curly-in-string */
-  licenseTemplate = '\n${index}. ${license}',
-  licenseTypeTemplate = '${text}',
-  uncategorizedLicenseTemplate = '${name} (${version})',
-  /* eslint-enable no-template-curly-in-string */
-  filteredTypes = null,
-  textColor = defaultTextColor,
-  licenseTypeColor = []
-}) => {
-  if (!outputPath || typeof outputPath !== 'string') {
-    throw new TypeError('Bad output path provided.');
-  }
-  if (typeof textColor === 'string') {
-    textColor = textColor.split(',');
-  }
-
-  const licenseTypeColorInfo = licenseTypeColor.map((typeAndColor) => {
-    const [type, colors] = typeAndColor.split('=');
-    return [type, colors.split(',')];
-  });
-  const customLicenseTypeToColor = new Map(
-    licenseTypeColorInfo
-  );
-
+  packagePath,
+  corrections,
+  licenseInfoPath,
+  production,
+  packageJson
+}) {
   let licenses;
   try {
     if (allDevelopment) {
@@ -139,6 +108,57 @@ module.exports = async ({
     /* istanbul ignore next */
     throw err;
   }
+  return licenses;
+};
+
+/**
+ * @param {LicenseBadgerOptions} options
+ * @returns {Promise<void>}
+ */
+module.exports = async ({
+  packagePath,
+  packageJson,
+  corrections,
+  production,
+  allDevelopment,
+  outputPath = resolve(process.cwd(), './license-badge.svg'),
+  licenseInfoPath = !allDevelopment &&
+    resolve(process.cwd(), './licenseInfo.json'),
+  logging = false,
+  textTemplate = 'Licenses',
+  /* eslint-disable no-template-curly-in-string */
+  licenseTemplate = '\n${index}. ${license}',
+  licenseTypeTemplate = '${text}',
+  uncategorizedLicenseTemplate = '${name} (${version})',
+  /* eslint-enable no-template-curly-in-string */
+  filteredTypes = null,
+  completePackageList = null,
+  textColor = defaultTextColor,
+  licenseTypeColor = []
+}) => {
+  if (!outputPath || typeof outputPath !== 'string') {
+    throw new TypeError('Bad output path provided.');
+  }
+  if (typeof textColor === 'string') {
+    textColor = textColor.split(',');
+  }
+
+  const licenseTypeColorInfo = licenseTypeColor.map((typeAndColor) => {
+    const [type, colors] = typeAndColor.split('=');
+    return [type, colors.split(',')];
+  });
+  const customLicenseTypeToColor = new Map(
+    licenseTypeColorInfo
+  );
+
+  const licenses = completePackageList || await getLicensesMap({
+    allDevelopment,
+    packagePath,
+    corrections,
+    licenseInfoPath,
+    production,
+    packageJson
+  });
 
   const usedLicenses = [];
   const licenseTypesWithUncategorized = licenseTypes.map((

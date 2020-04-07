@@ -1,5 +1,12 @@
 # CHANGES for license-badger
 
+## 0.13.0
+
+- Enhancement: Allow `completePackageList` map programmatic option
+    (and `getLicensesMap` export)
+- Docs: Info for possible use with `rollup-plugin-license`
+- npm: Add `prepublishOnly` script for updating license badges
+
 ## 0.12.7
 
 - Fix: Add missing `disableLsErrorAborting` setting to avoid the

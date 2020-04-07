@@ -18,8 +18,6 @@
 
 [![issuehunt-to-marktext](https://issuehunt.io/static/embed/issuehunt-button-v1.svg)](https://issuehunt.io/r/brettz9/license-badger)
 
-**This project is in early beta.**
-
 Build a badge indicating the licenses of your project's dependencies
 (dependencies, devDependencies, whitelist-bundled devDependencies, and/or
 your project's own license).
@@ -107,6 +105,14 @@ be forced to either:
   which has no need of a bundling step or which has a bundling step but is not
   used for all files such as an online demo.
 
+### Those already having a list of licenses
+
+Though this option is only recommended for tools and such because one might
+otherwise miss transitive dependencies (dependencies of your dependencies)
+that should also be included. But if you are sure you know the complete list,
+including transitive dependencies, you can use the option `completePackageList`,
+a Map of package names (only available in the programmatic interface).
+
 ## Notes on license categories
 
 Adopts helpful categories of [npm-consider](https://github.com/delfrrr/npm-consider):
@@ -178,6 +184,56 @@ get-license-type "license expression"
 
 ## To-dos
 
+1. Provide export for convenient use with
+    [rollup-plugin-license](https://www.npmjs.com/package/rollup-plugin-license),
+    building our `completePackageList` map option as its `template` option
+    is called:
+
+```js
+// UNTESTED
+
+const getLicenseType = require('npm-consider/lib/getLicenseType');
+
+const licenseMap = new Map();
+
+export default {
+  plugins: [
+    license({
+      thirdParty: {
+        output: {
+          template (dependencies) {
+            dependencies.forEach((dependency) => {
+              const type = getLicenseType(dependency.license);
+              const set = licenseMap.has(type)
+                ? licenseMap.get(type)
+                : new Set();
+              set.add(dependency.license);
+              licenseMap.set(type, set);
+            });
+          }
+        }
+      }
+    }),
+    // Making plugin here on the fly, but should expose to API
+    (() => {
+      return {
+        name: 'license-badger',
+        buildEnd () {
+          licenseBadger({
+            licenseInfoPath: '',
+            completePackageList: licenseMap,
+            textColor: 'orange,s{blue}'
+          });
+        }
+      };
+    })()
+  ],
+  input: '...',
+  output: {
+    //
+  }
+};
+```
 1. Get to work with Git submodules
 1. Ability to normalize an AND/OR license, e.g.,
     `(MIT OR (MIT OR GPL-3.0))`, `(MIT AND (MIT AND GPL-3.0))`,

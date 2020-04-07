@@ -12,8 +12,15 @@ module.exports = {
   overrides: [
     {
       files: '*.md',
+      extends: ['plugin:node/recommended-module'],
+      globals: {
+        require: 'readonly',
+        license: 'readonly',
+        licenseBadger: 'readonly'
+      },
       rules: {
-
+        'import/no-anonymous-default-export': 0,
+        strict: 0
       }
     },
     {
