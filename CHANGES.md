@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- Docs: Clarification of `filteredTypes` option
+
 ## 0.13.0
 
 - Enhancement: Allow `completePackageList` map programmatic option

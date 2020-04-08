@@ -72,11 +72,11 @@ const optionDefinitions = [
   {
     name: 'filteredTypes', type: String, alias: 'f',
     description: 'Comma-separated list of specific license types to display ' +
-      'and/or "nonempty"; defaults to no filter; can be one of ' +
+      'and/or "nonempty"; defaults to no filter; can be any of ' +
       '"publicDomain"|"permissive"|"weaklyProtective"|\n' +
       '"protective"|"networkProtective"|"reuseProtective"|\n' +
-      '"unlicensed"|"uncategorized"',
-    typeLabel: '{underline list of "nonempty" or value}'
+      '"unlicensed"|"uncategorized"|"nonempty"',
+    typeLabel: '{underline value or list of values}'
   },
   {
     name: 'textColor', type: String,
