@@ -13,14 +13,14 @@ const satisfiesFile = join(__dirname, '../bin/satisfies.js');
 
 describe('Binary', function () {
   this.timeout(8000);
-  it('should return help', async function () {
+  it('should log help', async function () {
     const {stdout} = await execFile(binFile, ['-h']);
     expect(stdout).to.contain(
       "Builds a badge indicating your project's license(s)"
     );
   });
 
-  it('should return execute', async function () {
+  it('should log sections', async function () {
     const {stdout, stderr} = await execFile(
       binFile,
       [
