@@ -2,6 +2,7 @@
 
 ## ?
 
+- Linting: Check hidden files; add missing `use strict` on hidden files
 - Docs: Clarification of `filteredTypes` option
 
 ## 0.13.0
