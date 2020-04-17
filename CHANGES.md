@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## 0.14.2
+
+- Fix: Ensure sorting order of `filteredTypes` follows users' order
+
 ## 0.14.1
 
 - Docs: Update CLI docs

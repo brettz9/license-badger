@@ -218,6 +218,8 @@ module.exports = async ({
       [type, {licenseCount}]
     ) => {
       return (checkNonempty && licenseCount) || filteredTypes.includes(type);
+    }).sort(([typeA], [typeB]) => {
+      return filteredTypes.indexOf(typeA) > filteredTypes.indexOf(typeB);
     });
   }
 

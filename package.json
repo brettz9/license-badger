@@ -1,6 +1,6 @@
 {
   "name": "license-badger",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "description": "Builds a badge indicating your project's license(s) and those of its dependencies.",
   "main": "src/index.js",
   "bin": {
