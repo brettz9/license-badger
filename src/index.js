@@ -209,12 +209,15 @@ module.exports = async ({
 
   let filteredLicenseTypes = licenseTypesWithUncategorized;
   const nonemptyPos = filteredTypes.indexOf('nonempty');
-  if (nonemptyPos > -1) {
+  const checkNonempty = nonemptyPos > -1;
+  if (checkNonempty) {
     filteredTypes.splice(nonemptyPos, 1);
+  }
+  if (checkNonempty || filteredTypes.length) {
     filteredLicenseTypes = filteredLicenseTypes.filter((
       [type, {licenseCount}]
     ) => {
-      return licenseCount || filteredTypes.includes(type);
+      return (checkNonempty && licenseCount) || filteredTypes.includes(type);
     });
   }
 

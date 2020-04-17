@@ -35,6 +35,7 @@ const productionPath = getFixturePath('production.svg');
 const packageJsonPath = getFixturePath('packageJson.svg');
 const packageJsonAndLicensePath = getFixturePath('packageJsonAndLicense.svg');
 const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
+const otherFilteredTypes = getFixturePath('otherFilteredTypes.svg');
 const seeLicenseInPath = getFixturePath('seeLicenseIn.svg');
 const unlicensedPath = getFixturePath('unlicensed.svg');
 const reuseProtectivePath = getFixturePath('reuseProtective.svg');
@@ -80,7 +81,7 @@ describe('Main file', function () {
 
   describe('Main functionality', function () {
     const fixturePaths = [];
-    for (let i = 0; i <= 11; i++) {
+    for (let i = 0; i <= 12; i++) {
       fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));
     }
     let j = 0;
@@ -128,6 +129,20 @@ describe('Main file', function () {
     });
 
     it('should work with `filteredTypes`', async function () {
+      const outputPath = getNextFixturePath();
+      await licenseBadger({
+        packagePath,
+        licenseInfoPath,
+        outputPath,
+        filteredTypes: 'missing',
+        logging
+      });
+      const contents = await readFile(outputPath, 'utf8');
+      const expected = await readFile(otherFilteredTypes, 'utf8');
+      expect(contents).to.equal(expected);
+    });
+
+    it('should work with `filteredTypes` (nonempty)', async function () {
       const outputPath = getNextFixturePath();
       await licenseBadger({
         packagePath,

@@ -1,7 +1,8 @@
 # CHANGES for license-badger
 
-## ?
+## 0.14.0
 
+- Fix: Allow `filteredTypes` to work besides with `nonempty`
 - Linting: Check hidden files; add missing `use strict` on hidden files
 - Docs: Clarification of `filteredTypes` option
 
