@@ -208,12 +208,12 @@ module.exports = async ({
     : [];
 
   let filteredLicenseTypes = licenseTypesWithUncategorized;
-  const nonemptyPos = filteredTypes.indexOf('nonempty');
-  const checkNonempty = nonemptyPos > -1;
-  if (checkNonempty) {
-    filteredTypes.splice(nonemptyPos, 1);
-  }
-  if (checkNonempty || filteredTypes.length) {
+  if (filteredTypes.length) {
+    const nonemptyPos = filteredTypes.indexOf('nonempty');
+    const checkNonempty = nonemptyPos > -1;
+    if (checkNonempty) {
+      filteredTypes.splice(nonemptyPos, 1);
+    }
     filteredLicenseTypes = filteredLicenseTypes.filter((
       [type, {licenseCount}]
     ) => {
