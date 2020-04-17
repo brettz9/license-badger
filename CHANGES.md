@@ -1,5 +1,10 @@
 # CHANGES for license-badger
 
+## 0.14.1
+
+- Docs: Update CLI docs
+- Refactoring: Simplify and avoid extra checks
+
 ## 0.14.0
 
 - Fix: Allow `filteredTypes` to work besides with `nonempty`
