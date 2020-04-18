@@ -167,10 +167,15 @@ get-license-type "license expression"
 
 ## See also
 
+- [eslint-formatter-badger](https://github.com/brettz9/eslint-formatter-badger) -
+    Locally created badges indicating linting results (as run against your project
+    and/or your dependencies)
+- [filesize-badger](https://github.com/brettz9/filesize-badger) - Locally created
+    badges indicating file size (also buildable as part of Rollup routine)
 - [mocha-badge-generator](https://github.com/ianpogi5/mocha-badge-generator) - Locally
-  created badges for Mocha test results
+    created badges for Mocha test results
 - [coveradge](https://github.com/brettz9/coveradge) - Locally-created badges
-  for nyc/istanbul coverage
+    for nyc/istanbul coverage
 
 ## Immediate to-dos
 
