@@ -175,7 +175,7 @@ exports.getLicenses = async ({
   if (allDevelopment) {
     bundledRootPackages = true;
   } else if (licenseInfoPath) {
-    // eslint-disable-next-line import/no-dynamic-require, global-require
+    // eslint-disable-next-line import/no-dynamic-require
     ({bundledRootPackages} = require(
       resolve(process.cwd(), licenseInfoPath)
     ));

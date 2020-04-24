@@ -86,7 +86,7 @@ const getLicensesMap = exports.getLicensesMap = async function ({
       );
     }
     if (packageJson) {
-      // eslint-disable-next-line import/no-dynamic-require, global-require
+      // eslint-disable-next-line import/no-dynamic-require
       const {name, version, license} = require(
         join(packagePath || process.cwd(), 'package.json')
       );

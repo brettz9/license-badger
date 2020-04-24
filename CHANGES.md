@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- npm: Update devDeps.
+
 ## 0.14.2
 
 - Fix: Ensure sorting order of `filteredTypes` follows users' order
