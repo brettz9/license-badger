@@ -1,7 +1,9 @@
 # CHANGES for license-badger
 
-## ?
+## 0.15.0
 
+- Docs: Update badges per updates
+- npm: Remove `q-combinators` (previously used for sample of custom license)
 - npm: Update devDeps.
 
 ## 0.14.2
