@@ -278,3 +278,5 @@ export default {
     for more detection opportunities (e.g., README and License file); see
     also <https://github.com/davglass/license-checker/issues/225> to make this
     easier on our end.
+1. Utilize `es-file-traverse` to be able to list licenses for files
+    actually in use.
