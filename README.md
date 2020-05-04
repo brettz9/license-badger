@@ -273,7 +273,8 @@ export default {
         license type(s) automatically). (Would also be nice to have means of
         doing so for the server-side code driving a site.). Could make this
         as a reporter which builds the necessary code (probably caching
-        a static copy for performance reasons).
+        a static copy for performance reasons)--i.e., build a JS web labels
+        table (being sure to link to it).
 1. See about using [license-checker](https://github.com/davglass/license-checker)
     for more detection opportunities (e.g., README and License file); see
     also <https://github.com/davglass/license-checker/issues/225> to make this
