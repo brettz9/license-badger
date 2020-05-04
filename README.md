@@ -280,7 +280,8 @@ export default {
             to a `package.json` file. (Besides being easier to convert this
             code base to work in this manner, would be useful to have a
             formal mechanism for finding other meta-data and source
-            code.)
+            code.) Might have separate `<link>` or `rel` to distinguish
+            between a package with just JS code and server code?
 1. See about using [license-checker](https://github.com/davglass/license-checker)
     for more detection opportunities (e.g., README and License file); see
     also <https://github.com/davglass/license-checker/issues/225> to make this
