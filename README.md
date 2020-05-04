@@ -270,11 +270,12 @@ export default {
     1. Along the lines of <https://www.gnu.org/software/librejs/free-your-javascript.html#step3>/
         <https://www.gnu.org/licenses/javascript-labels.html>, might advertise
         permissiveness of JS (to a browser add-on which could indicate the
-        license type(s) automatically). (Would also be nice to have means of
-        doing so for the server-side code driving a site.). Could make this
-        as a reporter which builds the necessary code (probably caching
-        a static copy for performance reasons)--i.e., build a JS web labels
-        table (being sure to link to it).
+        license type(s) automatically). (Would also be nice to settle on a
+        means of advertising the server-side licenses in use behind a site
+        as well as info on how to get source.). Could make this as a reporter
+        which builds the necessary code (probably caching a static copy for
+        performance reasons)--i.e., build a JS web labels table (being sure
+        to link to it).
 1. See about using [license-checker](https://github.com/davglass/license-checker)
     for more detection opportunities (e.g., README and License file); see
     also <https://github.com/davglass/license-checker/issues/225> to make this
