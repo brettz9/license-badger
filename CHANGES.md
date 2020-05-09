@@ -1,5 +1,12 @@
 # CHANGES for license-badger
 
+## 0.16.0
+
+- Docs: Update dev license badges
+- npm: Update devDeps and `package-lock.json` (including `npm-consider`
+    fork support for "OBSD" categorization)
+- npm: Switch to maintained `cypress-multi-reporters`
+
 ## 0.15.0
 
 - Docs: Update badges per updates
