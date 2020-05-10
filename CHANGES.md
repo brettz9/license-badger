@@ -1,5 +1,11 @@
 # CHANGES for license-badger
 
+## 0.17.0
+
+- Testing: Update test expectations per updated `badge-up` (generated
+    SVG is somewhat different but essentially the same)
+- npm: Use stable `badge-up` and devDeps.
+
 ## 0.16.0
 
 - Docs: Update dev license badges
