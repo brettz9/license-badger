@@ -31,12 +31,13 @@ const stringifyLicense = (ast) => {
 
 /**
  * @param {PlainObject} typeInfo
- * @param {Map} [typeInfo.licenses = new Map()]
+ * @param {Map} [typeInfo.licenses=new Map()]
  * @param {string} typeInfo.license
  * @param {string} [typeInfo.name] Optional if license is known to be
  * a positive-length string, and is not "UNLICENSED", with "SEE LICENSE IN ",
  * beginning with "RPL-" or "Parity-", or of type "uncategorized"
  * @param {string} [typeInfo.version] See `typeInfo.name`.
+ * @param {boolean} [typeInfo.licenseAsAST]
  * @returns {Map}
  */
 const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({

@@ -21,8 +21,8 @@
     "coverage-badge": "coveradge badges/coverage-badge.svg",
     "eslint": "eslint --ext=js,md,html .",
     "mocha": "mocha --require chai/register-expect test/** --reporter-options configFile=mocha-multi-reporters.json",
-    "test": "npm run eslint && npm run mocha",
-    "test-cov": "rm -rf node_modules/.cache && nyc --all npm run mocha && npm run coverage-badge"
+    "nyc": "rm -rf node_modules/.cache && nyc --all npm run mocha && npm run coverage-badge",
+    "test": "npm run eslint && npm run nyc"
   },
   "nyc": {
     "reporter": [
@@ -86,7 +86,7 @@
     "badge-up": "^3.0.0",
     "command-line-basics": "^0.8.0",
     "es6-template-strings": "^2.0.1",
-    "licensee": "git+https://github.com/brettz9/licensee.js.git#filterPackages-and-error-aborting",
+    "licensee": "^8.1.0",
     "npm-consider": "git+https://github.com/brettz9/npm-consider.git#fixes",
     "spdx-expression-parse": "^3.0.0"
   }

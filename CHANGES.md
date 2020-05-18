@@ -1,5 +1,11 @@
 # CHANGES for license-badger
 
+## ?
+
+- Linting: As per latest ash-nazg (`eslint-plugin-jsdoc`)
+- npm: Use stable `licensee`
+- npm: Add coverage to regular `test` script
+
 ## 0.17.0
 
 - Testing: Update test expectations per updated `badge-up` (generated
