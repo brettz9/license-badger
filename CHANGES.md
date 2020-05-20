@@ -3,6 +3,7 @@
 ## ?
 
 - Linting: As per latest ash-nazg (`eslint-plugin-jsdoc`)
+- Linting (LGTM): Add `lgtm.yml`
 - npm: Use stable `licensee`
 - npm: Add coverage to regular `test` script
 
