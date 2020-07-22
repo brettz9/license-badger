@@ -132,7 +132,13 @@ const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
   let type, custom;
   [type, custom, licns] = getTypeInfo(licns);
 
-  if (type) {
+  if (
+    // When dependencies point to `file:` (like @mysticatea/eslint-plugin),
+    //  these will have metadata but without a name; ignore these (should be
+    //  caught by parent package with a name)
+    name &&
+    type
+  ) {
     addType(type, licns);
   }
   return licenses;
@@ -151,10 +157,10 @@ If adding back to `LicenseInfo`
 * @property {string[]} manuallyCorrected
  */
 
-/* eslint-disable max-len */
 /**
  * @param {PlainObject} cfg
- * @param {LicenseBadgerOptions#licenseInfoPath} [cfg.licenseInfoPath=resolve(process.cwd(), './licenseInfo.json')]
+ * @param {LicenseBadgerOptions#licenseInfoPath} [cfg.licenseInfoPath=
+ * resolve(process.cwd(), './licenseInfo.json')]
  * Not used, nor default obtained, when `filter` is `false`.
  * @param {LicenseBadgerOptions#packagePath} [cfg.packagePath=process.cwd()]
  * @param {LicenseBadgerOptions#corrections} [cfg.corrections=false]
@@ -164,7 +170,6 @@ If adding back to `LicenseInfo`
  * @returns {Promise<LicenseInfo>}
  */
 exports.getLicenses = async ({
-  /* eslint-enable max-len */
   licenseInfoPath,
   packagePath = process.cwd(),
   corrections = false,
@@ -176,7 +181,7 @@ exports.getLicenses = async ({
   if (allDevelopment) {
     bundledRootPackages = true;
   } else if (licenseInfoPath) {
-    // eslint-disable-next-line import/no-dynamic-require
+    // eslint-disable-next-line import/no-dynamic-require -- User path
     ({bundledRootPackages} = require(
       resolve(process.cwd(), licenseInfoPath)
     ));
@@ -217,7 +222,7 @@ exports.getLicenses = async ({
     );
   } catch (err) {
     /* istanbul ignore next */
-    // eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console -- Extra info
     console.log('Error', err);
     /* istanbul ignore next */
     throw err;

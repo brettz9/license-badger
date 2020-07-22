@@ -3,11 +3,11 @@
 const pkg = require('../package.json');
 
 // Todo: We really need a comamnd-line-args-TO-typedef-jsdoc generator!
-/* eslint-disable jsdoc/require-property */
+/* eslint-disable jsdoc/require-property -- See schema below */
 /**
 * @typedef {PlainObject} LicenseBadgerOptions
 */
-/* eslint-enable jsdoc/require-property */
+/* eslint-enable jsdoc/require-property -- See schema below */
 
 const getChalkTemplateSingleEscape = (s) => {
   return s.replace(/[{}\\]/gu, (ch) => {
@@ -110,7 +110,7 @@ const optionDefinitions = [
     name: 'licenseTemplate', type: String,
     description: 'Template for listing individual licenses; defaults ' +
       getChalkTemplateSingleEscape(
-        // eslint-disable-next-line no-template-curly-in-string
+      // eslint-disable-next-line no-template-curly-in-string -- User templates
         'to: "\n${index}. ${license}"; passed `license` and `index` (1-based); '
       ) +
       'remember to escape `$` with backslash for CLI use',
@@ -120,7 +120,7 @@ const optionDefinitions = [
     name: 'uncategorizedLicenseTemplate', type: String,
     description: 'Template for listing individual uncategorized projects; ' +
       getChalkTemplateSingleEscape(
-        // eslint-disable-next-line no-template-curly-in-string
+      // eslint-disable-next-line no-template-curly-in-string -- User templates
         'defaults to: "${name} (${version})"; passed `license`, `name`, '
       ) +
       '`custom` (license text after "SEE LICENSE IN "), and `version`; ' +
@@ -131,7 +131,7 @@ const optionDefinitions = [
     name: 'licenseTypeTemplate', type: String,
     description: 'Template for listing individual license types; defaults ' +
       getChalkTemplateSingleEscape(
-        // eslint-disable-next-line no-template-curly-in-string
+      // eslint-disable-next-line no-template-curly-in-string -- User templates
         'to: "${text}"; passed `text` and `licenseCount`; remember to escape '
       ) +
       '`$` with backslash for CLI use',

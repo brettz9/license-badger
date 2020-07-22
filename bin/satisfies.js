@@ -13,5 +13,5 @@ if (!optionDefinitions) { // cliBasics handled
   process.exit();
 }
 
-// eslint-disable-next-line no-console
+// eslint-disable-next-line no-console -- CLI
 console.log(satisfies(...optionDefinitions.licenseExpressions));

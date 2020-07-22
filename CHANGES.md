@@ -1,10 +1,13 @@
 # CHANGES for license-badger
 
-## ?
+## 0.18.0
 
+- Fix: Avoid adding nameless `file:` licenses (to missing)
 - Linting: As per latest ash-nazg (`eslint-plugin-jsdoc`)
 - Linting (LGTM): Add `lgtm.yml`
 - npm: Use stable `licensee`
+- npm: Update `spx-expression-parse` dependency
+- npm: Update devDeps.
 - npm: Add coverage to regular `test` script
 
 ## 0.17.0

@@ -41,7 +41,15 @@ module.exports = function (bundledRootPackages) {
             bundledRootPackages.includes(pkg.name)));
     });
 
-    // eslint-disable-next-line jsdoc/require-jsdoc
+    /**
+     * `package.json` info.
+     * @external PackageInfo
+     */
+
+    /**
+     * @param {external:PackageInfo} pkgs
+     * @returns {void}
+     */
     function getDeps (pkgs) {
       pkgs.forEach((pkg) => {
         // Not able to replicate, but keeping as condition
@@ -62,12 +70,10 @@ module.exports = function (bundledRootPackages) {
               const {name} = pk;
               return dep === name;
             };
-            /* eslint-disable unicorn/no-fn-reference-in-iterator */
-            if (filteredPackages.find(findPkg) !== undefined) {
+            if (filteredPackages.find((item) => findPkg(item)) !== undefined) {
               return;
             }
-            const pk = packages.find(findPkg);
-            /* eslint-enable unicorn/no-fn-reference-in-iterator */
+            const pk = packages.find((item) => findPkg(item));
             pkgsToCheck.push(pk);
             filteredPackages.push(pk);
           });
@@ -77,8 +83,11 @@ module.exports = function (bundledRootPackages) {
     }
 
     getDeps(filteredPackages);
-    // eslint-disable-next-line max-len
-    // console.log('filteredPackages', filteredPackages.map(({name}) => name).sort());
+    /*
+    console.log(
+      'filteredPackages', filteredPackages.map(({name}) => name).sort()
+    );
+    */
 
     return filteredPackages;
   };

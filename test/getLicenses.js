@@ -16,11 +16,11 @@ describe('getLicenses', function () {
     expect(permissive).to.be.a('Set');
     expect(permissive.has('MIT')).to.be.true;
   });
-  it('should work with empty `licenses`', () => {
+  it('should avoid adding nameless `license`', () => {
     const licenses = getTypeInfoForLicense({license: 'MIT'});
     const permissive = licenses.get('permissive');
-    expect(permissive).to.be.a('Set');
-    expect(permissive.has('MIT')).to.be.true;
+    expect(permissive).to.be.undefined;
+    expect([...licenses]).to.have.lengthOf(0);
   });
   it('should work with AND and OR', () => {
     const licenses = getTypeInfoForLicense({

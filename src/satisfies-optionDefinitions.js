@@ -3,11 +3,11 @@
 const pkg = require('../package.json');
 
 // Todo: We really need a comamnd-line-args-TO-typedef-jsdoc generator!
-/* eslint-disable jsdoc/require-property */
+/* eslint-disable jsdoc/require-property -- See schema below */
 /**
 * @typedef {PlainObject} SatisfiesOptions
 */
-/* eslint-enable jsdoc/require-property */
+/* eslint-enable jsdoc/require-property -- See schema below */
 
 const optionDefinitions = [
   {

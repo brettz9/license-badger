@@ -86,7 +86,7 @@ const getLicensesMap = exports.getLicensesMap = async function ({
       );
     }
     if (packageJson) {
-      // eslint-disable-next-line import/no-dynamic-require
+      // eslint-disable-next-line import/no-dynamic-require -- User package
       const {name, version, license} = require(
         join(packagePath || process.cwd(), 'package.json')
       );
@@ -103,7 +103,7 @@ const getLicensesMap = exports.getLicensesMap = async function ({
     }
   } catch (err) {
     /* istanbul ignore next */
-    // eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console -- More info
     console.log('err', err);
     /* istanbul ignore next */
     throw err;
@@ -126,11 +126,11 @@ module.exports = async ({
     resolve(process.cwd(), './licenseInfo.json'),
   logging = false,
   textTemplate = 'Licenses',
-  /* eslint-disable no-template-curly-in-string */
+  /* eslint-disable no-template-curly-in-string -- User templates */
   licenseTemplate = '\n${index}. ${license}',
   licenseTypeTemplate = '${text}',
   uncategorizedLicenseTemplate = '${name} (${version})',
-  /* eslint-enable no-template-curly-in-string */
+  /* eslint-enable no-template-curly-in-string -- User templates */
   filteredTypes = null,
   completePackageList = null,
   textColor = defaultTextColor,
@@ -256,7 +256,7 @@ module.exports = async ({
   ];
 
   if (logging === 'verbose') {
-    // eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console -- CLI
     console.log('Using licenses', licenses, '\nprinting sections:\n', sections);
   }
 

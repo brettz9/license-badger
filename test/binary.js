@@ -31,7 +31,7 @@ describe('Binary', function () {
       ]
     );
     if (stderr) {
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console -- Test info
       console.log('stderr', stderr);
     }
     expect(stdout).to.contain('printing sections');
@@ -55,7 +55,7 @@ describe('getLicenseType', function () {
       ]
     );
     if (stderr) {
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console -- Test info
       console.log('stderr', stderr);
     }
     expect(stdout).to.contain('permissive');
@@ -80,7 +80,7 @@ describe('satisfies', function () {
       ]
     );
     if (stderr) {
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console -- Test info
       console.log('stderr', stderr);
     }
     expect(stdout).to.contain('true');
