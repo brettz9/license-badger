@@ -4,3 +4,4 @@ coverage
 .mocharc.js
 mocha-multi-reporters.json
 test.svg
+lgtm.yml
