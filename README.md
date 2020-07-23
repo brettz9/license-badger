@@ -165,6 +165,15 @@ get-license-type "license expression"
 
 ![cli.svg](https://raw.githubusercontent.com/brettz9/license-badger/master/cli.svg?sanitize=true)
 
+## Tips
+
+You may wish to use the likes of [@hkdobrev/run-if-changed](https://github.com/hkdobrev/run-if-changed) (with [husky](https://github.com/typicode/husky))
+so as to check for `package.json`/`package-lock.json` changes and run
+`license-badger` to ensure it is being built against the latest `dependencies`
+(and/or `devDependencies`). (The package is also useful for ensuring your
+local installation is auto-updated to reflect your project's latest package
+lock.)
+
 ## See also
 
 - [eslint-formatter-badger](https://github.com/brettz9/eslint-formatter-badger) -
