@@ -1,5 +1,5 @@
 'use strict';
 module.exports = {
   exclude: 'test/*/**',
-  reporter: 'cypress-multi-reporters'
+  reporter: 'mocha-multi-reporters'
 };

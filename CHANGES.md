@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- Testing: Switch to stable version of `mocha-multi-reporters`
+
 ## 0.18.0
 
 - Fix: Avoid adding nameless `file:` licenses (to missing)
