@@ -186,6 +186,12 @@ lock.)
 - [coveradge](https://github.com/brettz9/coveradge) - Locally-created badges
     for nyc/istanbul coverage
 
+## Development
+
+Some npm commands (`npm audit fix`) might auto-add items to the `dependencies`,
+but if you use such a command, be sure to undo the change (and run tests to be
+sure).
+
 ## Immediate to-dos
 
 1. Get `npm-consider/lib/getLicenseType` to stop treating AND as

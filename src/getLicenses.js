@@ -150,8 +150,9 @@ const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
 * @property {Map} licenses
 */
 
-/*
+/**
 If adding back to `LicenseInfo`
+* @ignore
 * @property {GenericArray} approved
 * @property {GenericArray} nonApproved
 * @property {string[]} manuallyCorrected
@@ -160,7 +161,7 @@ If adding back to `LicenseInfo`
 /**
  * @param {PlainObject} cfg
  * @param {LicenseBadgerOptions#licenseInfoPath} [cfg.licenseInfoPath=
- * resolve(process.cwd(), './licenseInfo.json')]
+ * resolve(process.cwd(), "./licenseInfo.json")]
  * Not used, nor default obtained, when `filter` is `false`.
  * @param {LicenseBadgerOptions#packagePath} [cfg.packagePath=process.cwd()]
  * @param {LicenseBadgerOptions#corrections} [cfg.corrections=false]

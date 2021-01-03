@@ -2,6 +2,8 @@
 
 ## ?
 
+- Linting: As per latest ash-nazg
+- npm: Update devDeps.
 - Testing: Switch to stable version of `mocha-multi-reporters`
 
 ## 0.18.0
