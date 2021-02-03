@@ -25,7 +25,7 @@ describe('Binary', function () {
       binFile,
       [
         '-l', 'test/fixtures/licenseInfo.json',
-        '--packagePath', '.',
+        '--packagePath', '../',
         '--logging', 'verbose',
         'test.svg'
       ]
@@ -61,6 +61,19 @@ describe('getLicenseType', function () {
     expect(stdout).to.contain('permissive');
     expect(stderr).to.equal('');
   });
+  it("should report error if user doesn't supply argument", async function () {
+    const {stdout, stderr} = await execFile(
+      getLicenseTypeFile,
+      [
+      ]
+    );
+    if (stderr) {
+      // eslint-disable-next-line no-console -- Test info
+      console.log('stderr', stderr);
+    }
+    expect(stdout).to.equal('');
+    expect(stderr).to.contain('Please provide a single license argument\n');
+  });
 });
 
 describe('satisfies', function () {
@@ -86,4 +99,41 @@ describe('satisfies', function () {
     expect(stdout).to.contain('true');
     expect(stderr).to.equal('');
   });
+
+  it('should handle UNLICENSED special case', async function () {
+    const {stdout, stderr} = await execFile(
+      satisfiesFile,
+      [
+        'UNLICENSED',
+        'UNLIC`'
+      ]
+    );
+    if (stderr) {
+      // eslint-disable-next-line no-console -- Test info
+      console.log('stderr', stderr);
+    }
+    expect(stdout).to.contain('false');
+    expect(stderr).to.equal('');
+  });
+
+  it(
+    'should report error if user provides inadequate arguments',
+    async function () {
+      const {stdout, stderr} = await execFile(
+        satisfiesFile,
+        [
+          'MIT'
+        ]
+      );
+      if (stderr) {
+        // eslint-disable-next-line no-console -- Test info
+        console.log('stderr', stderr);
+      }
+      expect(stdout).to.equal('');
+      expect(stderr).to.equal(
+        'Please provide at least two license arguments ' +
+          '(the `licenseExpressions`).\n'
+      );
+    }
+  );
 });

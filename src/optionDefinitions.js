@@ -74,7 +74,7 @@ const optionDefinitions = [
     description: 'Comma-separated list of specific license types to display ' +
       'and/or "nonempty"; defaults to no filter; can be any of ' +
       '"publicDomain"|"permissive"|"weaklyProtective"|\n' +
-      '"protective"|"networkProtective"|"reuseProtective"|\n' +
+      '"protective"|"networkProtective"|"useProtective"|"modifyProtective"|\n' +
       '"unlicensed"|"uncategorized"|"nonempty"',
     typeLabel: '{underline value or list of values}'
   },

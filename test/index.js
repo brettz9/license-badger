@@ -23,8 +23,14 @@ const licenseInfoPathUnlicensed = getFixturePath('licenseInfo-unlicensed.json');
 const licenseInfoPathUncategorized = getFixturePath(
   'licenseInfo-uncategorized.json'
 );
-const licenseInfoPathReuseProtective = getFixturePath(
-  'licenseInfo-reuseProtective.json'
+const licenseInfoPathUseProtective = getFixturePath(
+  'licenseInfo-useProtective.json'
+);
+const licenseInfoPathModifyProtective = getFixturePath(
+  'licenseInfo-modifyProtective.json'
+);
+const licenseInfoPathUseAndModifyProtective = getFixturePath(
+  'licenseInfo-useAndModifyProtective.json'
 );
 const licenseBadgePath = join(__dirname, '../license-badge.svg');
 const licenseBadgeFixturePath = getFixturePath('license-badge.svg');
@@ -38,7 +44,9 @@ const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
 const otherFilteredTypes = getFixturePath('otherFilteredTypes.svg');
 const seeLicenseInPath = getFixturePath('seeLicenseIn.svg');
 const unlicensedPath = getFixturePath('unlicensed.svg');
-const reuseProtectivePath = getFixturePath('reuseProtective.svg');
+const useAndModifyProtectivePath = getFixturePath('useAndModifyProtective.svg');
+const useProtectivePath = getFixturePath('useProtective.svg');
+const modifyProtectivePath = getFixturePath('modifyProtective.svg');
 const uncategorizedPath = getFixturePath('uncategorized.svg');
 const completePackageList = getFixturePath('completePackageList.svg');
 
@@ -81,7 +89,7 @@ describe('Main file', function () {
 
   describe('Main functionality', function () {
     const fixturePaths = [];
-    for (let i = 0; i <= 12; i++) {
+    for (let i = 0; i <= 14; i++) {
       fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));
     }
     let j = 0;
@@ -183,7 +191,7 @@ describe('Main file', function () {
       expect(contents).to.equal(expected);
     });
 
-    it('should work with `packageJson`', async function () {
+    it('should work with `packageJson` (packagePath)', async function () {
       const outputPath = getNextFixturePath();
       await licenseBadger({
         packageJson: true,
@@ -197,7 +205,7 @@ describe('Main file', function () {
       expect(contents).to.equal(expected);
     });
 
-    it('should work with `packageJson`', async function () {
+    it('should work with `packageJson` (chdir)', async function () {
       const cwd = process.cwd();
       process.chdir(join(__dirname, '../'));
       const outputPath = getNextFixturePath();
@@ -261,17 +269,45 @@ describe('Main file', function () {
         expect(contents).to.equal(expected);
       });
 
-      it('should work with Parity', async function () {
+      it('should work with CC-BY-NC-4.0', async function () {
         const outputPath = getNextFixturePath();
         await licenseBadger({
           corrections: true,
           packagePath,
-          licenseInfoPath: licenseInfoPathReuseProtective,
+          licenseInfoPath: licenseInfoPathUseProtective,
           outputPath,
           logging
         });
         const contents = await readFile(outputPath, 'utf8');
-        const expected = await readFile(reuseProtectivePath, 'utf8');
+        const expected = await readFile(useProtectivePath, 'utf8');
+        expect(contents).to.equal(expected);
+      });
+
+      it('should work with CC-BY-ND-4.0', async function () {
+        const outputPath = getNextFixturePath();
+        await licenseBadger({
+          corrections: true,
+          packagePath,
+          licenseInfoPath: licenseInfoPathModifyProtective,
+          outputPath,
+          logging
+        });
+        const contents = await readFile(outputPath, 'utf8');
+        const expected = await readFile(modifyProtectivePath, 'utf8');
+        expect(contents).to.equal(expected);
+      });
+
+      it('should work with CC-BY-NC-ND-4.0', async function () {
+        const outputPath = getNextFixturePath();
+        await licenseBadger({
+          corrections: true,
+          packagePath,
+          licenseInfoPath: licenseInfoPathUseAndModifyProtective,
+          outputPath,
+          logging
+        });
+        const contents = await readFile(outputPath, 'utf8');
+        const expected = await readFile(useAndModifyProtectivePath, 'utf8');
         expect(contents).to.equal(expected);
       });
 

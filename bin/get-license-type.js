@@ -2,14 +2,22 @@
 'use strict';
 
 const {join} = require('path');
-const getLicenseType = require('npm-consider/lib/getLicenseType');
 const {cliBasics} = require('command-line-basics');
+const getLicenseType = require('../src/getLicenseType.js');
 
 const optionDefinitions = cliBasics(
   join(__dirname, '../src/glt-optionDefinitions.js')
 );
 
 if (!optionDefinitions) { // cliBasics handled
+  process.exit();
+}
+
+if (!optionDefinitions.licenseExpression) {
+  // eslint-disable-next-line no-console -- CLI
+  console.error(
+    'Please provide a single license argument'
+  );
   process.exit();
 }
 

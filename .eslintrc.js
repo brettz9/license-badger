@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   env: {
-    browser: false,
+    'shared-node-browser': false,
     node: true,
     es6: true
   },
@@ -9,29 +9,28 @@ module.exports = {
     polyfills: [
     ]
   },
-  extends: ['ash-nazg/sauron', 'plugin:node/recommended-script'],
+  extends: ['ash-nazg/sauron-node-script-overrides'],
+  parserOptions: {
+    ecmaVersion: 2018
+  },
   overrides: [
     {
-      files: '*.md',
-      extends: ['plugin:node/recommended-module'],
+      files: '*.md/*.js',
+      extends: ['ash-nazg/sauron-node-script-overrides'],
       globals: {
         require: 'readonly',
         license: 'readonly',
         licenseBadger: 'readonly'
       },
       rules: {
-        'import/no-anonymous-default-export': 0,
-        strict: 0
-      }
-    },
-    {
-      files: '*.html',
-      rules: {
-        'import/unambiguous': 0
+        'node/no-missing-require': ['error', {
+          allowModules: ['license-badger']
+        }]
       }
     },
     {
       extends: [
+        'ash-nazg/sauron-node-script-overrides',
         'plugin:chai-expect/recommended',
         'plugin:chai-friendly/recommended'
       ],
@@ -41,19 +40,23 @@ module.exports = {
       },
       env: {
         mocha: true
+      },
+      parserOptions: {
+        ecmaVersion: 2018
+      },
+      rules: {
+        'compat/compat': 0
       }
     }
   ],
-  parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: 'script'
-  },
   rules: {
-    'import/no-commonjs': 0,
-
     // Not used by Node
     'compat/compat': 0,
-    // Added back by `plugin:node/recommended-script` above, so disable
-    'no-process-exit': 0
+
+    // fs/promises
+    'node/no-missing-require': 0,
+
+    // We need multiple exports
+    'node/exports-style': 0
   }
 };

@@ -9,6 +9,7 @@ const fs = require('fs');
 const {promisify} = require('util');
 const {join, resolve} = require('path');
 
+const licenseTypes = require('license-types/types.json');
 const badgeUp = require('badge-up').v2;
 const template = require('es6-template-strings');
 
@@ -17,49 +18,6 @@ const writeFile = promisify(fs.writeFile);
 const {getLicenses, getTypeInfoForLicense} = require('./getLicenses.js');
 
 const defaultTextColor = ['navy'];
-const licenseTypes = [
-  ['publicDomain', {
-    color: ['darkgreen'],
-    text: 'Public\ndomain'
-  }],
-  ['permissive', {
-    color: ['green'],
-    text: 'Permissive'
-  }],
-  ['weaklyProtective', {
-    color: ['CCCC00'], // dark yellow
-    text: 'Weakly\nprotective'
-  }],
-  ['protective', {
-    color: ['pink'],
-    text: 'Protective'
-  }],
-  ['networkProtective', {
-    color: ['FF69B4'], // pink
-    text: 'Network\nprotective'
-  }],
-  ['reuseProtective', {
-    color: ['red'],
-    text: 'Reuse\nprotective'
-  }],
-  ['unlicensed', {
-    color: ['black'],
-    text: 'Unlicensed'
-  }],
-  ['custom', {
-    color: ['gray'],
-    text: 'Custom'
-  }],
-  ['uncategorized', {
-    // darkgray is lighter than gray!
-    color: ['darkgray'],
-    text: 'Uncategorized'
-  }],
-  ['missing', {
-    color: ['lightgray'],
-    text: 'Missing'
-  }]
-];
 
 const getLicensesMap = exports.getLicensesMap = async function ({
   allDevelopment,
@@ -86,7 +44,8 @@ const getLicensesMap = exports.getLicensesMap = async function ({
       );
     }
     if (packageJson) {
-      // eslint-disable-next-line import/no-dynamic-require -- User package
+      // eslint-disable-next-line max-len -- Long
+      // eslint-disable-next-line import/no-dynamic-require, node/global-require -- User package
       const {name, version, license} = require(
         join(packagePath || process.cwd(), 'package.json')
       );
@@ -161,7 +120,7 @@ module.exports = async ({
   });
 
   const usedLicenses = [];
-  const licenseTypesWithUncategorized = licenseTypes.map((
+  const licenseTypesWithUncategorized = Object.entries(licenseTypes).map((
     [type, {color, text}]
   ) => {
     if (!licenses.has(type)) {

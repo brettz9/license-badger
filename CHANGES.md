@@ -1,5 +1,33 @@
 # CHANGES for license-badger
 
+## 0.19.0
+
+### User-impacting
+
+- Breaking change: Remove `reuseProtective` in favor of `useProtective`
+    and `modifyProtective` (or `networkProtective`)
+- Breaking change: Change `getLicenseType` to return array of possible license
+    types (some are not mutually exclusive like use and modify protective)
+- Breaking change: Must have lock file (inspired by removal of `_requiredBy`
+    data within npm)
+- Enhancement: Support yarn and pnpm
+- Update to `npm-consider` subproject instead of `npm-consider` (avoids
+    overhead and maintenance difficulties)
+- Enhancement: Give error if providing too few args to `satisfies` or
+    `get-license-type` binary
+- Docs: Indicate that project is working again, though only if
+   `package-lock.json` present
+
+### Dev-impacting
+
+- Linting: As per latest ash-nazg
+- Refactoring: Extract out `checkMiscTypes.js` utility for possible reuse and
+    move outside of proect
+- npm: Add `lint` and `bin` script
+- npm: Restore `prepublishOnly` script's execution of `license-badges` creation
+- npm: Update devDeps; switch to `@brettz9/eslint-plugin` and
+    `eslint-plugin-radar` and remove `typescript` as changed ash-nazg peerDeps.
+
 ## 0.18.1
 
 - Docs: Add notice about project status

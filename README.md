@@ -18,10 +18,9 @@
 
 [![issuehunt-to-marktext](https://issuehunt.io/static/embed/issuehunt-button-v1.svg)](https://issuehunt.io/r/brettz9/license-badger)
 
-***license-badger has regrettably been effectively broken by updates to
-npm (and lacks support for pnpm). Hopefully the project can be revived if
-a means of iterating for license of specific devDependencies (as well as
-dependencies) is restored.***
+***license-badger does not currently support badge-creation for pnpm or Yarn
+projects. It also currently requires a `package-lock.json` file. See the
+FAQ.***
 
 Build a badge indicating the licenses of your project's dependencies
 (dependencies, devDependencies, whitelist-bundled devDependencies, and/or
@@ -120,14 +119,14 @@ a Map of package names (only available in the programmatic interface).
 
 ## Notes on license categories
 
-Adopts helpful categories of [npm-consider](https://github.com/delfrrr/npm-consider):
-"publicDomain", "permissive", "weaklyProtective", "protective", "networkProtective",
-and "uncategorized". We also add "reuseProtective" (for
-[RPL](https://en.wikipedia.org/wiki/Reciprocal_Public_License) and
-[Parity](https://licensezero.com/licenses/parity) type licenses which put
-conditions on even private use) and "unlicensed" (which is copyrighted or
-otherwise explicitly against reuse--rather than merely being currently
-unspecified).
+Adopts helpful categories of [npm-consider](https://github.com/delfrrr/npm-consider)
+(now a part of a separate and maintained [license-types](https://github.com/brettz9/license-types) project):
+
+"publicDomain", "permissive", "weaklyProtective", "protective",
+"networkProtective", "useProtective", "modifyProtective", and "uncategorized".
+We also add "unlicensed" (which is copyrighted or otherwise explicitly against
+reuse--rather than merely being currently unspecified), "custom" (for
+"SEE LICENSE IN") and "missing".
 <!--
 (See [#24](https://github.com/delfrrr/npm-consider/issues/24) and [#18](https://github.com/delfrrr/npm-consider/issues/18#issuecomment-568872477) of `npm-consider` for tracking these recommendations)
 -->
@@ -197,12 +196,35 @@ Some npm commands (`npm audit fix`) might auto-add items to the `dependencies`,
 but if you use such a command, be sure to undo the change (and run tests to be
 sure).
 
+## FAQ
+
+1. Why was a lock file (currently `package-lock.json`) required?
+
+Due to [deprecation](https://github.com/npm/rfcs/blob/latest/implemented/0013-no-package-json-_fields.md)
+by `npm` and lack of support by `yarn` or `pnpm`, we needed to replace the
+`_requiredBy` property which we were using to detect `devDependencies` (though
+we might be able to just avoid it since devDep. detection was intended to
+check all anyways). See to-do below.
+
 ## Immediate to-dos
 
-1. Get `npm-consider/lib/getLicenseType` to stop treating AND as
+1. We might see about iterating through `package.json` `devDependencies` and
+    trace dependency chains ourselves to restore ability to avoid
+    `package-lock.json` (as long as `node_modules` structure was not changed
+    like with `pnpm`);
+    `npm ls --json --parseable --long --unicode --prod/--dev`?
+1. If not changing to iterate solely through `node_modules`, we should support
+    pnpm and yarn; need `@pnpm/list` for `licensee.js` replacement for
+    pnpm (for reading subpackages and obtaining license metadata); for Yarn,
+    need <https://github.com/nodeca/js-yaml/issues/62> due to Yarn currently
+    building a `yarn.lock` (at least against this repo) which cannot be read
+    by that parser.
+1. Get `getLicenseType` to stop treating AND as
     potentially getting stricter one (though each license is different,
     at least with "permissive" or "public domain" which could normally
-    submit to the other type). Filed <https://github.com/delfrrr/npm-consider/pull/26>.
+    submit to the other type). Originally filed
+    <https://github.com/delfrrr/npm-consider/pull/26>, but now handling
+    internally.
     May even have problem with "OR" per
     [this issue](https://github.com/delfrrr/npm-consider/issues/21),
     though this seems due to an outdated dep.
@@ -216,24 +238,26 @@ sure).
 
 ```js
 // UNTESTED
-
-const getLicenseType = require('npm-consider/lib/getLicenseType');
+'use strict';
+const getLicenseType = require('license-badger/src/getLicenseType');
 
 const licenseMap = new Map();
 
-export default {
+module.exports = {
   plugins: [
     license({
       thirdParty: {
         output: {
           template (dependencies) {
             dependencies.forEach((dependency) => {
-              const type = getLicenseType(dependency.license);
-              const set = licenseMap.has(type)
-                ? licenseMap.get(type)
-                : new Set();
-              set.add(dependency.license);
-              licenseMap.set(type, set);
+              const types = getLicenseType(dependency.license);
+              types.forEach((type) => {
+                const set = licenseMap.has(type)
+                  ? licenseMap.get(type)
+                  : new Set();
+                set.add(dependency.license);
+                licenseMap.set(type, set);
+              });
             });
           }
         }
@@ -280,7 +304,7 @@ export default {
     using `licenseeInfo.json`'s `bundledRootPackages` (and optionally
     `default`)
     1. Change the badge-making itself into a reporter, so can be optional,
-        in case just want to get at aggregated `npm-consider` + `licensee`
+        in case just want to get at aggregated license type + `licensee`
         info, e.g., to list on command line
     1. Use `unapproved`, `nonApproved`, and especially `manuallyCorrected`
         info in reports so users can know whether to report.

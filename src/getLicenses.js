@@ -1,16 +1,18 @@
 'use strict';
 
 const {promisify} = require('util');
-const {resolve} = require('path');
+const {join, resolve} = require('path');
 
 const parse = require('spdx-expression-parse');
-const getLicenseType = require('npm-consider/lib/getLicenseType');
 
 // May change implementation of `licensee` to Promise but only after
 //  Arborist may replace `read-package-tree`:
 //  https://github.com/jslicense/licensee.js/pull/62#discussion_r352206031
 // const licensee = require('licensee');
 const licensee = promisify(require('licensee'));
+
+const getLicenseType = require('./getLicenseType.js');
+const checkMiscTypes = require('./checkMiscTypes.js');
 
 const getWhitelistedRootPackagesLicenses = require(
   './getWhitelistedRootPackagesLicenses.js'
@@ -65,19 +67,8 @@ const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
   const getTypeInfo = (license, noParsing) => {
     let type, custom;
     if (!licenseAsAST) {
-      if (!license || typeof license !== 'string') {
-        type = 'missing';
-        license = null;
-      } else if (license === 'UNLICENSED') {
-        type = 'unlicensed';
-        license = null;
-      } else if (license.startsWith('SEE LICENSE IN ')) {
-        type = 'custom';
-        custom = license.replace('SEE LICENSE IN ', '');
-        license = null;
-      } else if ((/^(?:RPL|Parity)-/u).test(license)) {
-        type = 'reuseProtective';
-      } else if (noParsing) {
+      ({type, license, custom} = checkMiscTypes(license));
+      if (!type && noParsing) {
         type = getLicenseType(license);
       }
     }
@@ -129,17 +120,23 @@ const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
     return [type, custom, license];
   };
 
-  let type, custom;
-  [type, custom, licns] = getTypeInfo(licns);
+  let types, custom;
+  [types, custom, licns] = getTypeInfo(licns);
 
   if (
     // When dependencies point to `file:` (like @mysticatea/eslint-plugin),
     //  these will have metadata but without a name; ignore these (should be
     //  caught by parent package with a name)
     name &&
-    type
+    types
   ) {
-    addType(type, licns);
+    if (typeof types === 'string') {
+      addType(types, licns);
+    } else {
+      types.forEach((type) => {
+        addType(type, licns);
+      });
+    }
   }
   return licenses;
 };
@@ -151,17 +148,17 @@ const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
 */
 
 /**
-If adding back to `LicenseInfo`
+* If adding back to `LicenseInfo`
 * @ignore
 * @property {GenericArray} approved
 * @property {GenericArray} nonApproved
 * @property {string[]} manuallyCorrected
  */
 
+/* eslint-disable max-len -- eslint-plugin-jsdoc parsing? */
 /**
  * @param {PlainObject} cfg
- * @param {LicenseBadgerOptions#licenseInfoPath} [cfg.licenseInfoPath=
- * resolve(process.cwd(), "./licenseInfo.json")]
+ * @param {LicenseBadgerOptions#licenseInfoPath} [cfg.licenseInfoPath=resolve(process.cwd(), "./licenseInfo.json")]
  * Not used, nor default obtained, when `filter` is `false`.
  * @param {LicenseBadgerOptions#packagePath} [cfg.packagePath=process.cwd()]
  * @param {LicenseBadgerOptions#corrections} [cfg.corrections=false]
@@ -171,6 +168,7 @@ If adding back to `LicenseInfo`
  * @returns {Promise<LicenseInfo>}
  */
 exports.getLicenses = async ({
+  /* eslint-enable max-len -- eslint-plugin-jsdoc parsing? */
   licenseInfoPath,
   packagePath = process.cwd(),
   corrections = false,
@@ -182,10 +180,13 @@ exports.getLicenses = async ({
   if (allDevelopment) {
     bundledRootPackages = true;
   } else if (licenseInfoPath) {
-    // eslint-disable-next-line import/no-dynamic-require -- User path
+    // eslint-disable-next-line max-len -- Long
+    // eslint-disable-next-line import/no-dynamic-require, node/global-require -- User path
     ({bundledRootPackages} = require(
       resolve(process.cwd(), licenseInfoPath)
     ));
+  } else if (!production) {
+    bundledRootPackages = true;
   }
   // console.log('bundledRootPackages', bundledRootPackages);
 
@@ -197,11 +198,9 @@ exports.getLicenses = async ({
     ]
   };
 
-  const filterPackages = allDevelopment || licenseInfoPath
-    ? getWhitelistedRootPackagesLicenses(
-      bundledRootPackages
-    )
-    : undefined;
+  const filterPackages = await getWhitelistedRootPackagesLicenses(
+    bundledRootPackages, packagePath, production
+  );
 
   let results;
   try {
@@ -215,11 +214,11 @@ exports.getLicenses = async ({
           // 'load-stylesheets': '*'
         },
         filterPackages,
-        productionOnly: production,
+        // productionOnly: production,
         licenses: approvedLicenses
       },
       // Path to check
-      packagePath
+      packagePath.startsWith('.') ? join(__dirname, packagePath) : packagePath
     );
   } catch (err) {
     /* istanbul ignore next */
