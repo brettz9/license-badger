@@ -18,6 +18,11 @@
 
 [![issuehunt-to-marktext](https://issuehunt.io/static/embed/issuehunt-button-v1.svg)](https://issuehunt.io/r/brettz9/license-badger)
 
+***license-badger has regrettably been effectively broken by updates to
+npm (and lacks support for pnpm). Hopefully the project can be revived if
+a means of iterating for license of specific devDependencies (as well as
+dependencies) is restored.***
+
 Build a badge indicating the licenses of your project's dependencies
 (dependencies, devDependencies, whitelist-bundled devDependencies, and/or
 your project's own license).

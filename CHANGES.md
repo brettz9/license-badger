@@ -1,7 +1,8 @@
 # CHANGES for license-badger
 
-## ?
+## 0.18.1
 
+- Docs: Add notice about project status
 - Linting: As per latest ash-nazg
 - npm: Update devDeps.
 - Testing: Switch to stable version of `mocha-multi-reporters`
