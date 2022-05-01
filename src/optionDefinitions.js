@@ -1,6 +1,10 @@
-'use strict';
+import {readFile} from 'fs/promises';
+import {dirname, join} from 'path';
+import {fileURLToPath} from 'url';
 
-const pkg = require('../package.json');
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const pkg = JSON.parse(await readFile(join(__dirname, '../package.json')));
 
 // Todo: We really need a comamnd-line-args-TO-typedef-jsdoc generator!
 /* eslint-disable jsdoc/require-property -- See schema below */
@@ -156,7 +160,7 @@ const cliSections = [
   }
 ];
 
-exports.getChalkTemplateSingleEscape = getChalkTemplateSingleEscape;
-exports.getBracketedChalkTemplateEscape = getBracketedChalkTemplateEscape;
-exports.definitions = optionDefinitions;
-exports.sections = cliSections;
+export {
+  getChalkTemplateSingleEscape, getBracketedChalkTemplateEscape,
+  optionDefinitions as definitions, cliSections as sections
+};

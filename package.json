@@ -1,8 +1,9 @@
 {
   "name": "license-badger",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "description": "Builds a badge indicating your project's license(s) and those of its dependencies.",
   "main": "src/index.js",
+  "type": "module",
   "bin": {
     "license-badger": "./bin/index.js",
     "get-license-type": "./bin/get-license-type.js",
@@ -23,10 +24,10 @@
     "eslint": "eslint --ext=js,md,html .",
     "lint": "npm run eslint",
     "mocha": "mocha --require chai/register-expect.js test/** --reporter-options configFile=mocha-multi-reporters.json",
-    "nyc": "rm -rf node_modules/.cache && nyc --all npm run mocha && npm run coverage-badge",
-    "test": "npm run eslint && npm run nyc"
+    "c8": "rm -rf node_modules/.cache && c8 --all npm run mocha && npm run coverage-badge",
+    "test": "npm run eslint && npm run c8"
   },
-  "nyc": {
+  "c8": {
     "reporter": [
       "html",
       "json-summary",
@@ -42,7 +43,7 @@
   "contributors": [],
   "license": "MIT",
   "engines": {
-    "node": ">=8.3.0"
+    "node": ">=14"
   },
   "bugs": {
     "url": "https://github.com/brettz9/license-badger/issues"
@@ -57,6 +58,7 @@
     "@brettz9/license-unlicensed": "https://github.com/brettz9/license-unlicensed",
     "@brettz9/license-useandmodifyprotective": "https://github.com/brettz9/license-useandmodifyprotective",
     "@brettz9/license-useprotective": "https://github.com/brettz9/license-useprotective",
+    "c8": "^7.13.0",
     "chai": "^4.3.7",
     "command-line-publish": "^1.1.0",
     "coveradge": "^0.8.2",
@@ -81,15 +83,14 @@
     "eslint-plugin-unicorn": "^46.0.0",
     "mocha": "^10.2.0",
     "mocha-badge-generator": "^0.10.6",
-    "mocha-multi-reporters": "^1.5.1",
-    "nyc": "^15.1.0"
+    "mocha-multi-reporters": "^1.5.1"
   },
   "dependencies": {
     "@rpl/badge-up": "^3.0.0",
-    "command-line-basics": "^0.8.0",
+    "command-line-basics": "^1.1.0",
     "es6-template-strings": "^2.0.1",
     "js-yaml": "^4.1.0",
-    "license-types": "^1.0.2",
+    "license-types": "^3.0.1",
     "licensee": "^10.0.0",
     "spdx-correct": "^3.2.0",
     "spdx-expression-parse": "^3.0.1",

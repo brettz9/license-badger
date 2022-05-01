@@ -1,7 +1,9 @@
-'use strict';
+import {dirname, join} from 'path';
+import {fileURLToPath} from 'url';
 
-const {join} = require('path');
-const {getLicenses, getTypeInfoForLicense} = require('../src/getLicenses.js');
+import {getLicenses, getTypeInfoForLicense} from '../src/getLicenses.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const packagePath = join(__dirname, '../');
 

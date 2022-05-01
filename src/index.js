@@ -1,25 +1,24 @@
-'use strict';
-
 /*
 1. Waiting on whether might avoid need for specifying `licenses`/`packages`
    as alluded to in comment at https://github.com/jslicense/licensee.js/pull/61
 */
 
-const fs = require('fs');
-const {promisify} = require('util');
-const {join, resolve} = require('path');
+import {readFile, writeFile} from 'fs/promises';
+import {join, resolve} from 'path';
 
-const licenseTypes = require('license-types/types.json');
-const badgeUp = require('@rpl/badge-up').v2;
-const template = require('es6-template-strings');
+import BadgeUp from '@rpl/badge-up';
+import {getLicenseTypeInfo} from 'license-types';
+import template from 'es6-template-strings';
 
-const writeFile = promisify(fs.writeFile);
+import {getLicenses, getTypeInfoForLicense} from './getLicenses.js';
 
-const {getLicenses, getTypeInfoForLicense} = require('./getLicenses.js');
+const licenseTypes = await getLicenseTypeInfo();
+
+const badgeUp = BadgeUp.v2;
 
 const defaultTextColor = ['navy'];
 
-const getLicensesMap = exports.getLicensesMap = async function ({
+const getLicensesMap = async function ({
   allDevelopment,
   packagePath,
   corrections,
@@ -44,11 +43,9 @@ const getLicensesMap = exports.getLicensesMap = async function ({
       );
     }
     if (packageJson) {
-      // eslint-disable-next-line max-len -- Long
-      // eslint-disable-next-line import/no-dynamic-require, node/global-require -- User package
-      const {name, version, license} = require(
+      const {name, version, license} = JSON.parse(await readFile(
         join(packagePath || process.cwd(), 'package.json')
-      );
+      ));
       licenses = getTypeInfoForLicense({
         licenses, license, name, version
       });
@@ -61,10 +58,8 @@ const getLicensesMap = exports.getLicensesMap = async function ({
       }));
     }
   } catch (err) {
-    /* istanbul ignore next */
     // eslint-disable-next-line no-console -- More info
     console.log('err', err);
-    /* istanbul ignore next */
     throw err;
   }
   return licenses;
@@ -74,7 +69,7 @@ const getLicensesMap = exports.getLicensesMap = async function ({
  * @param {LicenseBadgerOptions} options
  * @returns {Promise<void>}
  */
-module.exports = async ({
+const licenseBadger = async ({
   packagePath,
   packageJson,
   corrections,
@@ -222,3 +217,7 @@ module.exports = async ({
   const svg = await badgeUp(sections);
   await writeFile(outputPath, svg);
 };
+
+export {getLicensesMap};
+
+export default licenseBadger;

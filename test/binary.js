@@ -1,8 +1,9 @@
-'use strict';
+import {promisify} from 'util';
+import {fileURLToPath} from 'url';
+import {dirname, join} from 'path';
+import {execFile as ef} from 'child_process';
 
-const {promisify} = require('util');
-const {join} = require('path');
-const {execFile: ef} = require('child_process');
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const execFile = promisify(ef);
 
@@ -25,7 +26,7 @@ describe('Binary', function () {
       binFile,
       [
         '-l', 'test/fixtures/licenseInfo.json',
-        '--packagePath', '../',
+        '--packagePath', './',
         '--logging', 'verbose',
         'test.svg'
       ]

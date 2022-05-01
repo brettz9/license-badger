@@ -1,16 +1,19 @@
 #!/usr/bin/env node
-'use strict';
 
-const {join} = require('path');
-const {cliBasics} = require('command-line-basics');
-const satisfies = require('../src/satisfies.js');
+import {join, dirname} from 'path';
+import {fileURLToPath} from 'url';
 
-const optionDefinitions = cliBasics(
+import {cliBasics} from 'command-line-basics';
+import satisfies from '../src/satisfies.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const optionDefinitions = await cliBasics(
   join(__dirname, '../src/satisfies-optionDefinitions.js')
 );
 
 if (!optionDefinitions) { // cliBasics handled
-  process.exit();
+  process.exit(0);
 }
 
 if (!optionDefinitions.licenseExpressions ||

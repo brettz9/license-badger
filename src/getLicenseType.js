@@ -4,10 +4,10 @@
  * `license-types-utils`.
  */
 
-'use strict';
+import {getLicenseTypes} from 'license-types';
+import satisfies from './satisfies.js';
 
-const licenseTypes = require('license-types');
-const satisfies = require('./satisfies.js');
+const licenseTypes = await getLicenseTypes();
 
 const types = [
   'publicDomain',
@@ -19,19 +19,23 @@ const types = [
   'modifyProtective'
 ];
 
-module.exports = function getLicenseType (license) {
+/**
+ * @param {string} license
+ * @returns {string[]}
+ */
+function getLicenseType (license) {
   const typeInfos = Object.entries(licenseTypes).flatMap(([
     testLicense, info
   ]) => {
     if (satisfies(license, testLicense)) {
-      return types.filter((prop) => {
-        return info[prop];
+      return types.filter((type) => {
+        return info[type];
       });
     }
     return null;
-  }).filter((info) => {
-    return info;
-  });
+  }).filter(Boolean);
 
   return typeInfos.length ? typeInfos : ['uncategorized'];
-};
+}
+
+export default getLicenseType;

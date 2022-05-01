@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @todo Move this with `getLicenseType.js` and `satisfies.js` to new
  * `license-types-utils`.
@@ -24,4 +22,4 @@ const checkMiscTypes = (license) => {
   };
 };
 
-module.exports = checkMiscTypes;
+export default checkMiscTypes;

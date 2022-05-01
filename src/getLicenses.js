@@ -1,22 +1,25 @@
-'use strict';
+import {readFile} from 'fs/promises';
+import {promisify} from 'util';
+import {dirname, join, resolve} from 'path';
+import {fileURLToPath} from 'url';
 
-const {promisify} = require('util');
-const {join, resolve} = require('path');
+import parse from 'spdx-expression-parse';
 
-const parse = require('spdx-expression-parse');
+import Licensee from 'licensee';
+
+import getLicenseType from './getLicenseType.js';
+import checkMiscTypes from './checkMiscTypes.js';
+
+import getWhitelistedRootPackagesLicenses from
+  './getWhitelistedRootPackagesLicenses.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // May change implementation of `licensee` to Promise but only after
 //  Arborist may replace `read-package-tree`:
 //  https://github.com/jslicense/licensee.js/pull/62#discussion_r352206031
-// const licensee = require('licensee');
-const licensee = promisify(require('licensee'));
-
-const getLicenseType = require('./getLicenseType.js');
-const checkMiscTypes = require('./checkMiscTypes.js');
-
-const getWhitelistedRootPackagesLicenses = require(
-  './getWhitelistedRootPackagesLicenses.js'
-);
+// import licensee from 'licensee';
+const licensee = promisify(Licensee);
 
 // Todo: Have stringification avoid extra parentheses when multiple joined
 //  conjunctions of the same type?
@@ -42,7 +45,7 @@ const stringifyLicense = (ast) => {
  * @param {boolean} [typeInfo.licenseAsAST]
  * @returns {Map}
  */
-const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
+const getTypeInfoForLicense = function ({
   licenses = new Map(), license: licns, name, version, licenseAsAST
 }) {
   const addType = (type, license) => {
@@ -167,7 +170,7 @@ const getTypeInfoForLicense = exports.getTypeInfoForLicense = function ({
  * @param {Map} [cfg.licenses=new Map()]
  * @returns {Promise<LicenseInfo>}
  */
-exports.getLicenses = async ({
+const getLicenses = async ({
   /* eslint-enable max-len -- eslint-plugin-jsdoc parsing? */
   licenseInfoPath,
   packagePath = process.cwd(),
@@ -180,11 +183,9 @@ exports.getLicenses = async ({
   if (allDevelopment) {
     bundledRootPackages = true;
   } else if (licenseInfoPath) {
-    // eslint-disable-next-line max-len -- Long
-    // eslint-disable-next-line import/no-dynamic-require, node/global-require -- User path
-    ({bundledRootPackages} = require(
+    ({bundledRootPackages} = JSON.parse(await readFile(
       resolve(process.cwd(), licenseInfoPath)
-    ));
+    )));
   } else if (!production) {
     bundledRootPackages = true;
   }
@@ -220,11 +221,10 @@ exports.getLicenses = async ({
       // Path to check
       packagePath.startsWith('.') ? join(__dirname, packagePath) : packagePath
     );
+  /* c8 ignore next 5 */
   } catch (err) {
-    /* istanbul ignore next */
     // eslint-disable-next-line no-console -- Extra info
     console.log('Error', err);
-    /* istanbul ignore next */
     throw err;
   }
 
@@ -299,3 +299,5 @@ exports.getLicenses = async ({
     // manuallyCorrected
   };
 };
+
+export {getTypeInfoForLicense, getLicenses};

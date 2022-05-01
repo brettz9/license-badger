@@ -4,10 +4,8 @@
  * `license-types-utils`.
  */
 
-'use strict';
-
-const spdxSatisfies = require('spdx-satisfies');
-const correct = require('spdx-correct');
+import spdxSatisfies from 'spdx-satisfies';
+import correct from 'spdx-correct';
 
 /**
  *
@@ -26,7 +24,7 @@ function correcting (spdx) {
  * @param {string} b spdx
  * @returns {boolean} [description]
  */
-module.exports = function satisfies (a, b) {
+function satisfies (a, b) {
   if (a === b) {
     return true;
   }
@@ -38,7 +36,8 @@ module.exports = function satisfies (a, b) {
   try {
     return spdxSatisfies(ac, bc);
   } catch (e) {
-    // istanbul ignore next -- dummy fallback
     return ac === bc;
   }
-};
+}
+
+export default satisfies;

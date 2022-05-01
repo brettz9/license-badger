@@ -1,15 +1,12 @@
-'use strict';
+import {readFile, unlink} from 'fs/promises';
+import {fileURLToPath} from 'url';
+import {dirname, join} from 'path';
+import licenseBadger from '../src/index.js';
 
-const {readFile: rf, unlink: ul} = require('fs');
-const {promisify} = require('util');
-const {join} = require('path');
-const licenseBadger = require('../src/index.js');
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const logging = 'verbose';
 const packagePath = join(__dirname, '../');
-
-const readFile = promisify(rf);
-const unlink = promisify(ul);
 
 const getFixturePath = (path) => {
   return join(__dirname, `fixtures/${path}`);

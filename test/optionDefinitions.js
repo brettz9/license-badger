@@ -1,8 +1,6 @@
-'use strict';
-
-const {
+import {
   getBracketedChalkTemplateEscape
-} = require('../src/optionDefinitions.js');
+} from '../src/optionDefinitions.js';
 
 describe('getBracketedChalkTemplateEscape', function () {
   it('Escapes brackets and backslashes', function () {

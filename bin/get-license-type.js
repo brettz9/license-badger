@@ -1,16 +1,19 @@
 #!/usr/bin/env node
-'use strict';
 
-const {join} = require('path');
-const {cliBasics} = require('command-line-basics');
-const getLicenseType = require('../src/getLicenseType.js');
+import {dirname, join} from 'path';
+import {fileURLToPath} from 'url';
 
-const optionDefinitions = cliBasics(
+import {cliBasics} from 'command-line-basics';
+import getLicenseType from '../src/getLicenseType.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const optionDefinitions = await cliBasics(
   join(__dirname, '../src/glt-optionDefinitions.js')
 );
 
 if (!optionDefinitions) { // cliBasics handled
-  process.exit();
+  process.exit(0);
 }
 
 if (!optionDefinitions.licenseExpression) {

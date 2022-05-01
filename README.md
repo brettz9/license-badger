@@ -238,12 +238,11 @@ check all anyways). See to-do below.
 
 ```js
 // UNTESTED
-'use strict';
-const getLicenseType = require('license-badger/src/getLicenseType');
+import getLicenseType from 'license-badger/src/getLicenseType.js';
 
 const licenseMap = new Map();
 
-module.exports = {
+const rollupConfig = {
   plugins: [
     license({
       thirdParty: {
@@ -282,6 +281,8 @@ module.exports = {
     //
   }
 };
+
+export default rollupConfig;
 ```
 1. Get to work with Git submodules
 1. Ability to normalize an AND/OR license, e.g.,

@@ -1,50 +1,54 @@
-'use strict';
+import {readFile} from 'fs/promises';
+import {join} from 'path';
 
-const {readFile} = require('fs/promises');
-const {join} = require('path');
+import yaml from 'js-yaml';
 
-const yaml = require('js-yaml');
+/**
+ * @callback PackageFilterer
+ * @param {LicenseeUnflattenedPackages} unflattenedPackages
+ * @returns {LicenseeFilterPackages} Filtered packages
+ */
 
-module.exports = async function (
+/**
+ * @param {boolean|string[]} bundledRootPackages
+ * @param {string} packagePath
+ * @param {boolean} production
+ * @returns {Promise<PackageFilterer>}
+ */
+async function getWhitelistedRootPackagesLicenses (
   bundledRootPackages, packagePath, production
 ) {
   let packageLock;
   let pnpm, yarn;
   try {
-    // eslint-disable-next-line max-len -- Long
-    // eslint-disable-next-line import/no-dynamic-require, node/global-require -- Runtime detect
-    packageLock = require(join(packagePath, 'package-lock.json')).packages;
+    packageLock = (
+      JSON.parse(await readFile(join(packagePath, 'package-lock.json')))
+    ).packages;
+  /* c8 ignore next 29 */
   } catch (e) {
-    // istanbul ignore next
     if (e) {
       /* eslint-disable no-console -- CLI */
-      // istanbul ignore next
       console.error(
         'No package-lock.json file found and pnpm-lock.yaml and yarn.lock ' +
         'files are not currently supported'
       );
       /* eslint-enable no-console -- CLI */
-      // istanbul ignore next
       return [];
     }
-    // istanbul ignore next
+
     try {
-      // istanbul ignore next
       packageLock = yaml.load(await readFile(
-        join(packagePath, 'pnpm-lock.yaml')
+        join(packagePath, 'pnpm-lock.yaml'),
+        'utf8'
       )).packages;
-      // istanbul ignore next
       pnpm = true;
       // console.log('packageLock', packageLock);
-    // istanbul ignore next
     } catch (pnpmErr) {
-      // istanbul ignore next
       packageLock = yaml.load(await readFile(
-        join(packagePath, 'yarn.lock')
+        join(packagePath, 'yarn.lock'),
+        'utf8'
       )).packages;
-      // istanbul ignore next
       yarn = true;
-      // istanbul ignore next
       if (yarn) {
         // Add this condition below as needed when may be ready
       }
@@ -52,15 +56,14 @@ module.exports = async function (
   }
 
   // Todo: Other lock files
-  // yaml.load(await readFile('yarn.lock'));
-  // yaml.load(await readFile('pnpm-lock.yaml'));
+  // yaml.load(await readFile('yarn.lock', 'utf8'));
+  // yaml.load(await readFile('pnpm-lock.yaml', 'utf8'));
 
   return (unflattenedPackages) => {
     const packages = [];
     const flatten = (pkg) => {
       packages.push(pkg);
       // Not able to replicate, but keeping as condition
-      /* istanbul ignore else */
       if (pkg.children) {
         pkg.children.forEach((p) => flatten(p));
       }
@@ -87,7 +90,6 @@ module.exports = async function (
       // Todo: Per https://github.com/npm/rfcs/blob/latest/implemented/0013-no-package-json-_fields.md ,
       //    this `_requiredBy` is being removed (and doesn't work with pnpm
       //    or Yarn)
-      /* istanbul ignore if */
       /*
       if (!pkg.package._requiredBy) {
         // May have been installed in `node_modules` but unused
@@ -104,7 +106,7 @@ module.exports = async function (
         [packageKey, value]
       ) => {
         return (
-          // istanbul ignore next
+          /* c8 ignore next 1 */
           (pnpm && packageKey === `/${name}/${version}`) ||
           (
             !pnpm && packageKey === `node_modules/${name}` &&
@@ -138,7 +140,7 @@ module.exports = async function (
     function getDeps (pkgs) {
       pkgs.forEach((pkg) => {
         // Not able to replicate, but keeping as condition
-        /* istanbul ignore if */
+        /* c8 ignore next 3 */
         if (!pkg) {
           return;
         }
@@ -148,14 +150,14 @@ module.exports = async function (
           Object.keys(dependencies).forEach((dep) => {
             const findPkg = (pk) => {
               // Not able to replicate, but keeping as condition
-              /* istanbul ignore if */
+              /* c8 ignore next 3 */
               if (!pk) {
                 return false;
               }
               const {name} = pk;
               return dep === name;
             };
-            if (filteredPackages.find((item) => findPkg(item)) !== undefined) {
+            if (filteredPackages.some((item) => findPkg(item))) {
               return;
             }
             const pk = packages.find((item) => findPkg(item));
@@ -176,4 +178,6 @@ module.exports = async function (
 
     return filteredPackages;
   };
-};
+}
+
+export default getWhitelistedRootPackagesLicenses;

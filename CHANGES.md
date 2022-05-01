@@ -1,5 +1,19 @@
 # CHANGES for license-badger
 
+## 0.20.0
+
+### User-impacting
+
+- refactor: ESM
+- fix: make `packagePath` relative to cwd
+- chore: update `spdx-correct`, `js-yaml`, `licensee`, `command-line-basics`,
+    `license-types`
+- chore: switch `badge-up` to `@rpl/badge-up`
+
+### Dev-impacting
+
+- chore: update devDeps.
+
 ## 0.19.0
 
 ### User-impacting
