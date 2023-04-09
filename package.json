@@ -90,7 +90,7 @@
     "command-line-basics": "^1.1.0",
     "es6-template-strings": "^2.0.1",
     "js-yaml": "^4.1.0",
-    "license-types": "^3.0.1",
+    "license-types": "^3.1.0",
     "licensee": "^10.0.0",
     "spdx-correct": "^3.2.0",
     "spdx-expression-parse": "^3.0.1",
