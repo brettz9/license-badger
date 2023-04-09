@@ -52,7 +52,8 @@ describe('getLicenses', function () {
       version: '6.0.0',
       license
     });
-    const permissive = licenses.get('networkProtective');
+    // Changed from networkProtective
+    const permissive = licenses.get('protective');
     expect(permissive).to.be.a('Set');
     expect(permissive.has(licenseStringified)).to.be.true;
     /*
