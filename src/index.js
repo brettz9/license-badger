@@ -10,7 +10,7 @@ const {promisify} = require('util');
 const {join, resolve} = require('path');
 
 const licenseTypes = require('license-types/types.json');
-const badgeUp = require('badge-up').v2;
+const badgeUp = require('@rpl/badge-up').v2;
 const template = require('es6-template-strings');
 
 const writeFile = promisify(fs.writeFile);
