@@ -49,15 +49,12 @@ async function getWhitelistedRootPackagesLicenses (
         'utf8'
       )).packages;
       yarn = true;
+      // Todo: Yarn lock
       if (yarn) {
         // Add this condition below as needed when may be ready
       }
     }
   }
-
-  // Todo: Other lock files
-  // yaml.load(await readFile('yarn.lock', 'utf8'));
-  // yaml.load(await readFile('pnpm-lock.yaml', 'utf8'));
 
   return (unflattenedPackages) => {
     const packages = [];
