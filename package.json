@@ -22,7 +22,7 @@
     "coverage-badge": "coveradge badges/coverage-badge.svg",
     "eslint": "eslint --ext=js,md,html .",
     "lint": "npm run eslint",
-    "mocha": "mocha --require chai/register-expect test/** --reporter-options configFile=mocha-multi-reporters.json",
+    "mocha": "mocha --require chai/register-expect.js test/** --reporter-options configFile=mocha-multi-reporters.json",
     "nyc": "rm -rf node_modules/.cache && nyc --all npm run mocha && npm run coverage-badge",
     "test": "npm run eslint && npm run nyc"
   },
@@ -57,7 +57,7 @@
     "@brettz9/license-unlicensed": "https://github.com/brettz9/license-unlicensed",
     "@brettz9/license-useandmodifyprotective": "https://github.com/brettz9/license-useandmodifyprotective",
     "@brettz9/license-useprotective": "https://github.com/brettz9/license-useprotective",
-    "chai": "^4.3.4",
+    "chai": "^4.3.7",
     "command-line-publish": "^0.7.0",
     "coveradge": "^0.6.0",
     "eslint": "^7.26.0",
