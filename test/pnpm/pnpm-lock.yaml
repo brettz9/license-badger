@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@brettz9/license-modifyprotective':
+    specifier: https://github.com/brettz9/license-modifyprotective
+    version: github.com/brettz9/license-modifyprotective/89f6b63a2f475b15a2dc0650347d489cbb8a0f80
   json-6:
     specifier: 1.1.4
     version: 1.1.4
@@ -11,4 +14,10 @@ packages:
     resolution: {integrity: sha512-ljsNv5ARPvSDpWmjFwja8NjzzEFkOis2OMRtvO5GRtr217DXaQseFYZO6fgVPThPPuaWpOI5/cs/fUCfqQlWiA==}
     engines: {node: '>=10.0.0'}
     hasBin: true
+    dev: false
+
+  github.com/brettz9/license-modifyprotective/89f6b63a2f475b15a2dc0650347d489cbb8a0f80:
+    resolution: {tarball: https://codeload.github.com/brettz9/license-modifyprotective/tar.gz/89f6b63a2f475b15a2dc0650347d489cbb8a0f80}
+    name: '@brettz9/license-modifyprotective'
+    version: 0.1.0
     dev: false

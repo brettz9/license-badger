@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@brettz9/license-modifyprotective": "https://github.com/brettz9/license-modifyprotective",
     "json-6": "1.1.4"
   }
 }

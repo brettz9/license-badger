@@ -1,5 +1,11 @@
 # CHANGES for license-badger
 
+## 0.21.1
+
+### User-impacting
+
+- fix: catch URL-based packages
+
 ## 0.21.0
 
 ### User-impacting

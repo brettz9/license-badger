@@ -99,9 +99,20 @@ async function getWhitelistedRootPackagesLicenses (
       const isRootDep = Object.entries(packageLock).some((
         [packageKey, value]
       ) => {
+        let target;
+        if (pnpm) {
+          target = (!pkg.resolved || (/file:.pnpm\/[^.]*@/u).test(pkg.resolved))
+            ? `/${name}@${version}`
+            // No better way to match github.com URL packages?
+            : new URL(pkg.resolved).pathname
+              .replace(/^\/.pnpm\//u, '')
+              .replace(/\+/gu, '/')
+              .replace(/@/gu, '/')
+              .replace(/\/node_modules.*$/u, '');
+        }
+
         return (
-          /* c8 ignore next 1 */
-          (pnpm && packageKey === `/${name}@${version}`) ||
+          (pnpm && packageKey === target) ||
           (
             !pnpm && packageKey === `node_modules/${name}` &&
             value.version === version
