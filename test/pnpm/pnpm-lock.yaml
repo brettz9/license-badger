@@ -1,0 +1,14 @@
+lockfileVersion: '6.0'
+
+dependencies:
+  json-6:
+    specifier: 1.1.4
+    version: 1.1.4
+
+packages:
+
+  /json-6@1.1.4:
+    resolution: {integrity: sha512-ljsNv5ARPvSDpWmjFwja8NjzzEFkOis2OMRtvO5GRtr217DXaQseFYZO6fgVPThPPuaWpOI5/cs/fUCfqQlWiA==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    dev: false

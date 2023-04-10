@@ -36,6 +36,7 @@ const redPublicDomainPath = getFixturePath('redPublicDomain.svg');
 const allDevelopmentPath = getFixturePath('allDevelopment.svg');
 const productionPath = getFixturePath('production.svg');
 const packageJsonPath = getFixturePath('packageJson.svg');
+const pnpmPath = getFixturePath('pnpmPath.svg');
 const packageJsonAndLicensePath = getFixturePath('packageJsonAndLicense.svg');
 const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
 const otherFilteredTypes = getFixturePath('otherFilteredTypes.svg');
@@ -86,7 +87,7 @@ describe('Main file', function () {
 
   describe('Main functionality', function () {
     const fixturePaths = [];
-    for (let i = 0; i <= 14; i++) {
+    for (let i = 0; i <= 16; i++) {
       fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));
     }
     let j = 0;
@@ -321,6 +322,41 @@ describe('Main file', function () {
         const expected = await readFile(uncategorizedPath, 'utf8');
         expect(contents).to.equal(expected);
       });
+    });
+
+    it('should work with pnpm (chdir)', async function () {
+      const cwd = process.cwd();
+      process.chdir(join(__dirname, './pnpm'));
+      const outputPath = getNextFixturePath();
+      await licenseBadger({
+        production: true,
+        licenseInfoPath: '',
+        outputPath,
+        logging
+      });
+      process.chdir(cwd);
+      const contents = await readFile(outputPath, 'utf8');
+      const expected = await readFile(pnpmPath, 'utf8');
+      expect(contents).to.equal(expected);
+    });
+
+    it('should err with no package.json or pnpm (chdir)', async function () {
+      const cwd = process.cwd();
+      process.chdir(join(__dirname, './yarn'));
+      const outputPath = getNextFixturePath();
+      let caught = false;
+      try {
+        await licenseBadger({
+          production: true,
+          licenseInfoPath: '',
+          outputPath,
+          logging
+        });
+      } catch (err) {
+        caught = true;
+      }
+      process.chdir(cwd);
+      expect(caught).to.equal(true);
     });
   });
 

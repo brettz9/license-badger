@@ -1,5 +1,11 @@
 # CHANGES for license-badger
 
+## 0.21.0
+
+### User-impacting
+
+- Enhancement: Support pnpm
+
 ## 0.20.0
 
 ### User-impacting
@@ -24,7 +30,6 @@
     types (some are not mutually exclusive like use and modify protective)
 - Breaking change: Must have lock file (inspired by removal of `_requiredBy`
     data within npm)
-- Enhancement: Support yarn and pnpm
 - Update to `npm-consider` subproject instead of `npm-consider` (avoids
     overhead and maintenance difficulties)
 - Enhancement: Give error if providing too few args to `satisfies` or

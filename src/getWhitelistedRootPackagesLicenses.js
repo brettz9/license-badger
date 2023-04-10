@@ -19,40 +19,37 @@ async function getWhitelistedRootPackagesLicenses (
   bundledRootPackages, packagePath, production
 ) {
   let packageLock;
-  let pnpm, yarn;
+  let pnpm;
+  // let yarn;
   try {
     packageLock = (
       JSON.parse(await readFile(join(packagePath, 'package-lock.json')))
     ).packages;
-  /* c8 ignore next 29 */
   } catch (e) {
-    if (e) {
-      /* eslint-disable no-console -- CLI */
-      console.error(
-        'No package-lock.json file found and pnpm-lock.yaml and yarn.lock ' +
-        'files are not currently supported'
-      );
-      /* eslint-enable no-console -- CLI */
-      return [];
-    }
-
     try {
       packageLock = yaml.load(await readFile(
         join(packagePath, 'pnpm-lock.yaml'),
         'utf8'
       )).packages;
       pnpm = true;
-      // console.log('packageLock', packageLock);
     } catch (pnpmErr) {
-      packageLock = yaml.load(await readFile(
-        join(packagePath, 'yarn.lock'),
-        'utf8'
-      )).packages;
-      yarn = true;
-      // Todo: Yarn lock
-      if (yarn) {
-        // Add this condition below as needed when may be ready
-      }
+      /* eslint-disable no-console -- CLI */
+      console.error(
+        'No package-lock.json file found and yarn.lock ' +
+        'files are not currently supported'
+      );
+      /* eslint-enable no-console -- CLI */
+      throw pnpmErr;
+
+      // packageLock = yaml.load(await readFile(
+      //   join(packagePath, 'yarn.lock'),
+      //   'utf8'
+      // )).packages;
+      // yarn = true;
+      // // Todo: Yarn lock
+      // if (yarn) {
+      //   // Add this condition below as needed when may be ready
+      // }
     }
   }
 
@@ -104,7 +101,7 @@ async function getWhitelistedRootPackagesLicenses (
       ) => {
         return (
           /* c8 ignore next 1 */
-          (pnpm && packageKey === `/${name}/${version}`) ||
+          (pnpm && packageKey === `/${name}@${version}`) ||
           (
             !pnpm && packageKey === `node_modules/${name}` &&
             value.version === version
