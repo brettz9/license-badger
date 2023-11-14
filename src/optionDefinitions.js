@@ -6,21 +6,21 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const pkg = JSON.parse(await readFile(join(__dirname, '../package.json')));
 
-// Todo: We really need a comamnd-line-args-TO-typedef-jsdoc generator!
+// Todo: We really need a command-line-args-TO-typedef-jsdoc generator!
 /* eslint-disable jsdoc/require-property -- See schema below */
 /**
-* @typedef {PlainObject} LicenseBadgerOptions
+* @typedef {object} LicenseBadgerOptions
 */
 /* eslint-enable jsdoc/require-property -- See schema below */
 
 const getChalkTemplateSingleEscape = (s) => {
-  return s.replace(/[{}\\]/gu, (ch) => {
+  return s.replaceAll(/[{}\\]/gu, (ch) => {
     return `\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
   });
 };
 
 const getChalkTemplateEscape = (s) => {
-  return s.replace(/[{}\\]/gu, (ch) => {
+  return s.replaceAll(/[{}\\]/gu, (ch) => {
     return `\\\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
   });
 };

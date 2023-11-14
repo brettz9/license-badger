@@ -36,7 +36,7 @@ const stringifyLicense = (ast) => {
 
 /**
  * @param {PlainObject} typeInfo
- * @param {Map} [typeInfo.licenses=new Map()]
+ * @param {Map} [typeInfo.licenses]
  * @param {string} typeInfo.license
  * @param {string} [typeInfo.name] Optional if license is known to be
  * a positive-length string, and is not "UNLICENSED", with "SEE LICENSE IN ",
@@ -158,20 +158,18 @@ const getTypeInfoForLicense = function ({
 * @property {string[]} manuallyCorrected
  */
 
-/* eslint-disable max-len -- eslint-plugin-jsdoc parsing? */
 /**
- * @param {PlainObject} cfg
- * @param {LicenseBadgerOptions#licenseInfoPath} [cfg.licenseInfoPath=resolve(process.cwd(), "./licenseInfo.json")]
+ * @param {object} cfg
+ * @param {string} [cfg.licenseInfoPath]
  * Not used, nor default obtained, when `filter` is `false`.
- * @param {LicenseBadgerOptions#packagePath} [cfg.packagePath=process.cwd()]
- * @param {LicenseBadgerOptions#corrections} [cfg.corrections=false]
- * @param {LicenseBadgerOptions#production} [cfg.production=false]
- * @param {LicenseBadgerOptions#allDevelopment} [cfg.allDevelopment=false]
- * @param {Map} [cfg.licenses=new Map()]
+ * @param {string} [cfg.packagePath]
+ * @param {boolean} [cfg.corrections]
+ * @param {boolean} [cfg.production]
+ * @param {boolean} [cfg.allDevelopment]
+ * @param {Map} [cfg.licenses]
  * @returns {Promise<LicenseInfo>}
  */
 const getLicenses = async ({
-  /* eslint-enable max-len -- eslint-plugin-jsdoc parsing? */
   licenseInfoPath,
   packagePath = process.cwd(),
   corrections = false,

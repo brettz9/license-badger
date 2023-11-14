@@ -104,11 +104,11 @@ async function getWhitelistedRootPackagesLicenses (
           target = (!pkg.resolved || (/file:.pnpm\/[^.]*@/u).test(pkg.resolved))
             ? `/${name}@${version}`
             // No better way to match github.com URL packages?
-            : new URL(pkg.resolved).pathname
-              .replace(/^\/.pnpm\//u, '')
-              .replace(/\+/gu, '/')
-              .replace(/@/gu, '/')
-              .replace(/\/node_modules.*$/u, '');
+            : new URL(pkg.resolved).pathname.
+              replace(/^\/.pnpm\//u, '').
+              replaceAll('+', '/').
+              replaceAll('@', '/').
+              replace(/\/node_modules.*$/u, '');
         }
 
         return (
@@ -139,7 +139,7 @@ async function getWhitelistedRootPackagesLicenses (
      */
 
     /**
-     * @param {external:PackageInfo} pkgs
+     * @param {PackageInfo} pkgs
      * @returns {void}
      */
     function getDeps (pkgs) {

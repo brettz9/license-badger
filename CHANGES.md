@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- chore: update `command-line-basics`, devDeps. and lint
+
 ## 0.21.1
 
 ### User-impacting

@@ -1,5 +1,5 @@
 /**
- * @file checks if spdx expressions are matching
+ * @file Checks if spdx expressions are matching.
  * @todo Move this with `getLicenseType.js` and `checkMiscTypes.js` to new
  * `license-types-utils`.
  */

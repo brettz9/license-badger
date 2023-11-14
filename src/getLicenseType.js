@@ -1,5 +1,5 @@
 /**
- * @file returns licensee type
+ * @file Returns licensee type.
  * @todo Move this with `checkMiscTypes.js` and `satisfies.js` to new
  * `license-types-utils`.
  */
