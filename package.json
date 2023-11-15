@@ -82,12 +82,12 @@
     "eslint-plugin-standard": "^4.1.0",
     "eslint-plugin-unicorn": "^49.0.0",
     "mocha": "^10.2.0",
-    "mocha-badge-generator": "^0.10.6",
+    "mocha-badge-generator": "^0.11.0",
     "mocha-multi-reporters": "^1.5.1"
   },
   "dependencies": {
     "@rpl/badge-up": "^3.0.0",
-    "command-line-basics": "^2.0.0",
+    "command-line-basics": "^2.0.1",
     "es6-template-strings": "^2.0.1",
     "js-yaml": "^4.1.0",
     "license-types": "^3.1.0",
