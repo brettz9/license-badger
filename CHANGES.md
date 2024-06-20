@@ -3,6 +3,9 @@
 ## ?
 
 - chore: update `command-line-basics`, devDeps. and lint
+- chore: update spdx-expression-parse, devDeps.
+- docs: update CLI badge
+- docs: update license dev badge
 
 ## 0.21.1
 
