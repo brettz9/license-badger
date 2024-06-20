@@ -58,8 +58,8 @@
     "@brettz9/license-unlicensed": "https://github.com/brettz9/license-unlicensed",
     "@brettz9/license-useandmodifyprotective": "https://github.com/brettz9/license-useandmodifyprotective",
     "@brettz9/license-useprotective": "https://github.com/brettz9/license-useprotective",
-    "c8": "^8.0.1",
-    "chai": "^4.3.10",
+    "c8": "^10.1.2",
+    "chai": "^5.1.1",
     "command-line-publish": "^1.1.0",
     "coveradge": "^0.8.2",
     "eslint": "^8.53.0",
@@ -81,7 +81,7 @@
     "eslint-plugin-sonarjs": "^0.23.0",
     "eslint-plugin-standard": "^4.1.0",
     "eslint-plugin-unicorn": "^49.0.0",
-    "mocha": "^10.2.0",
+    "mocha": "^10.4.0",
     "mocha-badge-generator": "^0.11.0",
     "mocha-multi-reporters": "^1.5.1"
   },
@@ -93,7 +93,7 @@
     "license-types": "^3.1.0",
     "licensee": "^10.0.0",
     "spdx-correct": "^3.2.0",
-    "spdx-expression-parse": "^3.0.1",
+    "spdx-expression-parse": "^4.0.0",
     "spdx-satisfies": "^5.0.1"
   }
 }
