@@ -9,7 +9,10 @@ import getLicenseType from '../src/getLicenseType.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const optionDefinitions = await cliBasics(
-  join(__dirname, '../src/glt-optionDefinitions.js')
+  join(__dirname, '../src/glt-optionDefinitions.js'),
+  {
+    packageJsonPath: import.meta.dirname + '/../package.json'
+  }
 );
 
 if (!optionDefinitions) { // cliBasics handled

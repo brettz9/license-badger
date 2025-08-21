@@ -1,9 +1,11 @@
 # CHANGES for license-badger
 
-## ?
+## 0.22.0
 
-- chore: update `command-line-basics`, devDeps. and lint
-- chore: update spdx-expression-parse, devDeps.
+- fix: supply `command-line-basics` proper info on name and
+    version for CLI
+- chore: update command-line-basics, spdx-expression-parse,
+    licensee, devDeps.
 - docs: update CLI badge
 - docs: update license dev badge
 

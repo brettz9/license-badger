@@ -9,7 +9,10 @@ import mainScript from '../src/index.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const optionDefinitions = await cliBasics(
-  join(__dirname, '../src/optionDefinitions.js')
+  join(__dirname, '../src/optionDefinitions.js'),
+  {
+    packageJsonPath: import.meta.dirname + '/../package.json'
+  }
 );
 
 if (!optionDefinitions) { // cliBasics handled

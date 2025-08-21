@@ -9,7 +9,10 @@ import satisfies from '../src/satisfies.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const optionDefinitions = await cliBasics(
-  join(__dirname, '../src/satisfies-optionDefinitions.js')
+  join(__dirname, '../src/satisfies-optionDefinitions.js'),
+  {
+    packageJsonPath: import.meta.dirname + '/../package.json'
+  }
 );
 
 if (!optionDefinitions) { // cliBasics handled

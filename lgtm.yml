@@ -1,3 +1,0 @@
-queries:
-  # These are deliberate (used with `es6-template-strings`)
-  - exclude: js/template-syntax-in-string-literal
