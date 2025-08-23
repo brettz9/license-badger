@@ -1,5 +1,6 @@
 import {dirname, join} from 'path';
 import {fileURLToPath} from 'url';
+import {expect} from 'chai';
 
 import {getLicenses, getTypeInfoForLicense} from '../src/getLicenses.js';
 

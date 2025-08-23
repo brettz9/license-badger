@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## 0.22.1
+
+- fix: properly indicate `engines` as now requiring 20.11.0+
+
 ## 0.22.0
 
 - fix: supply `command-line-basics` proper info on name and

@@ -14,13 +14,13 @@ const pkg = JSON.parse(await readFile(join(__dirname, '../package.json')));
 /* eslint-enable jsdoc/require-property -- See schema below */
 
 const getChalkTemplateSingleEscape = (s) => {
-  return s.replaceAll(/[{}\\]/gu, (ch) => {
+  return s.replaceAll(/[\{\}\\]/gv, (ch) => {
     return `\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
   });
 };
 
 const getChalkTemplateEscape = (s) => {
-  return s.replaceAll(/[{}\\]/gu, (ch) => {
+  return s.replaceAll(/[\{\}\\]/gv, (ch) => {
     return `\\\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
   });
 };

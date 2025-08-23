@@ -1,7 +1,7 @@
 import {readFile} from 'fs/promises';
 import {join} from 'path';
 
-import yaml from 'js-yaml';
+import {load} from 'js-yaml';
 
 /**
  * @callback PackageFilterer
@@ -27,7 +27,7 @@ async function getWhitelistedRootPackagesLicenses (
     ).packages;
   } catch (e) {
     try {
-      packageLock = yaml.load(await readFile(
+      packageLock = load(await readFile(
         join(packagePath, 'pnpm-lock.yaml'),
         'utf8'
       )).packages;
@@ -101,14 +101,14 @@ async function getWhitelistedRootPackagesLicenses (
       ) => {
         let target;
         if (pnpm) {
-          target = (!pkg.resolved || (/file:.pnpm\/[^.]*@/u).test(pkg.resolved))
+          target = (!pkg.resolved || (/file:.pnpm\/[^.]*@/v).test(pkg.resolved))
             ? `/${name}@${version}`
             // No better way to match github.com URL packages?
             : new URL(pkg.resolved).pathname.
-              replace(/^\/.pnpm\//u, '').
+              replace(/^\/.pnpm\//v, '').
               replaceAll('+', '/').
               replaceAll('@', '/').
-              replace(/\/node_modules.*$/u, '');
+              replace(/\/node_modules.*$/v, '');
         }
 
         return (

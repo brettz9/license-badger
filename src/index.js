@@ -164,7 +164,7 @@ const licenseBadger = async ({
   let filteredLicenseTypes = licenseTypesWithUncategorized;
   if (filteredTypes.length) {
     const nonemptyPos = filteredTypes.indexOf('nonempty');
-    const checkNonempty = nonemptyPos > -1;
+    const checkNonempty = nonemptyPos !== -1;
     if (checkNonempty) {
       filteredTypes.splice(nonemptyPos, 1);
     }

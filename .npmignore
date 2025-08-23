@@ -2,6 +2,7 @@ test
 coverage
 .nyc_output
 .mocharc.js
+eslint.config.js
 mocha-multi-reporters.json
 test.svg
 lgtm.yml
