@@ -1,10 +1,9 @@
 import {readFile, unlink} from 'fs/promises';
-import {fileURLToPath} from 'url';
-import {dirname, join} from 'path';
+import {join} from 'path';
 import {expect} from 'chai';
 import licenseBadger from '../src/index.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = import.meta.dirname;
 
 const logging = 'verbose';
 const packagePath = join(__dirname, '../');

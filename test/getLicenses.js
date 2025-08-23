@@ -1,12 +1,8 @@
-import {dirname, join} from 'path';
-import {fileURLToPath} from 'url';
 import {expect} from 'chai';
 
 import {getLicenses, getTypeInfoForLicense} from '../src/getLicenses.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const packagePath = join(__dirname, '../');
+const packagePath = import.meta.dirname + '/../';
 
 process.chdir(packagePath);
 

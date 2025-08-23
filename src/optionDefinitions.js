@@ -1,10 +1,8 @@
 import {readFile} from 'fs/promises';
-import {dirname, join} from 'path';
-import {fileURLToPath} from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const pkg = JSON.parse(await readFile(join(__dirname, '../package.json')));
+const pkg = JSON.parse(await readFile(
+  import.meta.dirname + '/../package.json'
+));
 
 // Todo: We really need a command-line-args-TO-typedef-jsdoc generator!
 /* eslint-disable jsdoc/require-property -- See schema below */

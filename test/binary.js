@@ -1,10 +1,9 @@
 import {promisify} from 'util';
-import {fileURLToPath} from 'url';
-import {dirname, join} from 'path';
+import {join} from 'path';
 import {execFile as ef} from 'child_process';
 import {expect} from 'chai';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = import.meta.dirname;
 
 const execFile = promisify(ef);
 

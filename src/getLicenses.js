@@ -1,7 +1,6 @@
 import {readFile} from 'fs/promises';
 import {promisify} from 'util';
-import {dirname, join, resolve} from 'path';
-import {fileURLToPath} from 'url';
+import {resolve} from 'path';
 
 import parse from 'spdx-expression-parse';
 
@@ -12,8 +11,6 @@ import checkMiscTypes from './checkMiscTypes.js';
 
 import getWhitelistedRootPackagesLicenses from
   './getWhitelistedRootPackagesLicenses.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // May change implementation of `licensee` to Promise but only after
 //  Arborist may replace `read-package-tree`:
@@ -217,7 +214,9 @@ const getLicenses = async ({
         licenses: approvedLicenses
       },
       // Path to check
-      packagePath.startsWith('.') ? join(__dirname, packagePath) : packagePath
+      packagePath.startsWith('.')
+        ? import.meta.dirname + '/' + packagePath
+        : packagePath
     );
   /* c8 ignore next 5 */
   } catch (err) {
