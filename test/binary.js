@@ -1,6 +1,6 @@
-import {promisify} from 'util';
-import {join} from 'path';
-import {execFile as ef} from 'child_process';
+import {promisify} from 'node:util';
+import {join} from 'node:path';
+import {execFile as ef} from 'node:child_process';
 import {expect} from 'chai';
 
 const __dirname = import.meta.dirname;
@@ -89,8 +89,8 @@ describe('satisfies', function () {
     const {stdout, stderr} = await execFile(
       satisfiesFile,
       [
-        'MIT',
-        '(ISC OR MIT)'
+        '(ISC OR MIT)',
+        'MIT'
       ]
     );
     if (stderr) {

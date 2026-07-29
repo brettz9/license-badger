@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
+import {join} from 'node:path';
 import {cliBasics} from 'command-line-basics';
 import getLicenseType from '../src/getLicenseType.js';
 
 const optionDefinitions = await cliBasics(
-  import.meta.dirname + '/../src/glt-optionDefinitions.js',
+  join(import.meta.dirname, '/../src/glt-optionDefinitions.js'),
   {
-    packageJsonPath: import.meta.dirname + '/../package.json'
+    packageJsonPath: join(import.meta.dirname, '/../package.json')
   }
 );
 

@@ -18,7 +18,7 @@ export default [
       }
     },
     rules: {
-      'import/no-unresolved': ['error', {
+      'import-x/no-unresolved': ['error', {
         ignore: [String.raw`license-badger/src/getLicenseType\.js`]
       }],
       'n/no-missing-import': ['error', {
@@ -35,7 +35,14 @@ export default [
       'n/no-missing-require': 0,
 
       // We need multiple exports
-      'n/exports-style': 0
+      'n/exports-style': 0,
+
+      'unicorn/max-nested-calls': 0,
+      'import-x/default': 0,
+      'import-x/namespace': 0,
+      'import-x/no-deprecated': 0,
+      'import-x/no-named-as-default': 0,
+      'import-x/no-named-as-default-member': 0
     }
   }
 ];

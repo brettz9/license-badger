@@ -1,6 +1,6 @@
-import {readFile} from 'fs/promises';
-import {promisify} from 'util';
-import {resolve} from 'path';
+import {readFile} from 'node:fs/promises';
+import {promisify} from 'node:util';
+import {resolve, join} from 'node:path';
 
 import parse from 'spdx-expression-parse';
 
@@ -215,7 +215,7 @@ const getLicenses = async ({
       },
       // Path to check
       packagePath.startsWith('.')
-        ? import.meta.dirname + '/' + packagePath
+        ? join(import.meta.dirname, packagePath)
         : packagePath
     );
   /* c8 ignore next 5 */
@@ -277,11 +277,9 @@ const getLicenses = async ({
   */
 
   /**
-  * @typedef {GenericArray} TypeInfoArray
-  * @property {string} 0 type
-  * @property {string|null} 1 license
-  * @property {string|undefined} 2 custom
-  */
+   * Type, license, custom.
+   * @typedef {[string, string|null, string|undefined]} TypeInfoArray
+   */
 
   [...new Set(results)].forEach(({license, name, version}) => {
     getTypeInfoForLicense({licenses, license, name, version});

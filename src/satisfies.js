@@ -34,7 +34,7 @@ function satisfies (a, b) {
     return false;
   }
   try {
-    return spdxSatisfies(ac, bc);
+    return spdxSatisfies(ac, [bc]);
   } catch (e) {
     return ac === bc;
   }

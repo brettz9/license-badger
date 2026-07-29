@@ -1,5 +1,12 @@
 # CHANGES for license-badger
 
+## 0.23.0
+
+BREAKING CHANGES:
+- Require Node >= 24
+
+- chore: update deps and devDeps and lint
+
 ## 0.22.1
 
 - fix: properly indicate `engines` as now requiring 20.11.0+

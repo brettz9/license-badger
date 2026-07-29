@@ -1,7 +1,8 @@
-import {readFile} from 'fs/promises';
+import {readFile} from 'node:fs/promises';
+import {join} from 'node:path';
 
 const pkg = JSON.parse(await readFile(
-  import.meta.dirname + '/../package.json'
+  join(import.meta.dirname, '/../package.json')
 ));
 
 // Todo: We really need a comamnd-line-args-TO-typedef-jsdoc generator!

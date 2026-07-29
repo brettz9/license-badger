@@ -1,5 +1,5 @@
-import {readFile, unlink} from 'fs/promises';
-import {join} from 'path';
+import {readFile, unlink} from 'node:fs/promises';
+import {join} from 'node:path';
 import {expect} from 'chai';
 import licenseBadger from '../src/index.js';
 
@@ -380,14 +380,13 @@ describe('Main file', function () {
       );
 
       const licenseMap = new Map();
-      const permissiveSet = new Set();
-      permissiveSet.add('MIT');
-      permissiveSet.add('ISC');
+      const permissiveSet = new Set(['MIT', 'ISC']);
       licenseMap.set('permissive', permissiveSet);
 
-      const protectiveSet = new Set();
-      protectiveSet.add('GPL-3.0-only');
-      protectiveSet.add('GPL-3.0-or-later');
+      const protectiveSet = new Set([
+        'GPL-3.0-only',
+        'GPL-3.0-or-later'
+      ]);
       licenseMap.set('protective', protectiveSet);
 
       await licenseBadger({

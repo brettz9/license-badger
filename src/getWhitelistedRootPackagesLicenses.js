@@ -1,5 +1,5 @@
-import {readFile} from 'fs/promises';
-import {join} from 'path';
+import {readFile} from 'node:fs/promises';
+import {join} from 'node:path';
 
 import {load} from 'js-yaml';
 
@@ -105,9 +105,7 @@ async function getWhitelistedRootPackagesLicenses (
             ? `/${name}@${version}`
             // No better way to match github.com URL packages?
             : new URL(pkg.resolved).pathname.
-              replace(/^\/.pnpm\//v, '').
-              replaceAll('+', '/').
-              replaceAll('@', '/').
+              replace(/^\/.pnpm\//v, '').replaceAll(/[+@]/gv, '/').
               replace(/\/node_modules.*$/v, '');
         }
 

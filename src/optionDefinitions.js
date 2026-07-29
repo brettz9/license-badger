@@ -1,7 +1,8 @@
-import {readFile} from 'fs/promises';
+import {readFile} from 'node:fs/promises';
+import {join} from 'node:path';
 
 const pkg = JSON.parse(await readFile(
-  import.meta.dirname + '/../package.json'
+  join(import.meta.dirname, '/../package.json')
 ));
 
 // Todo: We really need a command-line-args-TO-typedef-jsdoc generator!
@@ -13,13 +14,13 @@ const pkg = JSON.parse(await readFile(
 
 const getChalkTemplateSingleEscape = (s) => {
   return s.replaceAll(/[\{\}\\]/gv, (ch) => {
-    return `\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
+    return String.raw`\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
   });
 };
 
 const getChalkTemplateEscape = (s) => {
   return s.replaceAll(/[\{\}\\]/gv, (ch) => {
-    return `\\\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
+    return String.raw`\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
   });
 };
 

@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
+import {join} from 'node:path';
 import {cliBasics} from 'command-line-basics';
 import satisfies from '../src/satisfies.js';
 
 const optionDefinitions = await cliBasics(
-  import.meta.dirname + '/../src/satisfies-optionDefinitions.js',
+  join(import.meta.dirname, '/../src/satisfies-optionDefinitions.js'),
   {
-    packageJsonPath: import.meta.dirname + '/../package.json'
+    packageJsonPath: join(import.meta.dirname, '/../package.json')
   }
 );
 
@@ -23,6 +24,5 @@ if (!optionDefinitions.licenseExpressions ||
   );
   process.exit();
 }
-
 // eslint-disable-next-line no-console -- CLI
 console.log(satisfies(...optionDefinitions.licenseExpressions));

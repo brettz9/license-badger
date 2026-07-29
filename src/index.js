@@ -3,8 +3,8 @@
    as alluded to in comment at https://github.com/jslicense/licensee.js/pull/61
 */
 
-import {readFile, writeFile} from 'fs/promises';
-import {join, resolve} from 'path';
+import {readFile, writeFile} from 'node:fs/promises';
+import {join, resolve} from 'node:path';
 
 import BadgeUp from '@rpl/badge-up';
 import {getLicenseTypeInfo} from 'license-types';
@@ -98,7 +98,7 @@ const licenseBadger = async ({
   }
 
   const licenseTypeColorInfo = licenseTypeColor.map((typeAndColor) => {
-    const [type, colors] = typeAndColor.split('=');
+    const [type, colors] = typeAndColor.split('=', 2);
     return [type, colors.split(',')];
   });
   const customLicenseTypeToColor = new Map(
@@ -172,8 +172,8 @@ const licenseBadger = async ({
       [type, {licenseCount}]
     ) => {
       return (checkNonempty && licenseCount) || filteredTypes.includes(type);
-    }).sort(([typeA], [typeB]) => {
-      return filteredTypes.indexOf(typeA) > filteredTypes.indexOf(typeB);
+    }).toSorted(([typeA], [typeB]) => {
+      return filteredTypes.indexOf(typeA) - filteredTypes.indexOf(typeB);
     });
   }
 
@@ -191,7 +191,8 @@ const licenseBadger = async ({
         text,
         licenseCount
       })}\n${licenseCount
-        ? licenseList.sort().map((license, i) => {
+        // eslint-disable-next-line unicorn/require-array-sort-compare -- Ok
+        ? licenseList.toSorted().map((license, i) => {
           return glue(license, i + 1);
         }).join('')
         : ''
