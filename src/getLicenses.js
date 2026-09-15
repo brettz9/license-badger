@@ -6,6 +6,8 @@ import parse from 'spdx-expression-parse';
 
 import Licensee from 'licensee';
 
+import {getLicenseTypeInfo} from 'license-types';
+
 import getLicenseType from './getLicenseType.js';
 import checkMiscTypes from './checkMiscTypes.js';
 
@@ -17,6 +19,23 @@ import getWhitelistedRootPackagesLicenses from
 //  https://github.com/jslicense/licensee.js/pull/62#discussion_r352206031
 // import licensee from 'licensee';
 const licensee = promisify(Licensee);
+
+// Ordered from most to least permissive/desirable; used to pick the
+//  more permissive side of an `OR` license expression.
+const licenseTypeOrder = Object.keys(await getLicenseTypeInfo());
+
+/**
+ * @param {string|string[]|undefined} type
+ * @returns {number} Lower is more permissive; unrecognized/missing types
+ * rank as the least permissive.
+ */
+const rankOfType = (type) => {
+  const typeArr = Array.isArray(type) ? type : [type];
+  return Math.min(...typeArr.map((typ) => {
+    const idx = licenseTypeOrder.indexOf(typ);
+    return idx === -1 ? Infinity : idx;
+  }));
+};
 
 // Todo: Have stringification avoid extra parentheses when multiple joined
 //  conjunctions of the same type?
@@ -82,16 +101,16 @@ const getTypeInfoForLicense = function ({
           [typ] = getTypeInfo(ast.license, true);
           lic = ast.license;
         } else if (ast.conjunction === 'or') {
-          // Todo: This is more complex than the commented out, as
-          //  we'd only want to add these items if more permissive
-          //  than the other branch (faster if not safer if can
-          //  first be normalized); for now, we just reserialize
-          //  this branch and add the type of evaluating the
-          //  whole expression.
-          // getTypeInfoForLicense({license: ast.left});
-          // getTypeInfoForLicense({license: ast.right});
-          const stringified = stringifyLicense(ast);
-          [typ, , lic] = getTypeInfo(stringified, true);
+          // A licensee may choose either side of an `OR`, so categorize
+          //  by the more permissive side (rather than every category
+          //  either side might satisfy), while still reporting the full
+          //  expression as the license text.
+          const [leftType] = getTypes(ast.left);
+          const [rightType] = getTypes(ast.right);
+          typ = rankOfType(leftType) <= rankOfType(rightType)
+            ? leftType
+            : rightType;
+          lic = stringifyLicense(ast);
         } else {
           getTypeInfoForLicense({
             licenses, name, version,
@@ -295,4 +314,4 @@ const getLicenses = async ({
   };
 };
 
-export {getTypeInfoForLicense, getLicenses};
+export {getTypeInfoForLicense, getLicenses, rankOfType};

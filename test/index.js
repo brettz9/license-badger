@@ -37,6 +37,8 @@ const allDevelopmentPath = getFixturePath('allDevelopment.svg');
 const productionPath = getFixturePath('production.svg');
 const packageJsonPath = getFixturePath('packageJson.svg');
 const pnpmPath = getFixturePath('pnpmPath.svg');
+const pnpm9Path = getFixturePath('pnpm9Path.svg');
+const pnpm9AllDevPath = getFixturePath('pnpm9AllDevPath.svg');
 const packageJsonAndLicensePath = getFixturePath('packageJsonAndLicense.svg');
 const nonemptyFilteredTypes = getFixturePath('nonemptyFilteredTypes.svg');
 const otherFilteredTypes = getFixturePath('otherFilteredTypes.svg');
@@ -339,6 +341,57 @@ describe('Main file', function () {
       const expected = await readFile(pnpmPath, 'utf8');
       expect(contents).to.equal(expected);
     });
+
+    it(
+      'should work with pnpm lockfile v9 `production` (chdir), excluding ' +
+      'devDependencies',
+      async function () {
+        const cwd = process.cwd();
+        process.chdir(join(__dirname, './pnpm9'));
+        const outputPath = join(__dirname, 'fixtures/temp-pnpm9.svg');
+        try {
+          await licenseBadger({
+            production: true,
+            licenseInfoPath: '',
+            outputPath,
+            logging
+          });
+          const contents = await readFile(outputPath, 'utf8');
+          const expected = await readFile(pnpm9Path, 'utf8');
+          expect(contents).to.equal(expected);
+        } finally {
+          process.chdir(cwd);
+          try {
+            await unlink(outputPath);
+          } catch (err) {}
+        }
+      }
+    );
+
+    it(
+      'should work with pnpm lockfile v9 `allDevelopment` (chdir), ' +
+      'including devDependencies',
+      async function () {
+        const cwd = process.cwd();
+        process.chdir(join(__dirname, './pnpm9'));
+        const outputPath = join(__dirname, 'fixtures/temp-pnpm9-allDev.svg');
+        try {
+          await licenseBadger({
+            allDevelopment: true,
+            outputPath,
+            logging
+          });
+          const contents = await readFile(outputPath, 'utf8');
+          const expected = await readFile(pnpm9AllDevPath, 'utf8');
+          expect(contents).to.equal(expected);
+        } finally {
+          process.chdir(cwd);
+          try {
+            await unlink(outputPath);
+          } catch (err) {}
+        }
+      }
+    );
 
     it('should err with no package.json or pnpm (chdir)', async function () {
       const cwd = process.cwd();

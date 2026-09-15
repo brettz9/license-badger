@@ -1,5 +1,11 @@
 # CHANGES for license-badger
 
+## 0.23.1
+
+- fix: `getWhitelistedRootPackagesLicenses.js` matched pnpm lockfile keys with a leading `/` that pnpm dropped in lockfile v9, so packages failed to match (the badge would come out empty). Now detects the lockfile version and matches accordingly.
+- fix: pnpm v9 also dropped the per-package dev flag, so `--production` silently stopped excluding `devDependencies`. Now derives prod/dev reachability by walking snapshots from `importers['.'].dependencies`.
+- fix: OR-license double-categorization (e.g. LGPL-2.1-or-later OR MIT showing under both Permissive and Weakly protective) — implemented the fix the code's prior Todo comment described: pick the more permissive side of an OR expression instead of reporting every category either side could satisfy.
+
 ## 0.23.0
 
 BREAKING CHANGES:

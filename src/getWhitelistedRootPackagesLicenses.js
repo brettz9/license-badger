@@ -10,6 +10,59 @@ import {load} from 'js-yaml';
  */
 
 /**
+ * As of pnpm lockfile version 9, `packages` entries no longer carry a
+ * per-package `dev` flag (unlike npm's `package-lock.json` or pnpm's own
+ * pre-9 lockfiles); dev/production reachability instead has to be derived
+ * by walking the dependency graph in `snapshots` starting from the root
+ * `importers['.'].dependencies` (and `optionalDependencies`).
+ * @param {PlainObject} pnpmLock Parsed `pnpm-lock.yaml`
+ * @returns {Set<string>} Bare (no peer-dependency suffix) `name@version`
+ * keys, matching the `packages` map's key format, of every package
+ * reachable from a production (non-dev) dependency.
+ */
+function getPnpmProdReachablePackages (pnpmLock) {
+  const importer = pnpmLock.importers?.['.'];
+  const snapshots = pnpmLock.snapshots || {};
+  const reachable = new Set();
+  if (!importer) {
+    return reachable;
+  }
+
+  const rootDeps = {
+    ...importer.dependencies,
+    ...importer.optionalDependencies
+  };
+
+  const visited = new Set();
+  const queue = Object.entries(rootDeps).map(([depName, {version}]) => {
+    return `${depName}@${version}`;
+  });
+
+  while (queue.length) {
+    const snapshotKey = queue.pop();
+    if (visited.has(snapshotKey)) {
+      continue;
+    }
+    visited.add(snapshotKey);
+    reachable.add(snapshotKey.split('(', 1)[0]);
+
+    const snapshot = snapshots[snapshotKey];
+    if (!snapshot) {
+      continue;
+    }
+    const deps = {
+      ...snapshot.dependencies,
+      ...snapshot.optionalDependencies
+    };
+    Object.entries(deps).forEach(([depName, depVersion]) => {
+      queue.push(`${depName}@${depVersion}`);
+    });
+  }
+
+  return reachable;
+}
+
+/**
  * @param {boolean|string[]} bundledRootPackages
  * @param {string} packagePath
  * @param {boolean} production
@@ -20,6 +73,12 @@ async function getWhitelistedRootPackagesLicenses (
 ) {
   let packageLock;
   let pnpm;
+  // Leading `/` before scoped/unscoped package keys in the `packages` map
+  //   was dropped as of pnpm lockfile version 9 (pnpm v9); earlier
+  //   lockfile versions (e.g., 5.3/5.4/6.0) keyed packages as
+  //   `/${name}@${version}`.
+  let pnpmKeyHasLeadingSlash;
+  let pnpmProdReachablePackages;
   // let yarn;
   try {
     packageLock = (
@@ -27,10 +86,15 @@ async function getWhitelistedRootPackagesLicenses (
     ).packages;
   } catch (e) {
     try {
-      packageLock = load(await readFile(
+      const pnpmLock = load(await readFile(
         join(packagePath, 'pnpm-lock.yaml'),
         'utf8'
-      )).packages;
+      ));
+      packageLock = pnpmLock.packages;
+      pnpmKeyHasLeadingSlash = Number(pnpmLock.lockfileVersion) < 9;
+      if (!pnpmKeyHasLeadingSlash) {
+        pnpmProdReachablePackages = getPnpmProdReachablePackages(pnpmLock);
+      }
       pnpm = true;
     } catch (pnpmErr) {
       /* eslint-disable no-console -- CLI */
@@ -102,7 +166,7 @@ async function getWhitelistedRootPackagesLicenses (
         let target;
         if (pnpm) {
           target = (!pkg.resolved || (/file:.pnpm\/[^.]*@/v).test(pkg.resolved))
-            ? `/${name}@${version}`
+            ? `${pnpmKeyHasLeadingSlash ? '/' : ''}${name}@${version}`
             // No better way to match github.com URL packages?
             : new URL(pkg.resolved).pathname.
               replace(/^\/.pnpm\//v, '').replaceAll(/[+@]/gv, '/').
@@ -117,7 +181,10 @@ async function getWhitelistedRootPackagesLicenses (
           )
         ) &&
           (
-            !production || !value.dev
+            !production ||
+            (pnpm && pnpmProdReachablePackages
+              ? pnpmProdReachablePackages.has(packageKey)
+              : !value.dev)
           );
       });
 
@@ -184,3 +251,4 @@ async function getWhitelistedRootPackagesLicenses (
 }
 
 export default getWhitelistedRootPackagesLicenses;
+export {getPnpmProdReachablePackages};

@@ -1,7 +1,9 @@
 import {join} from 'node:path';
 import {expect} from 'chai';
 
-import {getLicenses, getTypeInfoForLicense} from '../src/getLicenses.js';
+import {
+  getLicenses, getTypeInfoForLicense, rankOfType
+} from '../src/getLicenses.js';
 
 const packagePath = join(import.meta.dirname, '/../');
 
@@ -52,13 +54,23 @@ describe('getLicenses', function () {
       version: '6.0.0',
       license
     });
-    // Changed from networkProtective
-    const permissive = licenses.get('protective');
+    // The most permissive side of the OR chain (X11) now determines the
+    //  category, while the reported license text is still the full
+    //  expression.
+    const permissive = licenses.get('permissive');
     expect(permissive).to.be.a('Set');
     expect(permissive.has(licenseStringified)).to.be.true;
-    /*
-    // Todo: Should add this if we can process the OR properly
-    expect(permissive.has('X11')).to.be.true;
-    */
+  });
+});
+
+describe('rankOfType', function () {
+  it('ranks a plain (non-array) type string', () => {
+    expect(rankOfType('permissive')).to.equal(rankOfType(['permissive']));
+  });
+  it('ranks an unrecognized type as least permissive', () => {
+    expect(rankOfType('not-a-real-license-type')).to.equal(Infinity);
+    expect(rankOfType(['permissive', 'not-a-real-license-type'])).to.equal(
+      rankOfType('permissive')
+    );
   });
 });
