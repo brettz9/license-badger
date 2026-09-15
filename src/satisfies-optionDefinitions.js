@@ -8,8 +8,8 @@ const pkg = JSON.parse(await readFile(
 // Todo: We really need a comamnd-line-args-TO-typedef-jsdoc generator!
 /* eslint-disable jsdoc/require-property -- See schema below */
 /**
-* @typedef {PlainObject} SatisfiesOptions
-*/
+ * @typedef {PlainObject} SatisfiesOptions
+ */
 /* eslint-enable jsdoc/require-property -- See schema below */
 
 const optionDefinitions = [

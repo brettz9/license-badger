@@ -209,8 +209,8 @@ async function getWhitelistedRootPackagesLicenses (
      */
     function getDeps (pkgs) {
       pkgs.forEach((pkg) => {
-        // Not able to replicate, but keeping as condition
-        /* c8 ignore next 3 */
+        // eslint-disable-next-line @stylistic/max-len -- Long
+        /* c8 ignore next 3 -- Not able to replicate, but keeping as condition */
         if (!pkg) {
           return;
         }
@@ -219,8 +219,8 @@ async function getWhitelistedRootPackagesLicenses (
           const pkgsToCheck = [];
           Object.keys(dependencies).forEach((dep) => {
             const findPkg = (pk) => {
-              // Not able to replicate, but keeping as condition
-              /* c8 ignore next 3 */
+              // eslint-disable-next-line @stylistic/max-len -- Long
+              /* c8 ignore next 3 -- Not able to replicate, but keeping as condition */
               if (!pk) {
                 return false;
               }

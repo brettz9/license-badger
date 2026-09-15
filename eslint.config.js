@@ -18,9 +18,9 @@ export default [
       }
     },
     rules: {
-      'import-x/no-unresolved': ['error', {
-        ignore: [String.raw`license-badger/src/getLicenseType\.js`]
-      }],
+      // 'import-x/no-unresolved': ['error', {
+      //   ignore: [String.raw`license-badger/src/getLicenseType\.js`]
+      // }],
       'n/no-missing-import': ['error', {
         allowModules: ['license-badger']
       }]

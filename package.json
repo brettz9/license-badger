@@ -22,7 +22,7 @@
     "build-cli": "clp -c src/optionDefinitions.js cli.svg",
     "coverage-badge": "coveradge badges/coverage-badge.svg",
     "eslint": "eslint --ext=js,md,html .",
-    "lint": "npm run eslint",
+    "lint": "npm run eslint --",
     "mocha": "mocha test/** --reporter-options configFile=mocha-multi-reporters.json",
     "c8": "rm -rf node_modules/.cache && c8 --all npm run mocha && npm run coverage-badge",
     "test": "npm run eslint && npm run c8"
@@ -70,23 +70,27 @@
     "@brettz9/license-useprotective": "https://github.com/brettz9/license-useprotective",
     "c8": "^12.0.0",
     "chai": "^6.2.2",
-    "command-line-publish": "^1.1.0",
+    "command-line-publish": "^2.0.0",
     "coveradge": "^0.8.2",
-    "eslint": "^10.8.0",
-    "eslint-config-ash-nazg": "^41.0.0",
-    "mocha": "^11.7.6",
-    "mocha-badge-generator": "^0.11.0",
-    "mocha-multi-reporters": "^1.5.1"
+    "eslint": "^10.10.0",
+    "eslint-config-ash-nazg": "^43.1.10",
+    "mocha": "^12.0.1",
+    "mocha-badge-generator": "^0.13.0",
+    "mocha-multi-reporters": "^1.5.2"
   },
   "dependencies": {
-    "@rpl/badge-up": "^3.0.0",
+    "@cumulusds/badge-up": "^3.0.1",
     "command-line-basics": "^3.0.0",
     "es6-template-strings": "^2.0.1",
-    "js-yaml": "^5.2.2",
-    "license-types": "^3.2.0",
-    "licensee": "^12.0.1",
+    "js-yaml": "^5.4.2",
+    "license-types": "^3.3.0",
+    "licensee": "^12.0.2",
     "spdx-correct": "^3.2.0",
     "spdx-expression-parse": "^5.0.0",
     "spdx-satisfies": "^6.0.0"
+  },
+  "allowScripts": {
+    "es5-ext@0.10.64": true,
+    "unrs-resolver@1.12.2": true
   }
 }

@@ -162,16 +162,16 @@ const getTypeInfoForLicense = function ({
 
 // Todo: When stabilized, list more specific types than `Map` and `GenericArray`
 /**
-* @typedef {PlainObject} LicenseInfo
-* @property {Map} licenses
-*/
+ * @typedef {PlainObject} LicenseInfo
+ * @property {Map} licenses
+ */
 
 /**
-* If adding back to `LicenseInfo`
-* @ignore
-* @property {GenericArray} approved
-* @property {GenericArray} nonApproved
-* @property {string[]} manuallyCorrected
+ * If adding back to `LicenseInfo`
+ * @ignore
+ * @property {GenericArray} approved
+ * @property {GenericArray} nonApproved
+ * @property {string[]} manuallyCorrected
  */
 
 /**
@@ -237,7 +237,7 @@ const getLicenses = async ({
         ? join(import.meta.dirname, packagePath)
         : packagePath
     );
-  /* c8 ignore next 5 */
+  /* c8 ignore next 5 -- Simulating error? */
   } catch (err) {
     // eslint-disable-next-line no-console -- Extra info
     console.log('Error', err);

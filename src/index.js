@@ -6,7 +6,7 @@
 import {readFile, writeFile} from 'node:fs/promises';
 import {join, resolve} from 'node:path';
 
-import BadgeUp from '@rpl/badge-up';
+import BadgeUp from '@cumulusds/badge-up';
 import {getLicenseTypeInfo} from 'license-types';
 import template from 'es6-template-strings';
 
@@ -127,7 +127,11 @@ const licenseBadger = async ({
         {name, version, custom, license}
       ) => {
         return template(templ, {
-          name, version, custom, license
+          // `license` is `null` for these types (uncategorized/custom/
+          //  unlicensed/missing); avoid interpolating the literal
+          //  string "null" into user-supplied templates that reference
+          //  `${license}`.
+          name, version, custom, license: license ?? ''
         });
       });
       if (mapped.length) {
