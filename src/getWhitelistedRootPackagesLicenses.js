@@ -215,27 +215,29 @@ async function getWhitelistedRootPackagesLicenses (
           return;
         }
         const {package: {dependencies}} = pkg;
-        if (dependencies) {
-          const pkgsToCheck = [];
-          Object.keys(dependencies).forEach((dep) => {
-            const findPkg = (pk) => {
-              // eslint-disable-next-line @stylistic/max-len -- Long
-              /* c8 ignore next 3 -- Not able to replicate, but keeping as condition */
-              if (!pk) {
-                return false;
-              }
-              const {name} = pk;
-              return dep === name;
-            };
-            if (filteredPackages.some((item) => findPkg(item))) {
-              return;
-            }
-            const pk = packages.find((item) => findPkg(item));
-            pkgsToCheck.push(pk);
-            filteredPackages.push(pk);
-          });
-          getDeps(pkgsToCheck);
+        if (!dependencies) {
+          return;
         }
+
+        const pkgsToCheck = [];
+        Object.keys(dependencies).forEach((dep) => {
+          const findPkg = (pk) => {
+            // eslint-disable-next-line @stylistic/max-len -- Long
+            /* c8 ignore next 3 -- Not able to replicate, but keeping as condition */
+            if (!pk) {
+              return false;
+            }
+            const {name} = pk;
+            return dep === name;
+          };
+          if (filteredPackages.some((item) => findPkg(item))) {
+            return;
+          }
+          const pk = packages.find((item) => findPkg(item));
+          pkgsToCheck.push(pk);
+          filteredPackages.push(pk);
+        });
+        getDeps(pkgsToCheck);
       });
     }
 

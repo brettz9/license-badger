@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## 0.23.2
+
+- chore: update license-types, devDeps
+
 ## 0.23.1
 
 - fix: `getWhitelistedRootPackagesLicenses.js` matched pnpm lockfile keys with a leading `/` that pnpm dropped in lockfile v9, so packages failed to match (the badge would come out empty). Now detects the lockfile version and matches accordingly.

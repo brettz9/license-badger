@@ -134,14 +134,16 @@ const licenseBadger = async ({
           name, version, custom, license: license ?? ''
         });
       });
-      if (mapped.length) {
-        // Get rid of objects now that data mapped
-        const set = licenses.get(type);
-        set.clear();
-        mapped.forEach((item) => {
-          set.add(item);
-        });
+      if (!mapped.length) {
+        return;
       }
+
+      // Get rid of objects now that data mapped
+      const set = licenses.get(type);
+      set.clear();
+      mapped.forEach((item) => {
+        set.add(item);
+      });
     };
 
     switch (type) {
