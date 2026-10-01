@@ -20,9 +20,12 @@ if (!optionDefinitions.licenseExpressions ||
 ) {
   // eslint-disable-next-line no-console -- CLI
   console.error(
-    'Please provide at least two license arguments (the `licenseExpressions`).'
+    'Please provide two license arguments (the `licenseExpressions`).'
   );
   process.exit();
 }
 // eslint-disable-next-line no-console -- CLI
-console.log(satisfies(...optionDefinitions.licenseExpressions));
+console.log(satisfies(
+  optionDefinitions.licenseExpressions[0],
+  optionDefinitions.licenseExpressions[1]
+));

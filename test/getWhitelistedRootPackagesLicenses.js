@@ -5,6 +5,7 @@ import {getPnpmProdReachablePackages} from
 
 describe('getPnpmProdReachablePackages', function () {
   it('returns an empty set when there is no root importer', () => {
+    // @ts-expect-error Testing
     const reachable = getPnpmProdReachablePackages({});
     expect(reachable).to.be.a('Set');
     expect(reachable.size).to.equal(0);
@@ -38,6 +39,7 @@ describe('getPnpmProdReachablePackages', function () {
           }
         }
       };
+      // @ts-expect-error Testing
       const reachable = getPnpmProdReachablePackages(pnpmLock);
       const sorted = [...reachable].toSorted((a, b) => a.localeCompare(b));
       expect(sorted).to.deep.equal(['b@1.0.0', 'c@1.0.0', 'd@1.0.0']);
@@ -64,6 +66,7 @@ describe('getPnpmProdReachablePackages', function () {
           }
         }
       };
+      // @ts-expect-error Testing
       const reachable = getPnpmProdReachablePackages(pnpmLock);
       const sorted = [...reachable].toSorted((a, b) => a.localeCompare(b));
       expect(sorted).to.deep.equal(['e@1.0.0', 'skipped-optional@1.0.0']);
@@ -83,6 +86,7 @@ describe('getPnpmProdReachablePackages', function () {
         'f@1.0.0(peer@2.0.0)': {}
       }
     };
+    // @ts-expect-error Testing
     const reachable = getPnpmProdReachablePackages(pnpmLock);
     expect([...reachable]).to.deep.equal(['f@1.0.0']);
   });

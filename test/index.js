@@ -8,6 +8,9 @@ const __dirname = import.meta.dirname;
 const logging = 'verbose';
 const packagePath = join(__dirname, '../');
 
+/**
+ * @param {string} path
+ */
 const getFixturePath = (path) => {
   return join(__dirname, `fixtures/${path}`);
 };
@@ -53,23 +56,25 @@ const completePackageList = getFixturePath('completePackageList.svg');
 describe('Main file', function () {
   this.timeout(15000);
   it('should throw with a bad output path', async () => {
+    /** @type {Error|undefined} */
     let err;
     try {
       await licenseBadger({outputPath: '', logging});
     } catch (error) {
-      err = error;
+      err = /** @type {Error} */ (error);
     }
-    expect(err.message).to.equal('Bad output path provided.');
+    expect(err?.message).to.equal('Bad output path provided.');
   });
 
   it('should throw with insufficient package type info', async function () {
+    /** @type {Error|undefined} */
     let err;
     try {
       await licenseBadger({outputPath: 'test', licenseInfoPath: '', logging});
     } catch (error) {
-      err = error;
+      err = /** @type {Error} */ (error);
     }
-    expect(err.message).to.equal(
+    expect(err?.message).to.equal(
       'You must specify at least `allDevelopment`, `licenseInfoPath`, ' +
       '`packageJson`, or `production`'
     );
@@ -88,13 +93,14 @@ describe('Main file', function () {
   });
 
   describe('Main functionality', function () {
+    /** @type {string[]} */
     const fixturePaths = [];
     for (let i = 0; i <= 16; i++) {
       fixturePaths.push(join(__dirname, `fixtures/temp${i}.svg`));
     }
     let j = 0;
     /**
-     * @returns {void}
+     * @returns {string}
      */
     function getNextFixturePath () {
       return fixturePaths[j++];
@@ -414,6 +420,7 @@ describe('Main file', function () {
   });
 
   describe('`completePackageList`', function () {
+    /** @type {string[]} */
     const fixturePaths = [];
     ['completePackageList'].forEach((path) => {
       fixturePaths.push(join(__dirname, `fixtures/temp-${path}.svg`));

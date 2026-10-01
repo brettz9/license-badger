@@ -4,9 +4,25 @@ import {join} from 'node:path';
 import {load} from 'js-yaml';
 
 /**
- * @callback PackageFilterer
- * @param {LicenseeUnflattenedPackages} unflattenedPackages
- * @returns {LicenseeFilterPackages} Filtered packages
+ * @typedef {Record<string, {
+ *   dev?: boolean,
+ *   version: string
+ * }>} PackageLock
+ */
+
+/**
+ * @typedef {{
+ *   lockfileVersion: string,
+ *   packages: PackageLock,
+ *   importers?: {'.': {
+ *     dependencies?: Record<string, {version: string}>,
+ *     optionalDependencies?: Record<string, {version: string}>
+ *   }},
+ *   snapshots?: Record<string, {
+ *     dependencies?: Record<string, string>,
+ *     optionalDependencies?: Record<string, string>
+ *   }>
+ * }} ParsedPnpmLock
  */
 
 /**
@@ -15,7 +31,7 @@ import {load} from 'js-yaml';
  * pre-9 lockfiles); dev/production reachability instead has to be derived
  * by walking the dependency graph in `snapshots` starting from the root
  * `importers['.'].dependencies` (and `optionalDependencies`).
- * @param {PlainObject} pnpmLock Parsed `pnpm-lock.yaml`
+ * @param {ParsedPnpmLock} pnpmLock Parsed `pnpm-lock.yaml`
  * @returns {Set<string>} Bare (no peer-dependency suffix) `name@version`
  * keys, matching the `packages` map's key format, of every package
  * reachable from a production (non-dev) dependency.
@@ -39,7 +55,7 @@ function getPnpmProdReachablePackages (pnpmLock) {
   });
 
   while (queue.length) {
-    const snapshotKey = queue.pop();
+    const snapshotKey = /** @type {string} */ (queue.pop());
     if (visited.has(snapshotKey)) {
       continue;
     }
@@ -66,30 +82,42 @@ function getPnpmProdReachablePackages (pnpmLock) {
  * @param {boolean|string[]} bundledRootPackages
  * @param {string} packagePath
  * @param {boolean} production
- * @returns {Promise<PackageFilterer>}
+ * @returns {Promise<import('licensee').Configuration['filterPackages']>}
  */
 async function getWhitelistedRootPackagesLicenses (
   bundledRootPackages, packagePath, production
 ) {
+  /** @type {PackageLock} */
   let packageLock;
+
+  /** @type {boolean|undefined} */
   let pnpm;
+
   // Leading `/` before scoped/unscoped package keys in the `packages` map
   //   was dropped as of pnpm lockfile version 9 (pnpm v9); earlier
   //   lockfile versions (e.g., 5.3/5.4/6.0) keyed packages as
   //   `/${name}@${version}`.
+  /** @type {boolean|undefined} */
   let pnpmKeyHasLeadingSlash;
+
+  /** @type {Set<string>} */
   let pnpmProdReachablePackages;
   // let yarn;
   try {
     packageLock = (
+      // @ts-expect-error Ok
       JSON.parse(await readFile(join(packagePath, 'package-lock.json')))
     ).packages;
   } catch (e) {
     try {
-      const pnpmLock = load(await readFile(
-        join(packagePath, 'pnpm-lock.yaml'),
-        'utf8'
-      ));
+      const pnpmLock =
+      /**
+       * @type {ParsedPnpmLock}
+       */
+        (load(await readFile(
+          join(packagePath, 'pnpm-lock.yaml'),
+          'utf8'
+        )));
       packageLock = pnpmLock.packages;
       pnpmKeyHasLeadingSlash = Number(pnpmLock.lockfileVersion) < 9;
       if (!pnpmKeyHasLeadingSlash) {
@@ -117,8 +145,27 @@ async function getWhitelistedRootPackagesLicenses (
     }
   }
 
+  /**
+   * @typedef {{
+   *   name: string,
+   *   version?: string,
+   *   resolved?: string,
+   *   package: {
+   *     version: string,
+   *     dependencies: unknown
+   *   },
+   *   children?: ObjectWithOptionalChildren[]
+   * }} ObjectWithOptionalChildren
+   */
+
   return (unflattenedPackages) => {
+    /** @type {ObjectWithOptionalChildren[]} */
     const packages = [];
+
+    /**
+     * @param {ObjectWithOptionalChildren} pkg
+     * @returns {void}
+     */
     const flatten = (pkg) => {
       packages.push(pkg);
       // Not able to replicate, but keeping as condition
@@ -199,12 +246,9 @@ async function getWhitelistedRootPackagesLicenses (
     // }));
 
     /**
-     * `package.json` info.
-     * @external PackageInfo
-     */
-
-    /**
-     * @param {PackageInfo} pkgs
+     * @param {{
+     *   package: {dependencies: unknown}
+     * }[]} pkgs
      * @returns {void}
      */
     function getDeps (pkgs) {
@@ -219,8 +263,12 @@ async function getWhitelistedRootPackagesLicenses (
           return;
         }
 
+        /** @type {ObjectWithOptionalChildren[]} */
         const pkgsToCheck = [];
         Object.keys(dependencies).forEach((dep) => {
+          /**
+           * @param {ObjectWithOptionalChildren} pk
+           */
           const findPkg = (pk) => {
             // eslint-disable-next-line @stylistic/max-len -- Long
             /* c8 ignore next 3 -- Not able to replicate, but keeping as condition */
@@ -233,7 +281,9 @@ async function getWhitelistedRootPackagesLicenses (
           if (filteredPackages.some((item) => findPkg(item))) {
             return;
           }
-          const pk = packages.find((item) => findPkg(item));
+          const pk = /** @type {ObjectWithOptionalChildren} */ (
+            packages.find((item) => findPkg(item))
+          );
           pkgsToCheck.push(pk);
           filteredPackages.push(pk);
         });

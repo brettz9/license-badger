@@ -14,6 +14,10 @@ import checkMiscTypes from './checkMiscTypes.js';
 import getWhitelistedRootPackagesLicenses from
   './getWhitelistedRootPackagesLicenses.js';
 
+/**
+ * @import {Info} from 'spdx-expression-parse';
+ */
+
 // May change implementation of `licensee` to Promise but only after
 //  Arborist may replace `read-package-tree`:
 //  https://github.com/jslicense/licensee.js/pull/62#discussion_r352206031
@@ -32,6 +36,9 @@ const licenseTypeOrder = Object.keys(await getLicenseTypeInfo());
 const rankOfType = (type) => {
   const typeArr = Array.isArray(type) ? type : [type];
   return Math.min(...typeArr.map((typ) => {
+    if (!typ) {
+      return Infinity;
+    }
     const idx = licenseTypeOrder.indexOf(typ);
     return idx === -1 ? Infinity : idx;
   }));
@@ -39,8 +46,13 @@ const rankOfType = (type) => {
 
 // Todo: Have stringification avoid extra parentheses when multiple joined
 //  conjunctions of the same type?
+
+/**
+ * @param {Info} ast
+ * @returns {string}
+ */
 const stringifyLicense = (ast) => {
-  if (ast.license) {
+  if ('license' in ast) {
     return ast.license +
       // Todo: Is this correct?
       (ast.plus ? '-or-later' : '') +
@@ -51,24 +63,41 @@ const stringifyLicense = (ast) => {
 };
 
 /**
- * @param {PlainObject} typeInfo
- * @param {Map} [typeInfo.licenses]
- * @param {string} typeInfo.license
+ * @typedef {Set<string|Info|{
+ *   name: string|undefined,
+ *   version: string|undefined,
+ *   license: string|Info|null|undefined,
+ *   custom?: string|undefined
+ * }>} LicensesSet
+ */
+
+/**
+ * @typedef {Map<string, LicensesSet>} LicenseTypeToLicenses
+ */
+
+/**
+ * @param {object} typeInfo
+ * @param {LicenseTypeToLicenses} [typeInfo.licenses]
+ * @param {string|null|undefined|Info} typeInfo.license
  * @param {string} [typeInfo.name] Optional if license is known to be
  * a positive-length string, and is not "UNLICENSED", with "SEE LICENSE IN ",
  * beginning with "RPL-" or "Parity-", or of type "uncategorized"
  * @param {string} [typeInfo.version] See `typeInfo.name`.
  * @param {boolean} [typeInfo.licenseAsAST]
- * @returns {Map}
+ * @returns {LicenseTypeToLicenses}
  */
 const getTypeInfoForLicense = function ({
   licenses = new Map(), license: licns, name, version, licenseAsAST
 }) {
+  /**
+   * @param {string} type
+   * @param {string|Info|null|undefined} license
+   */
   const addType = (type, license) => {
     if (!licenses.has(type)) {
       licenses.set(type, new Set());
     }
-    const set = licenses.get(type);
+    const set = /** @type {LicensesSet} */ (licenses.get(type));
     set.add(
       type !== 'uncategorized' && license
         ? license
@@ -83,15 +112,36 @@ const getTypeInfoForLicense = function ({
     licenses.set(type, set);
   };
 
+  /**
+   * @param {string|Info|undefined|null} license
+   * @param {boolean} [noParsing]
+   * @returns {[
+   *   type: string|undefined|ReturnType<typeof getLicenseType>,
+   *   custom: string|undefined,
+   *   license: string|Info|null|undefined
+   * ]}
+   */
   const getTypeInfo = (license, noParsing) => {
-    let type, custom;
+    let type,
+      /** @type {string|undefined} */
+      custom;
     if (!licenseAsAST) {
-      ({type, license, custom} = checkMiscTypes(license));
-      if (!type && noParsing) {
+      ({type, license, custom} = checkMiscTypes(
+        /** @type {string} */ (license)
+      ));
+      if (!type && license && noParsing) {
         type = getLicenseType(license);
       }
     }
     if (!type) {
+      /**
+       * @param {Info} ast
+       * @returns {[
+       *   string|ReturnType<typeof getLicenseType>|undefined,
+       *   undefined,
+       *   string|undefined
+       * ]}
+       */
       const getTypes = (ast) => {
         licenseAsAST = false;
         let typ, lic;
@@ -128,18 +178,30 @@ const getTypeInfoForLicense = function ({
       let parsed;
       if (!licenseAsAST) {
         try {
-          parsed = parse(licns);
+          parsed = parse(/** @type {string} */ (licns));
         } catch (err) {
-          return [getLicenseType(licns), undefined, licns];
+          return [
+            getLicenseType(
+              /** @type {string} */ (licns)
+            ),
+            undefined,
+            /** @type {string} */ (licns)
+          ];
         }
       }
-      [type, , license] = getTypes(licenseAsAST ? licns : parsed);
+      [type, , license] = getTypes(
+        licenseAsAST
+          ? /** @type {Info} */ (licns)
+          : /** @type {Info} */ (parsed)
+      );
     }
 
     return [type, custom, license];
   };
 
-  let types, custom;
+  let types,
+    /** @type {string|undefined} */
+    custom;
   [types, custom, licns] = getTypeInfo(licns);
 
   if (
@@ -162,8 +224,8 @@ const getTypeInfoForLicense = function ({
 
 // Todo: When stabilized, list more specific types than `Map` and `GenericArray`
 /**
- * @typedef {PlainObject} LicenseInfo
- * @property {Map} licenses
+ * @typedef {object} LicenseInfo
+ * @property {LicenseTypeToLicenses} licenses
  */
 
 /**
@@ -182,7 +244,7 @@ const getTypeInfoForLicense = function ({
  * @param {boolean} [cfg.corrections]
  * @param {boolean} [cfg.production]
  * @param {boolean} [cfg.allDevelopment]
- * @param {Map} [cfg.licenses]
+ * @param {LicenseTypeToLicenses} [cfg.licenses]
  * @returns {Promise<LicenseInfo>}
  */
 const getLicenses = async ({
@@ -197,6 +259,7 @@ const getLicenses = async ({
   if (allDevelopment) {
     bundledRootPackages = true;
   } else if (licenseInfoPath) {
+    // @ts-expect-error -- Ok
     ({bundledRootPackages} = JSON.parse(await readFile(
       resolve(process.cwd(), licenseInfoPath)
     )));
@@ -223,7 +286,7 @@ const getLicenses = async ({
       {
         // The manual corrections are useful but automatic ones are critical
         //   handling old objects, arrays of objects etc.
-        disableLsErrorAborting: true,
+        // disableLsErrorAborting: true, // No longer present
         corrections,
         packages: {
           // 'load-stylesheets': '*'

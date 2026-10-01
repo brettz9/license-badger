@@ -10,7 +10,7 @@ import correct from 'spdx-correct';
 /**
  *
  * @param {string} spdx
- * @returns {string}
+ * @returns {string|null}
  */
 function correcting (spdx) {
   if (spdx === 'UNLICENSED') { // See https://github.com/jslicense/spdx-correct.js/issues/3#issuecomment-279799556

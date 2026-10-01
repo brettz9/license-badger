@@ -132,7 +132,7 @@ describe('satisfies', function () {
       }
       expect(stdout).to.equal('');
       expect(stderr).to.equal(
-        'Please provide at least two license arguments ' +
+        'Please provide two license arguments ' +
           '(the `licenseExpressions`).\n'
       );
     }

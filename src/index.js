@@ -12,12 +12,22 @@ import template from 'es6-template-strings';
 
 import {getLicenses, getTypeInfoForLicense} from './getLicenses.js';
 
-const licenseTypes = await getLicenseTypeInfo();
+const licenseTypes = getLicenseTypeInfo();
 
 const badgeUp = BadgeUp.v2;
 
 const defaultTextColor = ['navy'];
 
+/**
+ * @param {{
+ *   allDevelopment?: boolean,
+ *   packagePath?: string,
+ *   corrections?: boolean,
+ *   licenseInfoPath?: string|false,
+ *   production?: boolean,
+ *   packageJson?: boolean
+ * }} cfg
+ */
 const getLicensesMap = async function ({
   allDevelopment,
   packagePath,
@@ -43,9 +53,12 @@ const getLicensesMap = async function ({
       );
     }
     if (packageJson) {
-      const {name, version, license} = JSON.parse(await readFile(
-        join(packagePath || process.cwd(), 'package.json')
-      ));
+      const {name, version, license} = JSON.parse(
+        // @ts-expect-error Ok
+        await readFile(
+          join(packagePath || process.cwd(), 'package.json')
+        )
+      );
       licenses = getTypeInfoForLicense({
         licenses, license, name, version
       });
@@ -66,7 +79,16 @@ const getLicensesMap = async function ({
 };
 
 /**
- * @param {LicenseBadgerOptions} options
+ * @typedef {{
+ *   color: string[],
+ *   text: string,
+ *   licenseCount: number,
+ *   licenseList: string[]
+ * }} LicenseTypeInfo
+ */
+
+/**
+ * @param {import('./optionDefinitions.js').LicenseBadgerOptions} options
  * @returns {Promise<void>}
  */
 const licenseBadger = async ({
@@ -97,10 +119,12 @@ const licenseBadger = async ({
     textColor = textColor.split(',');
   }
 
-  const licenseTypeColorInfo = licenseTypeColor.map((typeAndColor) => {
-    const [type, colors] = typeAndColor.split('=', 2);
-    return [type, colors.split(',')];
-  });
+  const licenseTypeColorInfo = /** @type {[string, string[]][]} */ (
+    licenseTypeColor.map((typeAndColor) => {
+      const [type, colors] = typeAndColor.split('=', 2);
+      return [type, colors.split(',')];
+    })
+  );
   const customLicenseTypeToColor = new Map(
     licenseTypeColorInfo
   );
@@ -113,6 +137,10 @@ const licenseBadger = async ({
     production,
     packageJson
   });
+  /* c8 ignore next 3 -- Defensive; only for type narrowing */
+  if (!licenses) {
+    throw new Error('No licenses found');
+  }
 
   const usedLicenses = [];
   const licenseTypesWithUncategorized = Object.entries(licenseTypes).map((
@@ -122,10 +150,28 @@ const licenseBadger = async ({
       licenses.set(type, new Set());
     }
 
+    /**
+     * @param {"custom" | "missing" | "uncategorized" | "unlicensed"} typ
+     * @param {string} templ
+     */
     const specialTemplate = (typ, templ) => {
-      const mapped = [...licenses.get(typ)].map((
-        {name, version, custom, license}
-      ) => {
+      const mapped = [...(
+        /** @type {import('./getLicenses.js').LicensesSet} */ (
+          licenses.get(typ)
+        )
+      )].map((licenseInfo) => {
+        const {name, version, custom, license} =
+          /**
+           * @type {{
+           *   name: string,
+           *   version: string,
+           *   custom: string,
+           *   license: string
+           * }}
+           */ (
+            licenseInfo
+          );
+
         return template(templ, {
           // `license` is `null` for these types (uncategorized/custom/
           //  unlicensed/missing); avoid interpolating the literal
@@ -139,7 +185,9 @@ const licenseBadger = async ({
       }
 
       // Get rid of objects now that data mapped
-      const set = licenses.get(type);
+      const set = /** @type {import('./getLicenses.js').LicensesSet} */ (
+        licenses.get(type)
+      );
       set.clear();
       mapped.forEach((item) => {
         set.add(item);
@@ -157,35 +205,46 @@ const licenseBadger = async ({
       break;
     }
 
-    const licenseList = [...licenses.get(type)];
+    // Special types were mapped to strings by `specialTemplate` above
+    const licenseList = /** @type {string[]} */ ([...(
+      /** @type {import('./getLicenses.js').LicensesSet} */ (
+        licenses.get(type)
+      )
+    )]);
     const licenseCount = licenseList.length;
     usedLicenses.push(...licenseList);
-    return [type, {color, text, licenseCount, licenseList}];
+    return /** @type {[string, LicenseTypeInfo]} */ ([
+      type, {color, text, licenseCount, licenseList}
+    ]);
   });
 
-  filteredTypes = filteredTypes
+  const filteredTypesArr = filteredTypes
     ? filteredTypes.split(',')
     : [];
 
   let filteredLicenseTypes = licenseTypesWithUncategorized;
-  if (filteredTypes.length) {
-    const nonemptyPos = filteredTypes.indexOf('nonempty');
+  if (filteredTypesArr.length) {
+    const nonemptyPos = filteredTypesArr.indexOf('nonempty');
     const checkNonempty = nonemptyPos !== -1;
     if (checkNonempty) {
-      filteredTypes.splice(nonemptyPos, 1);
+      filteredTypesArr.splice(nonemptyPos, 1);
     }
     filteredLicenseTypes = filteredLicenseTypes.filter((
       [type, {licenseCount}]
     ) => {
-      return (checkNonempty && licenseCount) || filteredTypes.includes(type);
+      return (checkNonempty && licenseCount) || filteredTypesArr.includes(type);
     }).toSorted(([typeA], [typeB]) => {
-      return filteredTypes.indexOf(typeA) - filteredTypes.indexOf(typeB);
+      return filteredTypesArr.indexOf(typeA) - filteredTypesArr.indexOf(typeB);
     });
   }
 
   const licensesWithColors = filteredLicenseTypes.map((
     [type, {color, text, licenseCount, licenseList}]
   ) => {
+    /**
+     * @param {string} license
+     * @param {string} index
+     */
     const glue = (license, index) => {
       return template(licenseTemplate, {
         license,
@@ -195,23 +254,23 @@ const licenseBadger = async ({
     return [
       `${template(licenseTypeTemplate, {
         text,
-        licenseCount
+        licenseCount: String(licenseCount)
       })}\n${licenseCount
         // eslint-disable-next-line unicorn/require-array-sort-compare -- Ok
         ? licenseList.toSorted().map((license, i) => {
-          return glue(license, i + 1);
+          return glue(license, String(i + 1));
         }).join('')
         : ''
       }`,
-      ...(customLicenseTypeToColor.has(type)
+      ...(/** @type {string[]} */ (customLicenseTypeToColor.has(type)
         ? customLicenseTypeToColor.get(type)
-        : color)
+        : color))
     ];
   });
 
   const sections = [
     [template(textTemplate, {
-      licenseCount: usedLicenses.length
+      licenseCount: String(usedLicenses.length)
     }), ...textColor],
     ...licensesWithColors
   ];

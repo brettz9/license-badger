@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "moduleResolution": "nodenext",
+    "module": "NodeNext",
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true,
+    "noEmit": true,
+    "target": "es2024",
+    "types": ["mocha", "chai", "node"]
+  },
+  "include": ["**/*.js", "typings/*.d.ts"],
+  "exclude": ["node_modules", "coverage"]
+}

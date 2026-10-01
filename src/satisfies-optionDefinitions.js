@@ -1,14 +1,9 @@
-import {readFile} from 'node:fs/promises';
-import {join} from 'node:path';
-
-const pkg = JSON.parse(await readFile(
-  join(import.meta.dirname, '/../package.json')
-));
+import pkg from '../package.json' with {type: 'json'};
 
 // Todo: We really need a comamnd-line-args-TO-typedef-jsdoc generator!
 /* eslint-disable jsdoc/require-property -- See schema below */
 /**
- * @typedef {PlainObject} SatisfiesOptions
+ * @typedef {object} SatisfiesOptions
  */
 /* eslint-enable jsdoc/require-property -- See schema below */
 

@@ -1,5 +1,9 @@
 # CHANGES for license-badger
 
+## ?
+
+- feat: typescript
+
 ## 0.23.2
 
 - chore: update license-types, devDeps

@@ -1,8 +1,15 @@
 /**
+ * @import {Info} from 'spdx-expression-parse';
+ */
+/**
  * @todo Move this with `getLicenseType.js` and `satisfies.js` to new
  * `license-types-utils`.
- * @param {?string} license
- * @returns {{type: string, license: null, custom: string}}
+ * @param {string|null|Info|undefined} license
+ * @returns {{
+ *   type: string|undefined,
+ *   license: string|null,
+ *   custom: string|undefined
+ * }}
  */
 const checkMiscTypes = (license) => {
   let type, custom;

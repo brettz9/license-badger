@@ -7,9 +7,9 @@
 import {getLicenseTypes} from 'license-types';
 import satisfies from './satisfies.js';
 
-const licenseTypes = await getLicenseTypes();
+const licenseTypes = getLicenseTypes();
 
-const types = [
+const types = /** @type {const} */ ([
   'publicDomain',
   'permissive',
   'weaklyProtective',
@@ -17,11 +17,11 @@ const types = [
   'networkProtective',
   'useProtective',
   'modifyProtective'
-];
+]);
 
 /**
  * @param {string} license
- * @returns {string[]}
+ * @returns {(keyof import('license-types').LicenseInfo|"uncategorized")[]}
  */
 function getLicenseType (license) {
   const typeInfos = Object.entries(licenseTypes).flatMap(([
@@ -35,7 +35,9 @@ function getLicenseType (license) {
     return null;
   }).filter(Boolean);
 
-  return typeInfos.length ? typeInfos : ['uncategorized'];
+  return typeInfos.length
+    ? /** @type {(keyof import('license-types').LicenseInfo)[]} */ (typeInfos)
+    : ['uncategorized'];
 }
 
 export default getLicenseType;

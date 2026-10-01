@@ -16,4 +16,8 @@ if (!optionDefinitions) { // cliBasics handled
 }
 
 // Use `optionDefinitions`
-await mainScript(optionDefinitions);
+await mainScript(
+  /** @type {import("../src/optionDefinitions.js").LicenseBadgerOptions} */ (
+    optionDefinitions
+  )
+);

@@ -16,7 +16,7 @@ describe('getLicenses', function () {
     expect(licenses).to.be.a('Map');
     const permissive = licenses.get('permissive');
     expect(permissive).to.be.a('Set');
-    expect(permissive.has('MIT')).to.be.true;
+    expect(permissive?.has('MIT')).to.be.true;
   });
   it('should avoid adding nameless `license`', () => {
     const licenses = getTypeInfoForLicense({license: 'MIT'});
@@ -32,11 +32,11 @@ describe('getLicenses', function () {
     });
     const permissive = licenses.get('permissive');
     expect(permissive).to.be.a('Set');
-    expect(permissive.has('MIT')).to.be.true;
-    expect(permissive.has('ISC')).to.be.true;
+    expect(permissive?.has('MIT')).to.be.true;
+    expect(permissive?.has('ISC')).to.be.true;
     const protective = licenses.get('permissive');
     expect(protective).to.be.a('Set');
-    expect(protective.has('GPL-3.0')).to.be.false;
+    expect(protective?.has('GPL-3.0')).to.be.false;
     /*
     // Todo: Should add this if we can process the OR properly
     expect(permissive.has('X11')).to.be.true;
@@ -59,13 +59,16 @@ describe('getLicenses', function () {
     //  expression.
     const permissive = licenses.get('permissive');
     expect(permissive).to.be.a('Set');
-    expect(permissive.has(licenseStringified)).to.be.true;
+    expect(permissive?.has(licenseStringified)).to.be.true;
   });
 });
 
 describe('rankOfType', function () {
   it('ranks a plain (non-array) type string', () => {
     expect(rankOfType('permissive')).to.equal(rankOfType(['permissive']));
+  });
+  it('ranks a missing type as least permissive', () => {
+    expect(rankOfType(undefined)).to.equal(Infinity);
   });
   it('ranks an unrecognized type as least permissive', () => {
     expect(rankOfType('not-a-real-license-type')).to.equal(Infinity);

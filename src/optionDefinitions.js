@@ -1,29 +1,54 @@
-import {readFile} from 'node:fs/promises';
-import {join} from 'node:path';
+import pkg from '../package.json' with {type: 'json'};
 
-const pkg = JSON.parse(await readFile(
-  join(import.meta.dirname, '/../package.json')
-));
-
-// Todo: We really need a command-line-args-TO-typedef-jsdoc generator!
-/* eslint-disable jsdoc/require-property -- See schema below */
 /**
  * @typedef {object} LicenseBadgerOptions
+ * @property {string} [packagePath]
+ * @property {boolean} [packageJson]
+ * @property {boolean} [corrections]
+ * @property {boolean} [production]
+ * @property {boolean} [allDevelopment]
+ * @property {string} [outputPath]
+ * @property {string|false} [licenseInfoPath]
+ * @property {"off"|"verbose"|false} [logging]
+ * @property {string} [textTemplate]
+ * @property {string} [licenseTemplate]
+ * @property {string} [licenseTypeTemplate]
+ * @property {string} [uncategorizedLicenseTemplate]
+ * @property {null|string} [filteredTypes]
+ * @property {null|
+ *   import('./getLicenses.js').LicenseTypeToLicenses} [completePackageList]
+ * @property {string|string[]} [textColor]
+ * @property {string[]} [licenseTypeColor]
  */
-/* eslint-enable jsdoc/require-property -- See schema below */
 
+/**
+ * @param {string} s
+ */
 const getChalkTemplateSingleEscape = (s) => {
-  return s.replaceAll(/[\{\}\\]/gv, (ch) => {
-    return String.raw`\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
-  });
+  return s.replaceAll(
+    /[\{\}\\]/gv,
+    /**
+     * @param {string} ch
+     * @returns {string}
+     */
+    (ch) => {
+      return String.raw`\u${ch.codePointAt(0)?.toString(16)?.padStart(4, '0')}`;
+    }
+  );
 };
 
+/**
+ * @param {string} s
+ */
 const getChalkTemplateEscape = (s) => {
   return s.replaceAll(/[\{\}\\]/gv, (ch) => {
-    return String.raw`\\u${ch.codePointAt().toString(16).padStart(4, '0')}`;
+    return String.raw`\\u${ch.codePointAt(0)?.toString(16)?.padStart(4, '0')}`;
   });
 };
 
+/**
+ * @param {string} s
+ */
 const getBracketedChalkTemplateEscape = (s) => {
   return '{' + getChalkTemplateEscape(s) + '}';
 };
